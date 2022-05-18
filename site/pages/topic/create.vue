@@ -68,6 +68,9 @@
 
         <div v-if="postForm.type === 1" class="field">
           <div class="control">
+            <!-- <no-ssr>
+              <div id="editorjs" data-placeholder="Custom placeholder"></div>
+            </no-ssr> -->
             <simple-editor
               ref="simpleEditor"
               @input="onSimpleEditorInput"
@@ -119,12 +122,13 @@
 </template>
 
 <script>
+// import EditorJS from '@editorjs/editorjs'
+
 export default {
   middleware: 'authenticated',
   async asyncData({ $axios, query, store }) {
     // 节点
     const nodes = await $axios.get('/api/topic/nodes')
-
     // 发帖标签
     const config = store.state.config.config || {}
     const nodeId = query.nodeId || config.defaultNodeId
@@ -186,6 +190,10 @@ export default {
   },
   watchQuery: ['type', 'nodeId'],
   mounted() {
+    // const editor = new EditorJS({
+    //   placeholder: '输入内容',
+    // })
+    // console.log(editor)
     this.showCaptcha()
   },
   methods: {
@@ -260,4 +268,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.ce-block__content,
+.ce-toolbar__content {
+  max-width: 100%; /* example value, adjust for your own use case */
+}
+</style>
