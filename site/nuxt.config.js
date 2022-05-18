@@ -1,10 +1,6 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    htmlAttrs: {
-      lang: 'zh-cmn-Hans',
-      xmlns: 'http://www.w3.org/1999/xhtml',
-    },
     meta: [
       {
         charset: 'utf-8',
@@ -19,21 +15,7 @@ export default {
         content: '_top',
       },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      {
-        rel: 'alternate',
-        type: 'application/atom+xml',
-        title: '文章',
-        href: '/atom.xml',
-      },
-      {
-        rel: 'alternate',
-        type: 'application/atom+xml',
-        title: '话题',
-        href: '/topic_atom.xml',
-      },
-    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
   },
 
   /*
@@ -78,10 +60,6 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/eslint-module',
     ['cookie-universal-nuxt', { alias: 'cookies' }],
-    [
-      '@nuxtjs/google-adsense',
-      { id: 'ca-pub-5683711753850351', pageLevelAds: true },
-    ],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

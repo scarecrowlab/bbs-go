@@ -1,9 +1,7 @@
 <template>
-  <div>
+  <div class="mt-10">
     <my-nav />
-
     <nuxt />
-
     <my-footer />
   </div>
 </template>

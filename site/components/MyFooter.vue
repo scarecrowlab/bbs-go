@@ -6,12 +6,6 @@
         <nuxt-link to="/tags">标签</nuxt-link>
         <nuxt-link to="/links">友链</nuxt-link>
       </div>
-      <div>
-        © 2022 Powered by
-        <a href="https://docs.bbs-go.com" target="_blank" class="light"
-          >BBS-GO</a
-        >
-      </div>
     </div>
   </footer>
 </template>

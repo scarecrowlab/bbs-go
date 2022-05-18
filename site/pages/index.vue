@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import '../assets/globals.css'
+
 export default {
   async asyncData({ $axios, store }) {
     store.commit('env/setCurrentNodeId', 0) // 设置当前所在node
