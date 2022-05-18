@@ -8,7 +8,11 @@
     <div class="container">
       <div class="navbar-brand">
         <nuxt-link to="/" class="navbar-item">
-          <img :alt="config.siteTitle" src="~/assets/images/logo.png" />
+          <img
+            :alt="config.siteTitle"
+            src="~/assets/images/logo.svg"
+            style="height: 64px"
+          />
         </nuxt-link>
         <a
           :class="{ 'is-active': navbarActive }"
@@ -72,9 +76,6 @@
                 >登录
               </nuxt-link>
             </div>
-          </div>
-          <div class="navbar-item">
-            <color-mode />
           </div>
         </div>
       </div>

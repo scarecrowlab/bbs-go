@@ -1,5 +1,5 @@
 <template>
-  <section class="main">
+  <section class="mt-10">
     <div class="container main-container left-main size-320">
       <div class="left-container">
         <div class="main-content no-padding no-bg topics-wrapper">
@@ -20,7 +20,7 @@
       <div class="right-container">
         <check-in />
         <site-notice />
-        <score-rank :score-rank="scoreRank" />
+        <!-- <score-rank :score-rank="scoreRank" /> -->
         <friend-links :links="links" />
       </div>
     </div>

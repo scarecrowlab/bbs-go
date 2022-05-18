@@ -1,36 +1,22 @@
 <template>
   <ul class="topic-list">
-    <li v-for="topic in topics" :key="topic.topicId" class="topic-item">
-      <div
-        class="topic-avatar"
-        :href="'/user/' + topic.user.id"
-        :title="topic.user.nickname"
-      >
-        <avatar :user="topic.user" />
-      </div>
-      <div class="topic-main-content">
-        <div class="topic-top">
-          <div class="topic-userinfo">
-            <avatar class="topic-inline-avatar" :user="topic.user" size="20" />
-            <nuxt-link :to="'/user/' + topic.user.id">{{
-              topic.user.nickname
-            }}</nuxt-link>
-            <span v-if="showSticky && topic.sticky" class="topic-sticky-icon"
-              >置顶</span
-            >
-          </div>
-          <div class="topic-time">
-            发布于{{ topic.createTime | prettyDate }}
-          </div>
-        </div>
-        <div class="topic-content" :class="{ 'topic-tweet': topic.type === 1 }">
+    <li
+      v-for="topic in topics"
+      :key="topic.topicId"
+      class="topic-item rounded-sm shadow-sm"
+    >
+      <div class="flex flex-col w-full">
+        <div
+          class="topic-content py-2"
+          :class="{ 'topic-tweet': topic.type === 1 }"
+        >
           <template v-if="topic.type === 0">
             <h1 class="topic-title">
               <nuxt-link :to="'/topic/' + topic.topicId">{{
                 topic.title
               }}</nuxt-link>
             </h1>
-            <nuxt-link :to="'/topic/' + topic.topicId" class="topic-summary">{{
+            <nuxt-link :to="'/topic/' + topic.topicId" class="text-lg">{{
               topic.summary
             }}</nuxt-link>
           </template>
@@ -38,7 +24,7 @@
             <nuxt-link
               v-if="topic.content"
               :to="'/topic/' + topic.topicId"
-              class="topic-summary"
+              class="text-lg"
               >{{ topic.content }}</nuxt-link
             >
             <ul
@@ -53,26 +39,51 @@
             </ul>
           </template>
         </div>
-        <div class="topic-bottom">
-          <div class="topic-handlers">
+        <div class="flex flex-row text-xs mt-2">
+          <div class="flex flex-row flex-grow items-center">
             <div
-              class="btn"
+              class="topic-avatar pr-2"
+              :href="'/user/' + topic.user.id"
+              :title="topic.user.nickname"
+            >
+              <avatar :user="topic.user" size="20" class="rounded-full" />
+            </div>
+            <!-- <nuxt-link :to="'/user/' + topic.user.id">{{
+              topic.user.nickname
+            }}</nuxt-link> -->
+            <div
+              class="btn px-0.5 flex items-center"
               :class="{ liked: topic.liked }"
               @click="like(topic)"
             >
-              <i class="iconfont icon-like" />{{ topic.liked ? '已赞' : '赞' }}
-              <span v-if="topic.likeCount > 0">{{ topic.likeCount }}</span>
+              <i
+                class="iconfont icon-like pr-1"
+                :class="{
+                  ' to-blue-500': topic.liked,
+                }"
+              />
+              <span>{{ topic.likeCount || 0 }}</span>
             </div>
-            <div class="btn" @click="toTopicDetail(topic.topicId)">
-              <i class="iconfont icon-comment" />评论
-              <span v-if="topic.commentCount > 0">{{
-                topic.commentCount
-              }}</span>
+            <div
+              class="btn px-0.5 flex items-center"
+              @click="toTopicDetail(topic.topicId)"
+            >
+              <i class="iconfont icon-comment pr-1" />
+              <span>{{ topic.commentCount || 0 }}</span>
             </div>
-            <div class="btn" @click="toTopicDetail(topic.topicId)">
-              <i class="iconfont icon-read" />浏览
-              <span v-if="topic.viewCount > 0">{{ topic.viewCount }}</span>
+            <div
+              class="btn px-0.5 flex items-center"
+              @click="toTopicDetail(topic.topicId)"
+            >
+              <i class="iconfont icon-read pr-1" />
+              <span>{{ topic.viewCount || 0 }}</span>
             </div>
+
+            <span
+              v-if="showSticky && topic.sticky"
+              class="topic-sticky-icon px-2"
+              >置顶</span
+            >
           </div>
           <div class="topic-tags">
             <span>
@@ -83,6 +94,10 @@
                 >{{ topic.node.name }}</nuxt-link
               >
             </span>
+          </div>
+
+          <div class="topic-time">
+            发布于{{ topic.createTime | prettyDate }}
           </div>
         </div>
       </div>

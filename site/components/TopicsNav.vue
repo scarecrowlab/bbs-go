@@ -56,20 +56,18 @@ export default {
 <style lang="scss" scoped>
 .dock-nav {
   display: block;
-  position: -webkit-sticky;
   position: sticky;
   top: 10px;
 
   width: 150px;
   border-radius: 2px;
-  background-color: var(--bg-color);
+
   transition: all 0.2s linear;
 
   ul {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 16px 12px;
 
     li:not(.dock-nav-divider) {
       position: relative;
@@ -120,7 +118,6 @@ export default {
           height: 24px;
           border-radius: 4px;
           margin-right: 10px;
-          background-color: var(--bg-color);
         }
       }
     }

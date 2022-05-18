@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="shadow-sm">
     <pc-nav class="pc-nav" />
     <mobile-nav class="mobile-nav" />
   </div>

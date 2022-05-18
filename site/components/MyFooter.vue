@@ -1,11 +1,10 @@
 <template>
   <footer class="footer">
     <div class="container content">
-      <div>
-        <nuxt-link to="/about">关于</nuxt-link>
+      <!-- <div>
         <nuxt-link to="/tags">标签</nuxt-link>
         <nuxt-link to="/links">友链</nuxt-link>
-      </div>
+      </div> -->
     </div>
   </footer>
 </template>
