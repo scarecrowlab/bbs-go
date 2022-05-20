@@ -1,29 +1,21 @@
 <template>
-  <el-dropdown v-if="hasPermission" trigger="click" @command="handleCommand">
-    <span class="el-dropdown-link">
-      管理<i class="el-icon-arrow-down el-icon--right"></i>
-    </span>
-    <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item v-if="hasPermission && value.type === 0" command="edit"
-        >修改</el-dropdown-item
-      >
-      <el-dropdown-item v-if="hasPermission" command="delete"
-        >删除</el-dropdown-item
-      >
-      <el-dropdown-item v-if="isOwner || isAdmin" command="recommend">{{
-        value.recommend ? '取消推荐' : '推荐'
-      }}</el-dropdown-item>
-      <el-dropdown-item v-if="isOwner || isAdmin" command="sticky">{{
-        value.sticky ? '取消置顶' : '置顶'
-      }}</el-dropdown-item>
-      <el-dropdown-item v-if="isOwner || isAdmin" command="forbidden7Days"
-        >禁言7天</el-dropdown-item
-      >
-      <el-dropdown-item v-if="isOwner" command="forbiddenForever"
-        >永久禁言</el-dropdown-item
-      >
-    </el-dropdown-menu>
-  </el-dropdown>
+  <div
+    v-if="hasPermission"
+    class="border border-red-500"
+    trigger="click"
+    @command="handleCommand"
+  >
+    <div v-if="hasPermission && value.type === 0" command="edit">修改</div>
+    <div v-if="hasPermission" command="delete">删除</div>
+    <div v-if="isOwner || isAdmin" command="recommend">
+      {{ value.recommend ? '取消推荐' : '推荐' }}
+    </div>
+    <div v-if="isOwner || isAdmin" command="sticky">
+      {{ value.sticky ? '取消置顶' : '置顶' }}
+    </div>
+    <div v-if="isOwner || isAdmin" command="forbidden7Days">禁言7天</div>
+    <div v-if="isOwner" command="forbiddenForever">永久禁言</div>
+  </div>
 </template>
 
 <script>
@@ -166,14 +158,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.el-dropdown-link {
-  cursor: pointer;
-  color: var(--text-color3);
-  font-size: 12px;
-}
-.el-dropdown-menu__item {
-  font-size: 12px;
-}
-</style>

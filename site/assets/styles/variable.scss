@@ -52,11 +52,6 @@ $title-color: var(--text);
 
   --color-red: #fa5151;
   --color-navbar-icon: #1878f3;
-
-  .navbar-dropdown {
-    background-color: #fff !important;
-    border-top-color: #dbdbdb !important;
-  }
 }
 
 .dark-mode {
@@ -94,9 +89,4 @@ $title-color: var(--text);
 
   --color-red: #fa5151;
   --color-navbar-icon: #e3e3e3;
-
-  .navbar-dropdown {
-    background-color: #3a3a3a !important;
-    border-top-color: #272727 !important;
-  }
 }
