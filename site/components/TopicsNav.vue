@@ -1,25 +1,24 @@
 <template>
-  <nav class="dock-nav">
+  <nav class="dock-nav border">
     <ul>
       <li :class="{ active: currentNodeId === 0 }">
         <nuxt-link to="/topics/node/newest">
-          <img class="node-logo" src="~/assets/images/new.png" />
+          <img class="node-logo" src="~/assets/logos/arduino.svg" />
           <span class="node-name">最新</span>
         </nuxt-link>
       </li>
       <li :class="{ active: currentNodeId === -1 }">
         <nuxt-link to="/topics/node/recommend">
-          <img class="node-logo" src="~/assets/images/recommend2.png" />
+          <img class="node-logo" src="~/assets/logos/raspberrypi.png" />
           <span class="node-name">推荐</span>
         </nuxt-link>
       </li>
       <li :class="{ active: currentNodeId === -2 }">
         <nuxt-link to="/topics/node/feed">
-          <img class="node-logo" src="~/assets/images/feed.png" />
+          <img class="node-logo" src="~/assets/logos/tinygo-logo.png" />
           <span class="node-name">关注</span>
         </nuxt-link>
       </li>
-      <li class="dock-nav-divider"></li>
       <li
         v-for="node in nodes"
         :key="node.nodeId"
@@ -65,39 +64,26 @@ export default {
   transition: all 0.2s linear;
 
   ul {
-    height: 100%;
     display: flex;
     flex-direction: column;
-
-    li:not(.dock-nav-divider) {
+    color: black;
+    background-color: white;
+    li {
+      padding: 5px 0px;
       position: relative;
       cursor: pointer;
-      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
-      color: var(--text-color);
-      //padding: 0 12px;
-      border-radius: 3px;
-      transition: background-color 0.2s, color 0.2s;
-      font-weight: 500;
-
-      &:not(:first-child) {
-        margin-top: 10px;
-      }
-
-      &.active {
-        background-color: #ea6f5a;
-        color: var(--text-color5);
-
-        a {
-          color: var(--text-color5);
-        }
-      }
-
-      &:not(.active):hover {
+      border-left: 20px;
+      &:hover {
         background-color: hsla(0, 0%, 94.9%, 0.6);
+      }
+      &.active {
+        background-color: hsla(0, 0%, 94.9%, 0.6);
+        border-left: solid;
+        border-left-color: black;
       }
 
       a {
@@ -115,16 +101,11 @@ export default {
         //justify-content: center;
         .node-logo {
           width: 24px;
-          height: 24px;
+
           border-radius: 4px;
           margin-right: 10px;
         }
       }
-    }
-
-    li.dock-nav-divider {
-      height: 15px;
-      border-bottom: 1px solid var(--border-color);
     }
   }
 }

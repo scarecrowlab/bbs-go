@@ -18,7 +18,7 @@
         </div>
       </article>
       <div v-else class="article-create-form">
-        <h1 class="title">发文章</h1>
+        <h1 class="title">发作品</h1>
         <div class="field">
           <div class="control">
             <input
@@ -77,7 +77,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle('发表文章'),
+      title: this.$siteTitle('发表作品'),
     }
   },
   computed: {

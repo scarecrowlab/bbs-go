@@ -31,7 +31,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle(this.tag.tagName + ' - 文章'),
+      title: this.$siteTitle(this.tag.tagName + ' - 作品'),
       meta: [
         {
           hid: 'description',

@@ -26,7 +26,7 @@
           >发帖子</el-dropdown-item
         >
         <el-dropdown-item command="article" icon="iconfont icon-article"
-          >发文章</el-dropdown-item
+          >发作品</el-dropdown-item
         >
       </el-dropdown-menu>
     </el-dropdown>

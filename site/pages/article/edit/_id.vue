@@ -2,7 +2,7 @@
   <section class="main">
     <div class="container">
       <div class="article-create-form">
-        <h1 class="title">修改文章</h1>
+        <h1 class="title">修改作品</h1>
 
         <div class="field">
           <div class="control">
@@ -81,7 +81,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle('修改文章'),
+      title: this.$siteTitle('修改作品'),
     }
   },
   computed: {

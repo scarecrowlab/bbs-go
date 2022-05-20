@@ -22,7 +22,7 @@
                     <span class="icon is-small">
                       <i class="iconfont icon-article" aria-hidden="true" />
                     </span>
-                    <span>文章</span>
+                    <span>作品</span>
                   </nuxt-link>
                 </li>
               </ul>
@@ -63,7 +63,7 @@
                   <article-list :articles="results" />
                 </load-more>
               </div>
-              <div v-else class="notification is-primary">暂无文章</div>
+              <div v-else class="notification is-primary">暂无作品</div>
             </div>
           </div>
         </div>

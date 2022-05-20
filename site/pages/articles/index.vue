@@ -24,7 +24,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle('文章'),
+      title: this.$siteTitle('作品'),
       meta: [
         {
           hid: 'description',

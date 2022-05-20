@@ -104,7 +104,7 @@
           v-if="relatedArticles && relatedArticles.length"
           class="widget no-margin"
         >
-          <div class="widget-header">相关文章</div>
+          <div class="widget-header">相关作品</div>
           <div class="widget-content article-related">
             <ul>
               <li v-for="a in relatedArticles" :key="a.articleId">
@@ -123,7 +123,7 @@
         <!-- 展示广告 -->
 
         <div v-if="nearlyArticles && nearlyArticles.length" class="widget">
-          <div class="widget-header">近期文章</div>
+          <div class="widget-header">近期作品</div>
           <div class="widget-content article-related">
             <ul>
               <li v-for="a in nearlyArticles" :key="a.articleId">
@@ -179,7 +179,7 @@ export default {
         $axios.get('/api/article/related/' + article.articleId),
       ])
 
-    // 文章关键字
+    // 作品关键字
     let keywords = ''
     const keywordsArr = []
     if (article.tags && article.tags.length > 0) {
@@ -191,7 +191,7 @@ export default {
       }
     }
 
-    // 文章描述
+    // 作品描述
     let description = ''
     if (article.summary && article.summary.length > 0) {
       description = article.summary.substr(0, 128)
@@ -267,7 +267,7 @@ export default {
         return
       }
       const me = this
-      this.$confirm('是否确认删除该文章？').then(function () {
+      this.$confirm('是否确认删除该作品？').then(function () {
         me.$axios
           .post('/api/article/delete/' + articleId)
           .then(() => {

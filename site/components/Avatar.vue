@@ -19,7 +19,7 @@
       :class="['avatar', sizeClass, roundClass, borderClass]"
       :style="styleText"
     >
-      {{ usernameAt }}
+      <img class="node-logo" src="~/assets/logos/avatar.svg" />
     </span>
   </nuxt-link>
 </template>
