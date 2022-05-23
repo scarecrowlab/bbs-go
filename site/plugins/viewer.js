@@ -10,6 +10,6 @@ Vue.use(Viewer, {
     tooltip: false,
     movable: false,
     scalable: false,
-    url: 'data-src',
-  },
+    url: 'data-src'
+  }
 })

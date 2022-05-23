@@ -10,7 +10,7 @@
         <span v-if="loading" class="icon">
           <i class="iconfont icon-loading"></i>
         </span>
-        <span>{{ hasMore ? '查看更多' : '到底啦' }}</span>
+        <span>{{ hasMore ? '查看更多' : '没有了' }}</span>
       </button>
     </div>
   </div>
@@ -22,49 +22,49 @@ export default {
     // 请求URL
     url: {
       type: String,
-      required: true,
+      required: true
     },
     // 请求参数
     params: {
       type: Object,
-      default() {
+      default () {
         return {}
-      },
+      }
     },
     // 初始化数据
     initData: {
       type: Object,
-      default() {
+      default () {
         return {
           results: [],
-          cursor: '',
+          cursor: ''
         }
-      },
-    },
+      }
+    }
   },
-  data() {
+  data () {
     return {
       cursor: this.initData.cursor, // 分页标识
       results: this.initData.results || [], // 列表数据
       hasMore: this.initData.hasMore, // 是否有更多数据
-      loading: false, // 是否正在加载中
+      loading: false // 是否正在加载中
     }
   },
   computed: {
     // 是否禁言自动加载
-    disabled() {
+    disabled () {
       return this.loading || !this.hasMore
-    },
+    }
   },
   methods: {
-    async loadMore() {
+    async loadMore () {
       this.loading = true
       try {
         const _params = Object.assign(this.params || {}, {
-          cursor: this.cursor,
+          cursor: this.cursor
         })
         const ret = await this.$axios.get(this.url, {
-          params: _params,
+          params: _params
         })
         this.cursor = ret.cursor
         this.hasMore = ret.hasMore
@@ -83,7 +83,7 @@ export default {
     /**
      * 在results最前面加一条数据
      */
-    unshiftResults(item) {
+    unshiftResults (item) {
       if (item) {
         this.results.unshift(item)
       }
@@ -91,12 +91,12 @@ export default {
     /**
      * 在results最后面加一条数据
      */
-    pushResults(item) {
+    pushResults (item) {
       if (item) {
         this.results.push(item)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

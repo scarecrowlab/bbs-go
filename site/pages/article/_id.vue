@@ -21,17 +21,15 @@
                     itemprop="author"
                     itemscope
                     itemtype="http://schema.org/Person"
-                    ><span itemprop="name">{{
-                      article.user.nickname
-                    }}</span></nuxt-link
-                  >发布于
+                  ><span itemprop="name">{{
+                    article.user.nickname
+                  }}</span></nuxt-link>发布于
                   <time
                     :datetime="
                       article.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')
                     "
                     itemprop="datePublished"
-                    >{{ article.createTime | prettyDate }}</time
-                  >
+                  >{{ article.createTime | prettyDate }}</time>
                 </span>
 
                 <span
@@ -114,8 +112,7 @@
                   :title="a.title"
                   class="article-related-title"
                   target="_blank"
-                  >{{ a.title }}</nuxt-link
-                >
+                >{{ a.title }}</nuxt-link>
               </li>
             </ul>
           </div>
@@ -133,8 +130,7 @@
                   :title="a.title"
                   class="article-related-title"
                   target="_blank"
-                  >{{ a.title }}</nuxt-link
-                >
+                >{{ a.title }}</nuxt-link>
               </li>
             </ul>
           </div>

@@ -8,11 +8,11 @@
         <div class="message-body">
           发表话题前，请先前往
           <strong
-            ><nuxt-link
-              to="/user/profile/account"
-              style="color: var(--text-link-color)"
-              >个人中心 &gt; 账号设置</nuxt-link
-            ></strong
+          ><nuxt-link
+            to="/user/profile/account"
+            style="color: var(--text-link-color)"
+          >个人中心 &gt; 账号设置</nuxt-link
+          ></strong
           >
           页面设置邮箱，并完成邮箱认证。
         </div>
@@ -89,8 +89,7 @@
               :disabled="publishing"
               class="button is-success"
               @click="submitCreate"
-              >{{ postForm.type === 1 ? '发表动态' : '发表帖子' }}</a
-            >
+            >发表帖子</a>
           </div>
         </div>
       </div>
@@ -103,7 +102,7 @@
 
 export default {
   middleware: 'authenticated',
-  async asyncData({ $axios, query, store }) {
+  async asyncData ({ $axios, query, store }) {
     // 节点
     const nodes = await $axios.get('/api/topic/nodes')
     // 发帖标签
@@ -124,11 +123,11 @@ export default {
       nodes,
       postForm: {
         type,
-        nodeId: currentNode ? currentNode.nodeId : 0,
-      },
+        nodeId: currentNode ? currentNode.nodeId : 0
+      }
     }
   },
-  data() {
+  data () {
     return {
       publishing: false, // 当前是否正处于发布中...
       captchaId: '',
@@ -141,32 +140,32 @@ export default {
         tags: [],
         content: '',
         hideContent: '',
-        imageList: [],
-      },
+        imageList: []
+      }
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle(this.postForm.type === 1 ? '发动态' : '发帖子'),
+      title: this.$siteTitle(this.postForm.type === 1 ? '发动态' : '发帖子')
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    config() {
+    config () {
       return this.$store.state.config.config
     },
     // 是否需要先邮箱认证
-    isNeedEmailVerify() {
+    isNeedEmailVerify () {
       return this.config.createTopicEmailVerified && !this.user.emailVerified
     },
-    isEnableHideContent() {
+    isEnableHideContent () {
       return this.config.enableHideContent
-    },
+    }
   },
   watchQuery: ['type', 'nodeId'],
-  mounted() {
+  mounted () {
     // const editor = new EditorJS({
     //   placeholder: '输入内容',
     // })
@@ -174,7 +173,7 @@ export default {
     this.showCaptcha()
   },
   methods: {
-    async submitCreate() {
+    async submitCreate () {
       if (this.publishing) {
         return
       }
@@ -205,16 +204,16 @@ export default {
             this.postForm.imageList && this.postForm.imageList.length
               ? JSON.stringify(this.postForm.imageList)
               : '',
-          tags: this.postForm.tags ? this.postForm.tags.join(',') : '',
+          tags: this.postForm.tags ? this.postForm.tags.join(',') : ''
         })
         if (this.$refs.mdEditor) {
           this.$refs.mdEditor.clearCache()
         }
         this.$msg({
           message: '提交成功',
-          onClose() {
+          onClose () {
             me.$linkTo('/topic/' + topic.topicId)
-          },
+          }
         })
       } catch (e) {
         await this.showCaptcha()
@@ -222,13 +221,13 @@ export default {
         this.$message.error(e.message || e)
       }
     },
-    async showCaptcha() {
+    async showCaptcha () {
       if (this.config.topicCaptcha) {
         try {
           const ret = await this.$axios.get('/api/captcha/request', {
             params: {
-              captchaId: this.captchaId || '',
-            },
+              captchaId: this.captchaId || ''
+            }
           })
           this.captchaId = ret.captchaId
           this.captchaUrl = ret.captchaUrl
@@ -237,11 +236,11 @@ export default {
         }
       }
     },
-    onSimpleEditorInput(value) {
+    onSimpleEditorInput (value) {
       this.postForm.content = value.content
       this.postForm.imageList = value.imageList
-    },
-  },
+    }
+  }
 }
 </script>
 
