@@ -26,11 +26,11 @@
         <search-input />
       </div>
 
-      <div class="navbar-item">
+      <div class="navbar-item px-5">
         <create-topic-btn />
       </div>
 
-      <msg-notice v-if="user" />
+      <msg-notice v-if="user" class=" px-5" />
 
       <div
         v-if="user"
