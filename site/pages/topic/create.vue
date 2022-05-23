@@ -68,9 +68,6 @@
 
         <div v-if="postForm.type === 1" class="field">
           <div class="control">
-            <!-- <no-ssr>
-              <div id="editorjs" data-placeholder="Custom placeholder"></div>
-            </no-ssr> -->
             <simple-editor
               ref="simpleEditor"
               @input="onSimpleEditorInput"

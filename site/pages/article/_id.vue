@@ -51,6 +51,7 @@
 
                 <div class="article-tool">
                   <span v-if="hasPermission">
+                    <v-modal name="dialog"></v-modal>
                     <a @click="deleteArticle(article.articleId)">
                       <i class="iconfont icon-delete" />&nbsp;删除
                     </a>
@@ -267,21 +268,43 @@ export default {
         return
       }
       const me = this
-      this.$confirm('是否确认删除该作品？').then(function () {
-        me.$axios
-          .post('/api/article/delete/' + articleId)
-          .then(() => {
-            me.$msg({
-              message: '删除成功',
-              onClose() {
-                me.$linkTo('/articles')
+
+      this.$modal.show(
+        'dialog',
+        {
+          title: 'The standard Lorem Ipsum passage',
+          buttons: [
+            {
+              title: '确认删除',
+              handler: () => {
+                this.$modal.hide('dialog')
               },
-            })
-          })
-          .catch((e) => {
-            me.$message.error('删除失败：' + (e.message || e))
-          })
-      })
+            },
+            {
+              title: 'Cancel',
+              handler: () => {
+                this.$modal.hide('dialog')
+              },
+            },
+          ],
+        },
+        { dialog: true }
+      )
+      // this.$confirm('是否确认删除该作品？').then(function () {
+      //   me.$axios
+      //     .post('/api/article/delete/' + articleId)
+      //     .then(() => {
+      //       me.$msg({
+      //         message: '删除成功',
+      //         onClose() {
+      //           me.$linkTo('/articles')
+      //         },
+      //       })
+      //     })
+      //     .catch((e) => {
+      //       me.$message.error('删除失败：' + (e.message || e))
+      //     })
+      // })
     },
     async addFavorite(articleId) {
       try {
