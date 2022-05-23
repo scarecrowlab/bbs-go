@@ -22,11 +22,11 @@
 export default {
   middleware: 'authenticated',
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
+    }
   },
-  methods: {},
+  methods: {}
 }
 </script>
 

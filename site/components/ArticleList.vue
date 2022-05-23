@@ -7,9 +7,11 @@
         itemtype="http://schema.org/BlogPosting"
       >
         <h1 class="article-title" itemprop="headline">
-          <nuxt-link :to="'/article/' + article.articleId">{{
-            article.title
-          }}</nuxt-link>
+          <nuxt-link :to="'/article/' + article.articleId">
+            {{
+              article.title
+            }}
+          </nuxt-link>
         </h1>
 
         <div class="article-summary" itemprop="description">
@@ -25,15 +27,13 @@
               itemprop="author"
               itemscope
               itemtype="http://schema.org/Person"
-              ><span itemprop="name">{{
-                article.user.nickname
-              }}</span></nuxt-link
-            >发布于
+            ><span itemprop="name">{{
+              article.user.nickname
+            }}</span></nuxt-link>发布于
             <time
               :datetime="article.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')"
               itemprop="datePublished"
-              >{{ article.createTime | prettyDate }}</time
-            >
+            >{{ article.createTime | prettyDate }}</time>
           </span>
 
           <span
@@ -61,8 +61,7 @@
                 font-size: 12px;
               "
             >
-              <i class="iconfont icon-shenhe" />&nbsp;审核中</a
-            >
+              <i class="iconfont icon-shenhe" />&nbsp;审核中</a>
           </span>
         </div>
       </article>
@@ -75,16 +74,16 @@ export default {
   props: {
     articles: {
       type: Array,
-      default() {
+      default () {
         return []
       },
-      required: false,
+      required: false
     },
     showAd: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 }
 </script>
 

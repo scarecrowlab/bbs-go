@@ -13,9 +13,11 @@
       <div v-if="fansList && fansList.length">
         <user-follow-list :users="fansList" @onFollowed="onFollowed" />
       </div>
-      <div v-else class="widget-tips">没有更多内容了</div>
+      <div v-else class="widget-tips">
+        没有更多内容了
+      </div>
     </div>
-    <v-modal name="showFansDialog">
+    <!-- <v-modal name="showFansDialog">
       <div v-loading="fansDialogLoading" class="m-10">
         <load-more
           v-if="fansPage"
@@ -29,7 +31,7 @@
         </load-more>
         <div v-else>没数据</div>
       </div>
-    </v-modal>
+    </v-modal> -->
   </div>
 </template>
 
@@ -38,47 +40,47 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       fansList: [],
       showFansDialog: false,
       fansDialogLoading: false,
-      fansPage: null,
+      fansPage: null
     }
   },
-  mounted() {
+  mounted () {
     this.loadData()
   },
   methods: {
-    async loadData() {
+    async loadData () {
       const data = await this.$axios.get(
         '/api/fans/recent/fans?userId=' + this.user.id
       )
       this.fansList = data.results
     },
-    async onFollowed(userId, followed) {
+    async onFollowed (userId, followed) {
       await this.loadData()
     },
-    async showMore() {
+    async showMore () {
       this.$modal.show('showFansDialog')
       this.showFansDialog = true
       this.fansDialogLoading = true
       try {
         this.fansPage = await this.$axios.get('/api/fans/fans', {
           params: {
-            userId: this.user.id,
-          },
+            userId: this.user.id
+          }
         })
       } catch (e) {
         this.$message.error(e.message || e)
       } finally {
         this.fansDialogLoading = false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

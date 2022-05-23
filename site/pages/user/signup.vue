@@ -3,7 +3,9 @@
     <div class="container">
       <div class="main-body no-bg">
         <div class="widget signin">
-          <div class="widget-header">注册</div>
+          <div class="widget-header">
+            注册
+          </div>
           <div class="widget-content">
             <div class="field">
               <label class="label">昵称</label>
@@ -14,7 +16,7 @@
                   type="text"
                   placeholder="请输入昵称"
                   @keyup.enter="signup"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-username" />
                 </span>
@@ -30,7 +32,7 @@
                   type="text"
                   placeholder="请输入邮箱"
                   @keyup.enter="signup"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-email" />
                 </span>
@@ -46,7 +48,7 @@
                   type="password"
                   placeholder="请输入密码"
                   @keyup.enter="signup"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -62,7 +64,7 @@
                   type="password"
                   placeholder="请再次输入密码"
                   @keyup.enter="signup"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -71,7 +73,9 @@
 
             <div class="field">
               <div class="control">
-                <button class="button is-success" @click="signup">注册</button>
+                <button class="button is-success" @click="signup">
+                  注册
+                </button>
                 <nuxt-link class="button is-text" to="/user/signin">
                   已有账号，前往登录&gt;&gt;
                 </nuxt-link>
@@ -86,12 +90,12 @@
 
 <script>
 export default {
-  asyncData({ params, query }) {
+  asyncData ({ params, query }) {
     return {
-      ref: query.ref,
+      ref: query.ref
     }
   },
-  data() {
+  data () {
     return {
       nickname: '',
       email: '',
@@ -99,21 +103,21 @@ export default {
       rePassword: '',
       captchaId: '',
       captchaUrl: '',
-      captchaCode: '',
+      captchaCode: ''
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle('注册'),
+      title: this.$siteTitle('注册')
     }
   },
   computed: {
-    loginMethod() {
+    loginMethod () {
       return this.$store.state.config.config.loginMethod
-    },
+    }
   },
   methods: {
-    async signup() {
+    async signup () {
       try {
         await this.$store.dispatch('user/signup', {
           captchaId: this.captchaId,
@@ -122,7 +126,7 @@ export default {
           email: this.email,
           password: this.password,
           rePassword: this.rePassword,
-          ref: this.ref,
+          ref: this.ref
         })
         if (this.ref) {
           // 跳到登录前
@@ -135,8 +139,8 @@ export default {
         this.$message.error(err.message || err)
         await this.showCaptcha()
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

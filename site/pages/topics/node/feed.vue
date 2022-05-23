@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  async asyncData({ $axios, store }) {
+  async asyncData ({ $axios, store }) {
     store.commit('env/setCurrentNodeId', -2) // 设置当前所在node
     let topicsPage
     try {
@@ -27,24 +27,24 @@ export default {
     }
     return { topicsPage }
   },
-  head() {
+  head () {
     return {
       title: this.$siteTitle('关注'),
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.$siteDescription(),
+          content: this.$siteDescription()
         },
-        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() },
-      ],
+        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() }
+      ]
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
-  },
+    }
+  }
 }
 </script>
 

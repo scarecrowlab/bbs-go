@@ -19,8 +19,7 @@
                       :to="'/articles/' + tag.tagId"
                       :title="tag.tagName"
                       target="_blank"
-                      >{{ tag.tagName }}</nuxt-link
-                    >
+                    >{{ tag.tagName }}</nuxt-link>
                   </span>
                 </div>
               </div>
@@ -40,23 +39,23 @@
 
 <script>
 export default {
-  async asyncData({ $axios, params }) {
+  async asyncData ({ $axios, params }) {
     const [tagsPage] = await Promise.all([
       $axios.get('/api/tag/tags', {
         params: {
-          page: params.page,
-        },
-      }),
+          page: params.page
+        }
+      })
     ])
     return {
-      tagsPage,
+      tagsPage
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle('标签'),
+      title: this.$siteTitle('标签')
     }
-  },
+  }
 }
 </script>
 

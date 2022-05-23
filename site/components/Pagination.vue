@@ -9,13 +9,14 @@
       v-if="previousPageUrl"
       :href="previousPageUrl"
       class="pagination-previous"
-      >上一页</a
-    >
+    >上一页</a>
     <a v-else class="pagination-previous" disabled>上一页</a>
 
-    <a v-if="nextPageUrl" :href="nextPageUrl" class="pagination-previous"
-      >下一页</a
-    >
+    <a
+      v-if="nextPageUrl"
+      :href="nextPageUrl"
+      class="pagination-previous"
+    >下一页</a>
     <a v-else class="pagination-previous" disabled>下一页</a>
 
     <ul class="pagination-list">
@@ -24,8 +25,7 @@
           :class="{ 'is-current': p == page.page }"
           :href="getPageUrl(p)"
           class="pagination-link"
-          >{{ p }}</a
-        >
+        >{{ p }}</a>
       </li>
     </ul>
   </nav>
@@ -37,20 +37,20 @@ export default {
     page: {
       // 页码对象
       type: Object,
-      default() {
+      default () {
         return { page: 1, total: 0, limit: 20 }
       },
-      required: true,
+      required: true
     },
     urlPrefix: {
       // 分页url前缀
       type: String,
       default: '/',
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
-    pageList() {
+    pageList () {
       const start = this.page.page - 2
       const end = this.page.page + 2
       const totalPage = this.getTotalPage()
@@ -73,44 +73,44 @@ export default {
           this.page.page - 1,
           this.page.page,
           this.page.page + 1,
-          this.page.page + 2,
+          this.page.page + 2
         ]
       }
     },
-    previousPageUrl() {
+    previousPageUrl () {
       return this.getPreviousPageUrl()
     },
-    nextPageUrl() {
+    nextPageUrl () {
       return this.getNextPageUrl()
-    },
+    }
   },
   methods: {
-    getNextPageUrl() {
+    getNextPageUrl () {
       const nextPage = this.page.page + 1
       if (nextPage > this.getTotalPage()) {
         return ''
       }
       return this.getPageUrl(nextPage)
     },
-    getPreviousPageUrl() {
+    getPreviousPageUrl () {
       const previousPage = this.page.page - 1
       if (previousPage <= 0) {
         return ''
       }
       return this.getPageUrl(previousPage)
     },
-    getPageUrl(page) {
+    getPageUrl (page) {
       if (this.page.page === page) {
         return 'javascript:void(0)'
       }
       return this.urlPrefix + page
     },
-    getTotalPage() {
+    getTotalPage () {
       return this.page.total % this.page.limit > 0
         ? parseInt(this.page.total / this.page.limit) + 1
         : this.page.total / this.page.limit
-    },
-  },
+    }
+  }
 }
 </script>
 

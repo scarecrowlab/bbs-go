@@ -30,8 +30,7 @@
           <time
             class="comment-time"
             :datetime="comment.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')"
-            >{{ comment.createTime | prettyDate }}</time
-          >
+          >{{ comment.createTime | prettyDate }}</time>
         </div>
         <div
           v-viewer
@@ -39,7 +38,7 @@
           class="comment-content-wrapper"
         >
           <div v-if="comment.content" class="comment-content content">
-            <div v-html="comment.content"></div>
+            <div v-html="comment.content" />
           </div>
           <div
             v-if="comment.imageList && comment.imageList.length"
@@ -49,14 +48,14 @@
               v-for="(image, imageIndex) in comment.imageList"
               :key="imageIndex"
               :data-src="image.url"
-            />
+            >
           </div>
 
           <div v-if="comment.quote" class="comment-quote">
             <div
               class="comment-quote-content content"
               v-html="comment.quote.content"
-            ></div>
+            />
             <div
               v-if="comment.quote.imageList && comment.quote.imageList.length"
               class="comment-quote-image-list"
@@ -65,7 +64,7 @@
                 v-for="(image, imageIndex) in comment.imageList"
                 :key="imageIndex"
                 :data-src="image.url"
-              />
+              >
             </div>
           </div>
         </div>
@@ -75,7 +74,7 @@
             :class="{ active: comment.liked }"
             @click="like(comment)"
           >
-            <i class="iconfont icon-like"></i>
+            <i class="iconfont icon-like" />
             <span>{{ comment.liked ? '已赞' : '点赞' }}</span>
             <span v-if="comment.likeCount > 0">{{ comment.likeCount }}</span>
           </div>
@@ -84,7 +83,7 @@
             :class="{ active: reply.quoteId === comment.commentId }"
             @click="switchShowReply(comment)"
           >
-            <i class="iconfont icon-comment"></i>
+            <i class="iconfont icon-comment" />
             <span>{{
               reply.quoteId === comment.commentId ? '取消评论' : '评论'
             }}</span>
@@ -114,14 +113,14 @@ export default {
   props: {
     commentId: {
       type: Number,
-      required: true,
+      required: true
     },
     data: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       replies: this.data,
       showReplyCommentId: 0,
@@ -129,29 +128,29 @@ export default {
         quoteId: 0,
         value: {
           content: '',
-          imageList: [],
-        },
-      },
+          imageList: []
+        }
+      }
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
+    }
   },
   methods: {
-    async loadMore() {
+    async loadMore () {
       const ret = await this.$axios.get('/api/comment/replies', {
         params: {
           commentId: this.commentId,
-          cursor: this.replies.cursor,
-        },
+          cursor: this.replies.cursor
+        }
       })
       this.replies.cursor = ret.cursor
       this.replies.hasMore = ret.hasMore
       this.replies.results.push(...ret.results)
     },
-    async like(comment) {
+    async like (comment) {
       try {
         await this.$axios.post(`/api/comment/like/${comment.commentId}`)
         comment.liked = true
@@ -165,7 +164,7 @@ export default {
         }
       }
     },
-    switchShowReply(comment) {
+    switchShowReply (comment) {
       if (!this.user) {
         this.$msgSignIn()
         return
@@ -180,12 +179,12 @@ export default {
         }, 0)
       }
     },
-    hideReply(comment) {
+    hideReply (comment) {
       this.reply.quoteId = 0
       this.reply.value.content = ''
       this.reply.value.imageList = []
     },
-    async submitReply(parent) {
+    async submitReply (parent) {
       try {
         const ret = await this.$axios.post('/api/comment/create', {
           entityType: 'comment',
@@ -195,7 +194,7 @@ export default {
           imageList:
             this.reply.value.imageList && this.reply.value.imageList.length
               ? JSON.stringify(this.reply.value.imageList)
-              : '',
+              : ''
         })
         this.hideReply()
         this.$emit('reply', ret)
@@ -207,8 +206,8 @@ export default {
           this.$message.error(e.message || e)
         }
       }
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

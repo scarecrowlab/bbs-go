@@ -50,8 +50,7 @@
                     class="has-text-danger"
                     style="font-weight: 700"
                     @click="requestEmailVerify"
-                    >验证&gt;&gt;</a
-                  >
+                  >验证&gt;&gt;</a>
                 </template>
                 <template v-else>
                   <a @click="showSetEmail = true">点击设置</a>
@@ -102,7 +101,7 @@
                   type="text"
                   placeholder="请输入用户名"
                   @keydown.enter="setUsername"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-username" />
                 </span>
@@ -139,7 +138,7 @@
                   type="text"
                   placeholder="请输入邮箱"
                   @keydown.enter="setEmail"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-email" />
                 </span>
@@ -176,7 +175,7 @@
                   type="password"
                   placeholder="请输入密码"
                   @keydown.enter="setPassword"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -190,7 +189,7 @@
                   type="password"
                   placeholder="请再次确认密码"
                   @keydown.enter="setPassword"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -227,7 +226,7 @@
                   type="password"
                   placeholder="请输入当前密码"
                   @keydown.enter="updatePassword"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -241,7 +240,7 @@
                   type="password"
                   placeholder="请输入密码"
                   @keydown.enter="updatePassword"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -255,7 +254,7 @@
                   type="password"
                   placeholder="请再次确认密码"
                   @keydown.enter="updatePassword"
-                />
+                >
                 <span class="icon is-small is-left">
                   <i class="iconfont icon-password" />
                 </span>
@@ -275,40 +274,40 @@
 <script>
 export default {
   middleware: 'authenticated',
-  async asyncData({ $axios }) {
+  async asyncData ({ $axios }) {
     const user = await $axios.get('/api/user/current')
     const form = { ...user }
     return {
       user,
-      form,
+      form
     }
   },
-  data() {
+  data () {
     return {
       form: {
         username: '',
         email: '',
         password: '',
         rePassword: '',
-        oldPassword: '',
+        oldPassword: ''
       },
       showSetUsername: false,
       showSetEmail: false,
       showSetPassword: false, // 显示设置密码
-      showUpdatePassword: false, // 显示修改密码
+      showUpdatePassword: false // 显示修改密码
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle(this.user.nickname + ' - 账号设置'),
+      title: this.$siteTitle(this.user.nickname + ' - 账号设置')
     }
   },
   methods: {
-    async setUsername() {
+    async setUsername () {
       try {
         const me = this
         await this.$axios.post('/api/user/set/username', {
-          username: me.form.username,
+          username: me.form.username
         })
         await this.reload()
         this.$message.success('用户名设置成功')
@@ -317,11 +316,11 @@ export default {
         this.$message.error('用户名设置失败：' + (err.message || err))
       }
     },
-    async setEmail() {
+    async setEmail () {
       try {
         const me = this
         await this.$axios.post('/api/user/set/email', {
-          email: me.form.email,
+          email: me.form.email
         })
         await this.reload()
         this.$message.success('邮箱设置成功')
@@ -330,12 +329,12 @@ export default {
         this.$message.error('邮箱设置失败：' + (err.message || err))
       }
     },
-    async setPassword() {
+    async setPassword () {
       try {
         const me = this
         await this.$axios.post('/api/user/set/password', {
           password: me.form.password,
-          rePassword: me.form.rePassword,
+          rePassword: me.form.rePassword
         })
         await this.reload()
         this.$message.success('密码设置成功')
@@ -344,13 +343,13 @@ export default {
         this.$message.error('密码设置失败：' + (err.message || err))
       }
     },
-    async updatePassword() {
+    async updatePassword () {
       try {
         const me = this
         await this.$axios.post('/api/user/update/password', {
           oldPassword: me.form.oldPassword,
           password: me.form.password,
-          rePassword: me.form.rePassword,
+          rePassword: me.form.rePassword
         })
         await this.reload()
         this.$message.success('密码修改成功')
@@ -359,7 +358,7 @@ export default {
         this.$message.error('密码修改失败：' + (err.message || err))
       }
     },
-    async requestEmailVerify() {
+    async requestEmailVerify () {
       try {
         await this.$axios.post('/api/user/send_verify_email')
         this.$message.success(
@@ -369,11 +368,11 @@ export default {
         this.$message.error('请求验证失败：' + (err.message || err))
       }
     },
-    async reload() {
+    async reload () {
       this.user = await this.$axios.get('/api/user/current')
       this.form = { ...this.user }
-    },
-  },
+    }
+  }
 }
 </script>
 

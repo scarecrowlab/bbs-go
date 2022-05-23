@@ -37,16 +37,16 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      nodes: [],
+      nodes: []
     }
   },
   computed: {
-    show() {
+    show () {
       return this.$store.state.env.showMobileNodes
     },
-    rows() {
+    rows () {
       const rowCount = 3
       const arrTemp = []
       const nodes = this.nodes
@@ -62,18 +62,18 @@ export default {
       }
       return arrTemp
     },
-    currentNodeId() {
+    currentNodeId () {
       return this.$store.state.env.currentNodeId
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.fetch()
   },
   methods: {
-    async fetch() {
+    async fetch () {
       this.nodes = await this.$axios.get('/api/topic/nodes')
-    },
-  },
+    }
+  }
 }
 </script>
 

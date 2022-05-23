@@ -1,6 +1,8 @@
 <template>
   <div class="widget">
-    <div class="widget-header">积分记录</div>
+    <div class="widget-header">
+      积分记录
+    </div>
     <div class="widget-content">
       <ul class="score-logs">
         <li
@@ -13,12 +15,11 @@
           }}</span>
           <span class="score-score">
             <i class="iconfont icon-score" />
-            <span>{{ scoreLog.score }}</span></span
-          >
+            <span>{{ scoreLog.score }}</span></span>
           <span class="score-description">{{ scoreLog.description }}</span>
-          <span class="score-time"
-            >@{{ scoreLog.createTime | formatDate }}</span
-          >
+          <span
+            class="score-time"
+          >@{{ scoreLog.createTime | formatDate }}</span>
         </li>
       </ul>
       <pagination :page="scoreLogsPage.page" url-prefix="/user/scores?p=" />
@@ -30,14 +31,14 @@
 export default {
   layout: 'ucenter',
   middleware: 'authenticated',
-  async asyncData({ $axios, query }) {
+  async asyncData ({ $axios, query }) {
     const [scoreLogsPage] = await Promise.all([
-      $axios.get('/api/user/scorelogs?page=' + (query.p || 1)),
+      $axios.get('/api/user/scorelogs?page=' + (query.p || 1))
     ])
     return {
-      scoreLogsPage,
+      scoreLogsPage
     }
-  },
+  }
 }
 </script>
 

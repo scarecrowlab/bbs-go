@@ -1,14 +1,15 @@
 <template>
   <div class="select-tags">
-    <input id="tags" v-model="tags" name="tags" type="hidden" />
+    <input id="tags" v-model="tags" name="tags" type="hidden">
     <div class="tags-selected">
       <span v-for="tag in tags" :key="tag" class="tag-item">
-        <span class="text"
-          >{{ tag
-          }}<i
-            :data-name="tag"
-            class="iconfont icon-close"
-            @click="clickRemoveTag"
+        <span
+          class="text"
+        >{{ tag
+        }}<i
+          :data-name="tag"
+          class="iconfont icon-close"
+          @click="clickRemoveTag"
         /></span>
       </span>
     </div>
@@ -17,8 +18,8 @@
       v-model="inputTag"
       :placeholder="
         '标签（请用逗号分隔每个标签，最多' +
-        maxTagCount +
-        '个，每个最长15字符）'
+          maxTagCount +
+          '个，每个最长15字符）'
       "
       class="input"
       type="text"
@@ -34,7 +35,7 @@
       @focus="openRecommendTags"
       @blur="closeRecommendTags"
       @click="openRecommendTags"
-    />
+    >
     <transition name="el-zoom-in-bottom">
       <div v-show="autocompleteTags.length > 0" class="autocomplete-tags">
         <div class="tags-container">
@@ -56,8 +57,11 @@
         <div class="tags-container">
           <div class="header">
             <span>推荐标签</span>
-            <span class="close-recommend"
-              ><i class="iconfont icon-close" @click="closeRecommendTags"
+            <span
+              class="close-recommend"
+            ><i
+              class="iconfont icon-close"
+              @click="closeRecommendTags"
             /></span>
           </div>
           <a
@@ -78,12 +82,12 @@ export default {
   props: {
     value: {
       type: Array,
-      default() {
+      default () {
         return []
-      },
-    },
+      }
+    }
   },
-  data() {
+  data () {
     return {
       tags: this.value || [],
       maxTagCount: 3, // 最多可以选择的标签数量
@@ -91,17 +95,17 @@ export default {
       showRecommendTags: false, // 是否显示推荐
       inputTag: '',
       autocompleteTags: [],
-      selectIndex: -1,
+      selectIndex: -1
     }
   },
   computed: {
     // 推荐标签
-    recommendTags() {
+    recommendTags () {
       return this.$store.state.config.config.recommendTags
-    },
+    }
   },
   methods: {
-    removeTag(event, tag) {
+    removeTag (event, tag) {
       const selectionStart = this.$refs.tagInput.selectionStart
       if (!this.inputTag || selectionStart === 0) {
         // input框没内容，或者光标在首位的时候就删除最后一个标签
@@ -110,7 +114,7 @@ export default {
       }
     },
 
-    clickRemoveTag(event) {
+    clickRemoveTag (event) {
       const tag = event.target.dataset.name
       if (tag) {
         const index = this.tags.indexOf(tag)
@@ -125,7 +129,7 @@ export default {
      * 手动点击选择标签
      * @param index
      */
-    selectTag(index) {
+    selectTag (index) {
       this.selectIndex = index
       this.addTag()
     },
@@ -134,7 +138,7 @@ export default {
      * 添加标签
      * @param event
      */
-    addTag(event) {
+    addTag (event) {
       if (event) {
         event.stopPropagation()
         event.preventDefault()
@@ -156,7 +160,7 @@ export default {
      * 添加推荐标签
      * @param tagName
      */
-    addRecommendTag(tagName) {
+    addRecommendTag (tagName) {
       this.addTagName(tagName)
       this.closeRecommendTags()
     },
@@ -166,7 +170,7 @@ export default {
      * @param tagName 标签名称
      * @returns {boolean} 是否成功
      */
-    addTagName(tagName) {
+    addTagName (tagName) {
       if (!tagName) {
         return false
       }
@@ -192,14 +196,14 @@ export default {
       return true
     },
 
-    async autocomplete() {
+    async autocomplete () {
       this.closeRecommendTags()
       this.selectIndex = -1
       if (!this.inputTag) {
         this.autocompleteTags = []
       } else {
         const ret = await this.$axios.post('/api/tag/autocomplete', {
-          input: this.inputTag,
+          input: this.inputTag
         })
         this.autocompleteTags = []
         if (ret.length > 0) {
@@ -210,7 +214,7 @@ export default {
       }
     },
 
-    selectUp(event) {
+    selectUp (event) {
       event.stopPropagation()
       event.preventDefault()
       const curIndex = this.selectIndex
@@ -222,7 +226,7 @@ export default {
       this.selectIndex--
     },
 
-    selectDown(event) {
+    selectDown (event) {
       event.stopPropagation()
       event.preventDefault()
       const curIndex = this.selectIndex
@@ -235,26 +239,26 @@ export default {
     },
 
     // 关闭推荐
-    openRecommendTags() {
+    openRecommendTags () {
       this.showRecommendTags = true
     },
 
     // 开启推荐
-    closeRecommendTags() {
+    closeRecommendTags () {
       setTimeout(() => {
         this.showRecommendTags = false
       }, 300)
     },
 
     // 关闭自动补全
-    close() {
+    close () {
       if (this.autocompleteTags && this.autocompleteTags.length > 0) {
         this.autocompleteTags = []
         this.selectIndex = -1
       }
       this.closeRecommendTags()
-    },
-  },
+    }
+  }
 }
 </script>
 

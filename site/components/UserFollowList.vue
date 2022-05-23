@@ -5,7 +5,9 @@
         <avatar :user="item" :size="40" has-border round />
         <div class="user-follow-item-info">
           <div class="nickname">
-            <nuxt-link :to="'/user/' + item.id">{{ item.nickname }}</nuxt-link>
+            <nuxt-link :to="'/user/' + item.id">
+              {{ item.nickname }}
+            </nuxt-link>
           </div>
           <div class="description">
             {{ item.description }}{{ item.description }}{{ item.description }}
@@ -28,16 +30,16 @@ export default {
   props: {
     users: {
       type: Array,
-      default() {
+      default () {
         return []
-      },
-    },
+      }
+    }
   },
   methods: {
-    onFollowed(userId, followed) {
+    onFollowed (userId, followed) {
       this.$emit('onFollowed', userId, followed)
-    },
-  },
+    }
+  }
 }
 </script>
 

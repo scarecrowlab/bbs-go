@@ -83,7 +83,7 @@
               class="article-content content"
               itemprop="articleBody"
               v-html="article.content"
-            ></div>
+            />
 
             <!-- 评论 -->
             <comment
@@ -103,7 +103,9 @@
           v-if="relatedArticles && relatedArticles.length"
           class="widget no-margin"
         >
-          <div class="widget-header">相关作品</div>
+          <div class="widget-header">
+            相关作品
+          </div>
           <div class="widget-content article-related">
             <ul>
               <li v-for="a in relatedArticles" :key="a.articleId">
@@ -112,7 +114,9 @@
                   :title="a.title"
                   class="article-related-title"
                   target="_blank"
-                >{{ a.title }}</nuxt-link>
+                >
+                  {{ a.title }}
+                </nuxt-link>
               </li>
             </ul>
           </div>
@@ -121,7 +125,9 @@
         <!-- 展示广告 -->
 
         <div v-if="nearlyArticles && nearlyArticles.length" class="widget">
-          <div class="widget-header">近期作品</div>
+          <div class="widget-header">
+            近期作品
+          </div>
           <div class="widget-content article-related">
             <ul>
               <li v-for="a in nearlyArticles" :key="a.articleId">
@@ -130,7 +136,9 @@
                   :title="a.title"
                   class="article-related-title"
                   target="_blank"
-                >{{ a.title }}</nuxt-link>
+                >
+                  {{ a.title }}
+                </nuxt-link>
               </li>
             </ul>
           </div>
@@ -143,57 +151,57 @@
 </template>
 
 <script>
-import UserHelper from "~/common/UserHelper";
-import CommonHelper from "~/common/CommonHelper";
+import UserHelper from '~/common/UserHelper'
+import CommonHelper from '~/common/CommonHelper'
 
 export default {
-  async asyncData({ $axios, params, error }) {
-    let article;
+  async asyncData ({ $axios, params, error }) {
+    let article
     try {
-      article = await $axios.get("/api/article/" + params.id);
+      article = await $axios.get('/api/article/' + params.id)
     } catch (e) {
       error({
         statusCode: e.errorCode,
-        message: e.message,
-      });
-      return;
+        message: e.message
+      })
+      return
     }
     const [commentsPage, favorited, nearlyArticles, relatedArticles] =
       await Promise.all([
-        $axios.get("/api/comment/comments", {
+        $axios.get('/api/comment/comments', {
           params: {
-            entityType: "article",
-            entityId: article.articleId,
-          },
+            entityType: 'article',
+            entityId: article.articleId
+          }
         }),
-        $axios.get("/api/favorite/favorited", {
+        $axios.get('/api/favorite/favorited', {
           params: {
-            entityType: "article",
-            entityId: params.id,
-          },
+            entityType: 'article',
+            entityId: params.id
+          }
         }),
-        $axios.get("/api/article/nearly/" + article.articleId),
-        $axios.get("/api/article/related/" + article.articleId),
-      ]);
+        $axios.get('/api/article/nearly/' + article.articleId),
+        $axios.get('/api/article/related/' + article.articleId)
+      ])
 
     // 作品关键字
-    let keywords = "";
-    const keywordsArr = [];
+    let keywords = ''
+    const keywordsArr = []
     if (article.tags && article.tags.length > 0) {
       article.tags.forEach((tag) => {
-        keywordsArr.push(tag.tagName);
-      });
+        keywordsArr.push(tag.tagName)
+      })
       if (keywordsArr.length > 0) {
-        keywords = keywordsArr.join(",");
+        keywords = keywordsArr.join(',')
       }
     }
 
     // 作品描述
-    let description = "";
+    let description = ''
     if (article.summary && article.summary.length > 0) {
-      description = article.summary.substr(0, 128);
+      description = article.summary.substr(0, 128)
       if (article.summary.length > 128) {
-        description += "...";
+        description += '...'
       }
     }
 
@@ -204,125 +212,125 @@ export default {
       relatedArticles,
       commentsPage,
       keywords,
-      description,
-    };
+      description
+    }
   },
-  head() {
+  head () {
     return {
       title: this.$siteTitle(this.article.title),
       meta: [
-        { hid: "description", name: "description", content: this.description },
-        { hid: "keywords", name: "keywords", content: this.keywords },
+        { hid: 'description', name: 'description', content: this.description },
+        { hid: 'keywords', name: 'keywords', content: this.keywords }
       ],
       link: [
         {
-          rel: "stylesheet",
-          href: CommonHelper.highlightCss,
-        },
+          rel: 'stylesheet',
+          href: CommonHelper.highlightCss
+        }
       ],
       script: [
         {
-          type: "text/javascript",
+          type: 'text/javascript',
           src: CommonHelper.highlightScript,
           callback: () => {
             // 客户端渲染的时候执行这里进行代码高亮
-            CommonHelper.initHighlight();
-          },
-        },
-      ],
-    };
+            CommonHelper.initHighlight()
+          }
+        }
+      ]
+    }
   },
   computed: {
-    hasPermission() {
+    hasPermission () {
       return (
         this.isOwner ||
         UserHelper.isOwner(this.user) ||
         UserHelper.isAdmin(this.user)
-      );
+      )
     },
-    isOwner() {
+    isOwner () {
       if (!this.user || !this.article) {
-        return false;
+        return false
       }
-      return this.user.id === this.article.user.id;
+      return this.user.id === this.article.user.id
     },
-    isPending() {
-      return this.article.status === 2;
+    isPending () {
+      return this.article.status === 2
     },
-    user() {
-      return this.$store.state.user.current;
-    },
+    user () {
+      return this.$store.state.user.current
+    }
   },
-  mounted() {
+  mounted () {
     // 为了解决服务端渲染时，没有刷新meta中的script，callback没执行，导致代码高亮失败的问题
     // 所以服务端渲染时会调用这里的方法进行代码高亮
-    CommonHelper.initHighlight(this);
+    CommonHelper.initHighlight(this)
   },
   methods: {
-    deleteArticle(articleId) {
+    deleteArticle (articleId) {
       if (!process.client) {
-        return;
+        return
       }
-      const me = this;
+      const me = this
 
       this.$modal.show(
-        "dialog",
+        'dialog',
         {
-          title: "删除作品",
-          text: "删除后不可恢复",
+          title: '删除作品',
+          text: '删除后不可恢复',
           buttons: [
             {
-              title: "确认",
+              title: '确认',
               handler: () => {
                 me.$axios
-                  .post("/api/article/delete/" + articleId)
+                  .post('/api/article/delete/' + articleId)
                   .then(() => {
                     me.$msg({
-                      message: "删除成功",
-                      onClose() {
-                        me.$linkTo("/articles");
-                      },
-                    });
+                      message: '删除成功',
+                      onClose () {
+                        me.$linkTo('/articles')
+                      }
+                    })
                   })
                   .catch((e) => {
-                    me.$message.error("删除失败：" + (e.message || e));
-                  });
-              },
+                    me.$message.error('删除失败：' + (e.message || e))
+                  })
+              }
             },
             {
-              title: "取消",
+              title: '取消',
               handler: () => {
-                this.$modal.hide("dialog");
-              },
-            },
-          ],
+                this.$modal.hide('dialog')
+              }
+            }
+          ]
         },
         { dialog: true }
-      );
+      )
     },
-    async addFavorite(articleId) {
+    async addFavorite (articleId) {
       try {
         if (this.favorited) {
-          await this.$axios.get("/api/favorite/delete", {
+          await this.$axios.get('/api/favorite/delete', {
             params: {
-              entityType: "article",
-              entityId: articleId,
-            },
-          });
-          this.favorited = false;
-          this.$message.success("已取消收藏");
+              entityType: 'article',
+              entityId: articleId
+            }
+          })
+          this.favorited = false
+          this.$message.success('已取消收藏')
         } else {
-          await this.$axios.post("/api/article/favorite/" + articleId);
-          this.favorited = true;
-          this.$message.success("收藏成功");
+          await this.$axios.post('/api/article/favorite/' + articleId)
+          this.favorited = true
+          this.$message.success('收藏成功')
         }
       } catch (e) {
-        console.error(e);
-        this.$message.error("收藏失败：" + (e.message || e));
+        console.error(e)
+        this.$message.error('收藏失败：' + (e.message || e))
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

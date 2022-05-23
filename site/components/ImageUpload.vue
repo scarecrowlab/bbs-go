@@ -7,7 +7,7 @@
       :class="{ deleted: image.deleted }"
       :style="{ width: size, height: size, margin: previewItemMargin }"
     >
-      <img :src="image.url" class="image-item" />
+      <img :src="image.url" class="image-item">
       <el-progress
         v-show="image.progress < 100"
         :percentage="image.progress"
@@ -15,7 +15,9 @@
         :show-text="false"
         class="progress"
       />
-      <div v-show="image.progress < 100" class="cover">上传中...</div>
+      <div v-show="image.progress < 100" class="cover">
+        上传中...
+      </div>
       <div
         :class="{
           'upload-delete': true,
@@ -38,7 +40,7 @@
         type="file"
         multiple
         @input="onInput"
-      />
+      >
       <slot name="add-image-button">
         <i class="iconfont icon-add" />
       </slot>
@@ -51,26 +53,26 @@ export default {
   props: {
     accept: {
       type: String,
-      default: 'image/*',
+      default: 'image/*'
     },
     limit: {
       type: Number,
-      default: 9,
+      default: 9
     },
     sizeLimit: {
       type: Number,
-      default: 1024 * 1024 * 20,
+      default: 1024 * 1024 * 20
     },
     onUpload: {
       type: Boolean,
-      default: false,
+      default: false
     },
     size: {
       type: String,
-      default: '94px',
-    },
+      default: '94px'
+    }
   },
-  data() {
+  data () {
     return {
       fileList: [],
       previewFiles: [],
@@ -83,29 +85,29 @@ export default {
         movable: false,
         scalable: false,
         url: 'src',
-        filter(image) {
+        filter (image) {
           return (
             image.classList &&
             image.classList.length &&
             image.classList.contains('image-item')
           )
-        },
-      },
+        }
+      }
     }
   },
   computed: {
-    previewItemMargin() {
+    previewItemMargin () {
       if (this.previewFiles.length > 1 || this.limit > 1) {
         // margin-right: 10px;
         // margin-bottom: 10px;
         return '0 10px 10px 0'
       }
       return '0'
-    },
+    }
   },
   watch: {
     fileList: {
-      handler() {
+      handler () {
         if (
           this.fileList.length > this.previewFiles.length &&
           this.previewFiles.length === 0
@@ -118,23 +120,23 @@ export default {
         }
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
-    onClick() {
+    onClick () {
       const currentObj = this.$refs.uploadImage
       this.currentInput = currentObj
       currentObj.dispatchEvent(new MouseEvent('click'))
     },
-    onInput(e) {
+    onInput (e) {
       const files = e.target.files
       this.addFiles(files)
     },
-    addFiles(files) {
-      if (!files || !files.length) return // 没有文件
-      if (!this.checkSizeLimit(files)) return // 文件大小检查
-      if (!this.checkLengthLimit(files)) return // 文件数量检查
+    addFiles (files) {
+      if (!files || !files.length) { return } // 没有文件
+      if (!this.checkSizeLimit(files)) { return } // 文件大小检查
+      if (!this.checkLengthLimit(files)) { return } // 文件数量检查
 
       const fileArray = []
       for (let i = 0; i < files.length; i++) {
@@ -144,7 +146,7 @@ export default {
           url,
           progress: 0,
           deleted: false,
-          size: files[i].size,
+          size: files[i].size
         })
         fileArray.push(files[i])
       }
@@ -154,10 +156,10 @@ export default {
       }, [])
       this.uploadFiles(promiseList)
     },
-    uploadFile(file, index, length) {
+    uploadFile (file, index, length) {
       const me = this
       const config = {
-        onUploadProgress(progressEvent) {
+        onUploadProgress (progressEvent) {
           if (!progressEvent.lengthComputable) {
             // 当进度不可估量,直接等于 100
             me.previewFiles[
@@ -171,14 +173,14 @@ export default {
                 (progressEvent.loaded / progressEvent.total) * 100
               ).toString()
             ) * 0.9
-        },
+        }
       }
       const formData = new FormData()
       formData.append('image', file, file.name)
       return this.$axios.post('/api/upload', formData, config)
     },
-    uploadFiles(promiseList) {
-      this.$emit(`update:onUpload`, true)
+    uploadFiles (promiseList) {
+      this.$emit('update:onUpload', true)
       Promise.all(promiseList).then(
         (resList) => {
           this.previewFiles.map((item) => {
@@ -186,12 +188,12 @@ export default {
           }) // 请求响应后，更新到 100%
           // const _fileList = [...this.fileList]
           // resList.forEach((item) => _fileList.push(item))
-          resList.forEach((item) => this.fileList.push(item))
+          resList.forEach(item => this.fileList.push(item))
           if (this.currentInput) {
             this.currentInput.value = ''
           }
           this.$emit('input', this.fileList)
-          this.$emit(`update:onUpload`, false)
+          this.$emit('update:onUpload', false)
         },
         (e) => {
           // 失败的时候取消对应的预览照片
@@ -199,18 +201,18 @@ export default {
             this.currentInput.value = ''
           }
           const length = promiseList.length
-          this.$emit(`update:onUpload`, false)
+          this.$emit('update:onUpload', false)
           this.previewFiles.splice(this.previewFiles.length - length, length)
           // this.handleError(e).then(() => {})
           console.error(e)
         }
       )
     },
-    removeItem(index) {
+    removeItem (index) {
       this.$confirm('确定删除此内容吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning',
+        type: 'warning'
       }).then(
         () => {
           this.previewFiles[index].deleted = true // 删除动画
@@ -226,20 +228,21 @@ export default {
         () => console.log('取消删除')
       )
     },
-    checkSizeLimit(files) {
+    checkSizeLimit (files) {
       let pass = true
       for (let i = 0; i < files.length; i++) {
         if (files[i].size > this.sizeLimit) {
           pass = false
         }
       }
-      if (!pass)
+      if (!pass) {
         this.$message.error(
           `图片大小不可超过 ${this.sizeLimit / 1024 / 1024} MB`
         )
+      }
       return pass
     },
-    checkLengthLimit(files) {
+    checkLengthLimit (files) {
       if (this.previewFiles.length + files.length > this.limit) {
         this.$message.warning(`图片最多上传${this.limit}张`)
         this.$emit('exceed', files)
@@ -248,7 +251,7 @@ export default {
         return true
       }
     },
-    getObjectURL(file) {
+    getObjectURL (file) {
       let url = null
       if (window.createObjectURL) {
         // basic
@@ -262,11 +265,11 @@ export default {
       }
       return url
     },
-    clear() {
+    clear () {
       this.fileList = []
       this.previewFiles = []
-    },
-  },
+    }
+  }
 }
 </script>
 

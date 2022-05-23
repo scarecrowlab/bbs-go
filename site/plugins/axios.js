@@ -16,7 +16,7 @@ export default function ({ $axios, app }) {
         }
         data = qs.stringify(data)
         return data
-      },
+      }
     ]
   })
 

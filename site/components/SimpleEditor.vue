@@ -18,7 +18,7 @@
         @drop="handleDrag"
         @keydown.ctrl.enter="doSubmit"
         @keydown.meta.enter="doSubmit"
-      ></textarea>
+      />
     </label>
     <div v-show="showImageUpload" class="simple-editor-image-upload">
       <image-upload
@@ -36,61 +36,61 @@ export default {
   props: {
     maxWordCount: {
       type: Number,
-      default: 5000,
+      default: 5000
     },
     value: {
       type: Object,
-      default() {
+      default () {
         return {
           content: '',
-          imageList: [],
+          imageList: []
         }
-      },
+      }
     },
     height: {
       type: String,
-      default: '200px',
-    },
+      default: '200px'
+    }
   },
-  data() {
+  data () {
     return {
       imageUploading: false, // 图片上传中...
       showImageUpload: false,
-      post: this.value,
+      post: this.value
     }
   },
   computed: {
-    hasContent() {
+    hasContent () {
       return this.post.content && this.post.content.length > 0
     },
-    wordCount() {
+    wordCount () {
       return this.post.content ? this.post.content.length : 0
     },
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    loading() {
+    loading () {
       return this.imageUploading
-    },
+    }
   },
   methods: {
-    doSubmit() {
+    doSubmit () {
       this.$emit('submit')
     },
-    onInput() {
+    onInput () {
       this.$emit('input', this.post)
     },
-    isOnUpload() {
+    isOnUpload () {
       return this.imageUploading
     },
-    switchImageUpload() {
+    switchImageUpload () {
       if (!this.showImageUpload) {
         // 打开文件弹窗
         this.$refs.imageUploader.onClick()
       }
       this.showImageUpload = !this.showImageUpload
     },
-    handleParse(e) {
+    handleParse (e) {
       const items = e.clipboardData && e.clipboardData.items
       if (!items || !items.length) {
         return
@@ -109,7 +109,7 @@ export default {
         this.$refs.imageUploader.addFiles(new Array(file))
       }
     },
-    handleDrag(e) {
+    handleDrag (e) {
       e.stopPropagation()
       e.preventDefault()
 
@@ -130,13 +130,13 @@ export default {
         this.$refs.imageUploader.addFiles(files)
       }
     },
-    clear() {
+    clear () {
       this.post.content = ''
       this.post.imageList = []
       this.$refs.imageUploader.clear()
       this.onInput()
-    },
-  },
+    }
+  }
 }
 </script>
 

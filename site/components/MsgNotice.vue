@@ -7,7 +7,7 @@
         class="msgicon"
         title="消息"
       >
-        <i class="iconfont icon-message"></i>
+        <i class="iconfont icon-message" />
         <span>消息</span>
         <sup v-if="msgcount > 0">{{ msgcount > 9 ? '9+' : msgcount }}</sup>
       </nuxt-link>
@@ -35,29 +35,29 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       msgcount: 0,
-      messages: [],
+      messages: []
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.getMsgcount()
   },
   methods: {
-    async getMsgcount() {
+    async getMsgcount () {
       if (this.user) {
         const ret = await this.$axios.get('/api/user/msgrecent')
         this.msgcount = ret.count
         this.messages = ret.messages
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

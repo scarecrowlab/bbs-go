@@ -13,7 +13,7 @@
       accept="image/*"
       type="file"
       @input="uploadAvatar"
-    />
+    >
   </div>
 </template>
 
@@ -22,15 +22,15 @@ export default {
   props: {
     value: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   methods: {
-    pickImage() {
+    pickImage () {
       const currentObj = this.$refs.uploadImage
       currentObj.dispatchEvent(new MouseEvent('click'))
     },
-    async uploadAvatar(e) {
+    async uploadAvatar (e) {
       const files = e.target.files
       if (files.length <= 0) {
         return
@@ -41,12 +41,12 @@ export default {
         const formData = new FormData()
         formData.append('image', file, file.name)
         const ret = await this.$axios.post('/api/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'multipart/form-data' }
         })
 
         // 设置头像
         await this.$axios.post('/api/user/update/avatar', {
-          avatar: ret.url,
+          avatar: ret.url
         })
 
         // 重新加载数据
@@ -56,8 +56,8 @@ export default {
         console.error(e)
         this.$emit('error', e)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

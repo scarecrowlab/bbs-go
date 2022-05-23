@@ -10,7 +10,7 @@
       @drop="handleDrag"
       @keydown.ctrl.enter="doSubmit"
       @keydown.meta.enter="doSubmit"
-    ></textarea>
+    />
     <div v-show="showImageUpload" class="text-editor-image-uploader">
       <image-upload
         ref="imageUploader"
@@ -45,36 +45,36 @@ export default {
   props: {
     height: {
       type: Number,
-      default: 120,
+      default: 120
     },
     value: {
       type: Object,
-      default() {
+      default () {
         return {
           content: '',
-          imageList: [],
+          imageList: []
         }
-      },
-    },
+      }
+    }
   },
-  data() {
+  data () {
     return {
       post: this.value,
       showImageUpload: false, // 是否显示图片上传
-      imageUploading: false, // 图片上传中
+      imageUploading: false // 图片上传中
     }
   },
   methods: {
-    doSubmit() {
+    doSubmit () {
       this.$emit('submit')
     },
-    onInput() {
+    onInput () {
       this.$emit('input', this.post)
     },
-    isOnUpload() {
+    isOnUpload () {
       return this.imageUploading
     },
-    handleParse(e) {
+    handleParse (e) {
       const items = e.clipboardData && e.clipboardData.items
       if (!items || !items.length) {
         return
@@ -93,7 +93,7 @@ export default {
         this.$refs.imageUploader.addFiles(new Array(file))
       }
     },
-    handleDrag(e) {
+    handleDrag (e) {
       e.stopPropagation()
       e.preventDefault()
 
@@ -114,24 +114,24 @@ export default {
         this.$refs.imageUploader.addFiles(files)
       }
     },
-    switchImageUpload() {
+    switchImageUpload () {
       if (!this.showImageUpload) {
         // 打开文件弹窗
         // this.$refs.imageUploader.onClick()
       }
       this.showImageUpload = !this.showImageUpload
     },
-    clear() {
+    clear () {
       this.post.content = ''
       this.post.imageList = []
       this.showImageUpload = false
       this.$refs.imageUploader.clear()
       this.onInput()
     },
-    focus() {
+    focus () {
       this.$refs.textarea.focus()
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

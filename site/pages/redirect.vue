@@ -3,12 +3,13 @@
     <div class="container">
       <div class="main-body redirect">
         <div>
-          <img src="~/assets/images/logo.svg" style="width: 128px" />
+          <img src="~/assets/images/logo.svg" style="width: 128px">
         </div>
         <div style="margin: 20px 0">
-          <a :href="url" rel="nofollow"
-            >即将跳往站外地址，点击该链接继续跳转&nbsp;&gt;&gt;</a
-          >
+          <a
+            :href="url"
+            rel="nofollow"
+          >即将跳往站外地址，点击该链接继续跳转&nbsp;&gt;&gt;</a>
         </div>
       </div>
     </div>
@@ -17,11 +18,11 @@
 
 <script>
 export default {
-  asyncData({ query }) {
+  asyncData ({ query }) {
     return {
-      url: query.url,
+      url: query.url
     }
-  },
+  }
 }
 </script>
 

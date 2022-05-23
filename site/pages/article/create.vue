@@ -7,18 +7,17 @@
         </div>
         <div class="message-body">
           发表话题前，请先前往
-          <strong
-            ><nuxt-link
-              to="/user/profile/account"
-              style="color: var(--text-link-color)"
-              >个人中心 &gt; 账号设置</nuxt-link
-            ></strong
-          >
+          <strong><nuxt-link
+            to="/user/profile/account"
+            style="color: var(--text-link-color)"
+          >个人中心 &gt; 账号设置</nuxt-link></strong>
           页面设置邮箱，并完成邮箱认证。
         </div>
       </article>
       <div v-else class="article-create-form">
-        <h1 class="title">发作品</h1>
+        <h1 class="title">
+          发作品
+        </h1>
         <div class="field">
           <div class="control">
             <input
@@ -26,7 +25,7 @@
               class="input"
               type="text"
               placeholder="标题"
-            />
+            >
           </div>
         </div>
 
@@ -53,8 +52,7 @@
               :disabled="publishing"
               class="button is-success"
               @click="submitCreate"
-              >发表</a
-            >
+            >发表</a>
           </div>
         </div>
       </div>
@@ -65,37 +63,37 @@
 <script>
 export default {
   middleware: 'authenticated',
-  data() {
+  data () {
     return {
       publishing: false, // 当前是否正处于发布中...
       postForm: {
         title: '',
         tags: [],
-        content: '',
-      },
+        content: ''
+      }
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle('发表作品'),
+      title: this.$siteTitle('发表作品')
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    config() {
+    config () {
       return this.$store.state.config.config
     },
     // 是否需要先邮箱认证
-    isNeedEmailVerify() {
+    isNeedEmailVerify () {
       // 发帖必须认证
       return this.config.createArticleEmailVerified && !this.user.emailVerified
-    },
+    }
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    async submitCreate() {
+    async submitCreate () {
       const me = this
       if (me.publishing) {
         return
@@ -105,21 +103,21 @@ export default {
         const article = await this.$axios.post('/api/article/create', {
           title: me.postForm.title,
           content: me.postForm.content,
-          tags: me.postForm.tags ? me.postForm.tags.join(',') : '',
+          tags: me.postForm.tags ? me.postForm.tags.join(',') : ''
         })
         this.$refs.mdEditor.clearCache()
         this.$msg({
           message: '提交成功',
-          onClose() {
+          onClose () {
             me.$linkTo('/article/' + article.articleId)
-          },
+          }
         })
       } catch (e) {
         me.publishing = false
         this.$message.error(e.message || e)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

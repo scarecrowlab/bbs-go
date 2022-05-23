@@ -23,8 +23,7 @@
             <time
               class="comment-time"
               :datetime="comment.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')"
-              >{{ comment.createTime | prettyDate }}</time
-            >
+            >{{ comment.createTime | prettyDate }}</time>
           </div>
           <div
             v-viewer
@@ -35,7 +34,7 @@
               v-if="comment.content"
               class="comment-content content"
               v-html="comment.content"
-            ></div>
+            />
             <div
               v-if="comment.imageList && comment.imageList.length"
               class="comment-image-list"
@@ -44,7 +43,7 @@
                 v-for="(image, imageIndex) in comment.imageList"
                 :key="imageIndex"
                 :data-src="image.url"
-              />
+              >
             </div>
           </div>
           <div class="comment-actions">
@@ -53,7 +52,7 @@
               :class="{ active: comment.liked }"
               @click="like(comment)"
             >
-              <i class="iconfont icon-like"></i>
+              <i class="iconfont icon-like" />
               <span>{{ comment.liked ? '已赞' : '点赞' }}</span>
               <span v-if="comment.likeCount > 0">{{ comment.likeCount }}</span>
             </div>
@@ -62,7 +61,7 @@
               :class="{ active: reply.commentId === comment.commentId }"
               @click="switchShowReply(comment)"
             >
-              <i class="iconfont icon-comment"></i>
+              <i class="iconfont icon-comment" />
               <span>{{
                 reply.commentId === comment.commentId ? '取消评论' : '评论'
               }}</span>
@@ -82,8 +81,8 @@
           <sub-comment-list
             v-if="
               comment.replies &&
-              comment.replies.results &&
-              comment.replies.results.length
+                comment.replies.results &&
+                comment.replies.results.length
             "
             :comment-id="comment.commentId"
             :data="comment.replies"
@@ -103,47 +102,47 @@ export default {
     entityType: {
       type: String,
       default: '',
-      required: true,
+      required: true
     },
     entityId: {
       type: Number,
       default: 0,
-      required: true,
+      required: true
     },
     commentsPage: {
       type: Object,
-      default() {
+      default () {
         return {}
-      },
-    },
+      }
+    }
   },
-  data() {
+  data () {
     return {
       showReplyCommentId: 0,
       reply: {
         commentId: 0,
         value: {
           content: '',
-          imageList: [],
-        },
-      },
+          imageList: []
+        }
+      }
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    isLogin() {
+    isLogin () {
       return this.$store.state.user.current != null
-    },
+    }
   },
   methods: {
-    append(data) {
+    append (data) {
       if (data) {
         this.$refs.commentsLoadMore.unshiftResults(data)
       }
     },
-    async like(comment) {
+    async like (comment) {
       try {
         await this.$axios.post(`/api/comment/like/${comment.commentId}`)
         comment.liked = true
@@ -157,7 +156,7 @@ export default {
         }
       }
     },
-    switchShowReply(comment) {
+    switchShowReply (comment) {
       if (!this.user) {
         this.$msgSignIn()
         return
@@ -172,12 +171,12 @@ export default {
         }, 0)
       }
     },
-    hideReply(comment) {
+    hideReply (comment) {
       this.reply.commentId = 0
       this.reply.value.content = ''
       this.reply.value.imageList = []
     },
-    async submitReply(parent) {
+    async submitReply (parent) {
       try {
         const ret = await this.$axios.post('/api/comment/create', {
           entityType: 'comment',
@@ -186,7 +185,7 @@ export default {
           imageList:
             this.reply.value.imageList && this.reply.value.imageList.length
               ? JSON.stringify(this.reply.value.imageList)
-              : '',
+              : ''
         })
         this.hideReply()
         this.appendReply(parent, ret)
@@ -199,19 +198,19 @@ export default {
         }
       }
     },
-    onReply(parent, comment) {
+    onReply (parent, comment) {
       this.appendReply(parent, comment)
     },
-    appendReply(parent, comment) {
+    appendReply (parent, comment) {
       if (parent.replies && parent.replies.results) {
         parent.replies.results.push(comment)
       } else {
         parent.replies = {
-          results: [comment],
+          results: [comment]
         }
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -6,9 +6,10 @@
           <div class="project-header">
             <h1>
               <span class="project-name">{{ project.name }}</span>
-              <span v-if="project.title" class="project-title"
-                >&nbsp;-&nbsp;{{ project.title }}</span
-              >
+              <span
+                v-if="project.title"
+                class="project-title"
+              >&nbsp;-&nbsp;{{ project.title }}</span>
             </h1>
             <div class="project-meta">
               <span>
@@ -24,7 +25,7 @@
             v-lazy-container="{ selector: 'img' }"
             class="content"
             v-html="project.content"
-          ></div>
+          />
 
           <div class="footer">
             <a
@@ -32,18 +33,19 @@
               :href="projectUrl"
               class="homepage"
               target="_blank"
-              >项目主页</a
-            >
-            <a v-if="docUrl" :href="docUrl" class="homepage" target="_blank"
-              >文档地址</a
-            >
+            >项目主页</a>
+            <a
+              v-if="docUrl"
+              :href="docUrl"
+              class="homepage"
+              target="_blank"
+            >文档地址</a>
             <a
               v-if="downloadUrl"
               :href="downloadUrl"
               class="homepage"
               target="_blank"
-              >下载地址</a
-            >
+            >下载地址</a>
           </div>
         </div>
 
@@ -64,18 +66,18 @@
 
 <script>
 export default {
-  async asyncData({ $axios, params, store }) {
+  async asyncData ({ $axios, params, store }) {
     const [project, commentsPage] = await Promise.all([
       $axios.get('/api/project/' + params.id),
       $axios.get('/api/comment/comments', {
         params: {
           entityType: 'project',
-          entityId: params.id,
-        },
-      }),
+          entityId: params.id
+        }
+      })
     ])
     // 构建url，如果登录了直接跳转到原地址，如果没登陆那么跳转到登录
-    function buildUrl(url) {
+    function buildUrl (url) {
       if (!url || !project) {
         return ''
       }
@@ -92,19 +94,19 @@ export default {
       commentsPage,
       projectUrl: buildUrl(project.url),
       docUrl: buildUrl(project.docUrl),
-      downloadUrl: buildUrl(project.downloadUrl),
+      downloadUrl: buildUrl(project.downloadUrl)
     }
   },
-  head() {
+  head () {
     let siteTitle = this.project.name
     if (this.project.title) {
       siteTitle += ' - ' + this.project.title
     }
     return {
       title: this.$siteTitle(siteTitle),
-      meta: [{ hid: 'description', name: 'description', content: siteTitle }],
+      meta: [{ hid: 'description', name: 'description', content: siteTitle }]
     }
-  },
+  }
 }
 </script>
 

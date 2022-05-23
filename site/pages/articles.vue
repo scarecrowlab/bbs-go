@@ -8,7 +8,6 @@
         <check-in />
         <site-notice />
         <score-rank :score-rank="scoreRank" />
-        <friend-links :links="links" />
       </div>
     </div>
   </section>
@@ -16,18 +15,18 @@
 
 <script>
 export default {
-  async asyncData({ $axios, store }) {
+  async asyncData ({ $axios, store }) {
     try {
       const [nodes, scoreRank, links] = await Promise.all([
         $axios.get('/api/topic/nodes'),
         $axios.get('/api/user/score/rank'),
-        $axios.get('/api/link/toplinks'),
+        $axios.get('/api/link/toplinks')
       ])
       return { nodes, scoreRank, links }
     } catch (e) {
       console.error(e)
     }
-  },
+  }
 }
 </script>
 

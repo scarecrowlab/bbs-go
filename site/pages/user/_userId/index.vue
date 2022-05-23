@@ -43,15 +43,17 @@
                   <topic-list :topics="results" :show-avatar="false" />
                 </load-more>
               </div>
-              <div v-else class="notification is-primary">暂无话题</div>
+              <div v-else class="notification is-primary">
+                暂无话题
+              </div>
             </div>
 
             <div v-if="activeTab === 'articles'">
               <div
                 v-if="
                   articlesPage &&
-                  articlesPage.results &&
-                  articlesPage.results.length
+                    articlesPage.results &&
+                    articlesPage.results.length
                 "
               >
                 <load-more
@@ -63,7 +65,9 @@
                   <article-list :articles="results" />
                 </load-more>
               </div>
-              <div v-else class="notification is-primary">暂无作品</div>
+              <div v-else class="notification is-primary">
+                暂无作品
+              </div>
             </div>
           </div>
         </div>
@@ -76,14 +80,14 @@
 const defaultTab = 'topics'
 
 export default {
-  async asyncData({ $axios, params, query, error }) {
+  async asyncData ({ $axios, params, query, error }) {
     let user
     try {
       user = await $axios.get('/api/user/' + params.userId)
     } catch (err) {
       error({
         statusCode: 404,
-        message: err.message || '系统错误',
+        message: err.message || '系统错误'
       })
       return
     }
@@ -93,38 +97,38 @@ export default {
     let articlesPage = null
     if (activeTab === 'topics') {
       topicsPage = await $axios.get('/api/topic/user/topics', {
-        params: { userId: params.userId },
+        params: { userId: params.userId }
       })
     } else if (activeTab === 'articles') {
       articlesPage = await $axios.get('/api/article/user/articles', {
-        params: { userId: params.userId },
+        params: { userId: params.userId }
       })
     }
     return {
       activeTab,
       user,
       topicsPage,
-      articlesPage,
+      articlesPage
     }
   },
-  data() {
+  data () {
     return {}
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle(this.user.nickname),
+      title: this.$siteTitle(this.user.nickname)
     }
   },
   computed: {
-    currentUser() {
+    currentUser () {
       return this.$store.state.user.current
     },
-    isOwner() {
+    isOwner () {
       const current = this.$store.state.user.current
       return this.user && current && this.user.id === current.id
-    },
+    }
   },
-  watchQuery: ['tab'],
+  watchQuery: ['tab']
 }
 </script>
 

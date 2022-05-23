@@ -5,7 +5,7 @@
       :style="{ zIndex: zIndex }"
       class="bbsgo-overlay"
       @touchmove="onTouchmove"
-    ></div>
+    />
   </transition>
 </template>
 
@@ -14,35 +14,35 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false,
+      default: false
     },
     lock: {
       type: Boolean,
-      default: true,
+      default: true
     },
     zIndex: {
       type: Number,
-      default: 1,
-    },
+      default: 1
+    }
   },
   methods: {
-    onTouchmove(event) {
+    onTouchmove (event) {
       if (this.lock) {
         this.preventTouchMove(event)
       }
     },
-    preventTouchMove(event) {
+    preventTouchMove (event) {
       this.preventDefault(event, true)
     },
-    preventDefault(event, isStopPropagation) {
+    preventDefault (event, isStopPropagation) {
       if (typeof event.cancelable !== 'boolean' || event.cancelable) {
         event.preventDefault()
       }
       if (isStopPropagation) {
         event.stopPropagation()
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

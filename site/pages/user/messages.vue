@@ -44,15 +44,18 @@
                 {{ message.content }}
               </div>
               <div v-if="message.detailUrl" class="msg-attr message-show-more">
-                <a :href="message.detailUrl" target="_blank"
-                  >点击查看详情&gt;&gt;</a
-                >
+                <a
+                  :href="message.detailUrl"
+                  target="_blank"
+                >点击查看详情&gt;&gt;</a>
               </div>
             </div>
           </div>
         </li>
       </ul>
-      <div v-else class="notification is-primary">暂无消息</div>
+      <div v-else class="notification is-primary">
+        暂无消息
+      </div>
       <pagination :page="messagesPage.page" url-prefix="/user/messages?p=" />
     </div>
   </div>
@@ -62,26 +65,26 @@
 export default {
   layout: 'ucenter',
   middleware: 'authenticated',
-  async asyncData({ $axios, query }) {
+  async asyncData ({ $axios, query }) {
     const [messagesPage] = await Promise.all([
-      $axios.get('/api/user/messages?page=' + (query.p || 1)),
+      $axios.get('/api/user/messages?page=' + (query.p || 1))
     ])
     return {
-      messagesPage,
+      messagesPage
     }
   },
-  data() {
+  data () {
     return {
       messages: [],
       cursor: 0,
-      hasMore: true,
+      hasMore: true
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle('消息'),
+      title: this.$siteTitle('消息')
     }
-  },
+  }
 }
 </script>
 

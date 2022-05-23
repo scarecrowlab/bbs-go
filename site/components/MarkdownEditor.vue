@@ -12,7 +12,7 @@
       @upload-image="uploadImage"
       @keydown.ctrl.enter.native="submit"
       @keydown.meta.enter.native="submit"
-    ></v-md-editor>
+    />
   </div>
 </template>
 
@@ -27,7 +27,7 @@ import '@kangc/v-md-editor/lib/theme/style/github.css'
 import hljs from 'highlight.js'
 
 VMdEditor.use(githubTheme, {
-  Hljs: hljs,
+  Hljs: hljs
 })
 
 Vue.use(VMdEditor)
@@ -36,50 +36,50 @@ export default {
   props: {
     value: {
       type: String,
-      default: '',
+      default: ''
     },
     height: {
       type: String,
-      default: '400px', // normal、mini
+      default: '400px' // normal、mini
     },
     placeholder: {
       type: String,
-      default: '请输入...',
-    },
+      default: '请输入...'
+    }
   },
-  data() {
+  data () {
     return {
       width: '100%',
-      content: this.value,
+      content: this.value
     }
   },
   computed: {
-    isMobile() {
+    isMobile () {
       return this.$store.state.env.isMobile
     },
-    toolbars() {
+    toolbars () {
       if (this.isMobile) {
         return 'h bold italic strikethrough image'
       } else {
         return 'undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code'
       }
     },
-    rightToolbar() {
+    rightToolbar () {
       if (this.$store.state.env.isMobile) {
         return 'fullscreen'
       }
       return 'preview sync-scroll fullscreen'
-    },
+    }
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    submit() {
+    submit () {
       this.$emit('submit', this.content)
     },
     /**
      * 上传图片
      */
-    async uploadImage(event, insertImage, files) {
+    async uploadImage (event, insertImage, files) {
       if (!files || !files.length) {
         return
       }
@@ -88,29 +88,29 @@ export default {
         const formData = new FormData()
         formData.append('image', file, file.name)
         const ret = await this.$axios.post('/api/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'multipart/form-data' }
         })
         insertImage({
           url: ret.url,
-          desc: ' ',
+          desc: ' '
         })
       }
     },
-    change(value, render) {
+    change (value, render) {
       this.$emit('input', value)
     },
     /**
      * 清空编辑器内容
      */
-    clear() {
+    clear () {
       this.content = ''
       this.$emit('input', this.content)
     },
     /**
      * 清理缓存
      */
-    clearCache() {},
-  },
+    clearCache () {}
+  }
 }
 </script>
 

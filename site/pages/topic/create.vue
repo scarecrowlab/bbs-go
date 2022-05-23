@@ -7,18 +7,17 @@
         </div>
         <div class="message-body">
           发表话题前，请先前往
-          <strong
-          ><nuxt-link
+          <strong><nuxt-link
             to="/user/profile/account"
             style="color: var(--text-link-color)"
-          >个人中心 &gt; 账号设置</nuxt-link
-          ></strong
-          >
+          >个人中心 &gt; 账号设置</nuxt-link></strong>
           页面设置邮箱，并完成邮箱认证。
         </div>
       </article>
       <div v-else class="topic-create-form">
-        <h1 class="title">{{ postForm.type === 0 ? '发帖子' : '发动态' }}</h1>
+        <h1 class="title">
+          {{ postForm.type === 0 ? '发帖子' : '发动态' }}
+        </h1>
 
         <div class="field">
           <div class="control">
@@ -41,7 +40,7 @@
               class="input topic-title"
               type="text"
               placeholder="请输入帖子标题"
-            />
+            >
           </div>
         </div>
 

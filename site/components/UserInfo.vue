@@ -3,9 +3,11 @@
     <div class="base-info">
       <avatar :user="user" size="80" :extra-style="{ margin: '0 auto' }" />
       <div class="nickname">
-        <nuxt-link :to="'/user/' + user.id" :alt="user.nickname">{{
-          user.nickname
-        }}</nuxt-link>
+        <nuxt-link :to="'/user/' + user.id" :alt="user.nickname">
+          {{
+            user.nickname
+          }}
+        </nuxt-link>
       </div>
       <div class="description">
         {{ user.description }}
@@ -14,19 +16,19 @@
     <div class="extra-info">
       <ul class="extra-data">
         <li>
-          <span>积分</span><br />
+          <span>积分</span><br>
           <b>{{ user.score }}</b>
         </li>
         <li>
-          <span>话题</span><br />
+          <span>话题</span><br>
           <b>{{ user.topicCount }}</b>
         </li>
         <li>
-          <span>评论</span><br />
+          <span>评论</span><br>
           <b>{{ user.commentCount }}</b>
         </li>
         <li>
-          <span>注册排名</span><br />
+          <span>注册排名</span><br>
           <b>{{ user.id }}</b>
         </li>
       </ul>
@@ -39,9 +41,9 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 Vue.use({
-  install(Vue, options) {
+  install (Vue, options) {
     Vue.prototype.$siteTitle = function (subTitle) {
       const siteTitle = this.$store.getters['config/siteTitle'] || ''
       if (subTitle) {
@@ -64,9 +64,9 @@ Vue.use({
       this.$msg({
         type: 'error',
         message: '请先登录',
-        onClose() {
+        onClose () {
           that.$toSignin()
-        },
+        }
       })
     }
 
@@ -80,14 +80,14 @@ Vue.use({
       type = 'success',
       message,
       duration = 800,
-      onClose,
+      onClose
     }) {
       this.$message({
         duration: 800,
         type,
         message,
-        onClose,
+        onClose
       })
     }
-  },
+  }
 })

@@ -5,8 +5,8 @@
         <div class="link">
           <div class="logo" />
           <div class="title">
-            <img v-if="link.logo" :src="link.logo" />
-            <img v-else src="~/assets/images/net.png" />
+            <img v-if="link.logo" :src="link.logo">
+            <img v-else src="~/assets/images/net.png">
             {{ link.title }}
           </div>
           <div class="summary">
@@ -23,13 +23,13 @@
 
 <script>
 export default {
-  async asyncData({ $axios, params }) {
+  async asyncData ({ $axios, params }) {
     const link = await $axios.get('/api/link/' + params.id)
     return {
-      link,
+      link
     }
   },
-  head() {
+  head () {
     const title = this.link.title + ' - 友情链接'
     return {
       title: this.$siteTitle(title),
@@ -37,12 +37,12 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.$siteDescription(),
+          content: this.$siteDescription()
         },
-        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() },
-      ],
+        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() }
+      ]
     }
-  },
+  }
 }
 </script>
 

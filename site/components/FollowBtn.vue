@@ -17,20 +17,20 @@ export default {
   props: {
     userId: {
       type: Number,
-      required: true,
+      required: true
     },
     followed: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
+    }
   },
   methods: {
-    async follow() {
+    async follow () {
       if (!this.user) {
         this.$msgSignIn()
         return
@@ -38,13 +38,13 @@ export default {
       try {
         if (this.followed) {
           await this.$axios.post('/api/fans/unfollow', {
-            userId: this.userId,
+            userId: this.userId
           })
           this.$emit('onFollowed', this.userId, false)
           this.$message.success('取消关注成功')
         } else {
           await this.$axios.post('/api/fans/follow', {
-            userId: this.userId,
+            userId: this.userId
           })
           this.$emit('onFollowed', this.userId, true)
           this.$message.success('关注成功')
@@ -52,8 +52,8 @@ export default {
       } catch (e) {
         this.$message.error(e.message || e)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

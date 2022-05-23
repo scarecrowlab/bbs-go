@@ -14,30 +14,30 @@
 
 <script>
 export default {
-  async asyncData({ $axios, store }) {
+  async asyncData ({ $axios, store }) {
     store.commit('env/setCurrentNodeId', -1) // 设置当前所在node
     try {
       const [topicsPage] = await Promise.all([
-        $axios.get('/api/topic/topics?recommend=true'),
+        $axios.get('/api/topic/topics?recommend=true')
       ])
       return { topicsPage }
     } catch (e) {
       console.error(e)
     }
   },
-  head() {
+  head () {
     return {
       title: this.$siteTitle('热门话题'),
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.$siteDescription(),
+          content: this.$siteDescription()
         },
-        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() },
-      ],
+        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() }
+      ]
     }
-  },
+  }
 }
 </script>
 

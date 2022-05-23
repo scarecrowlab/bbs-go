@@ -19,11 +19,21 @@
     <div class="search-time-range">
       <div class="select is-small">
         <select v-model="timeRange" @change="setTimeRange">
-          <option :value="0">时间不限</option>
-          <option :value="1">一天内</option>
-          <option :value="2">一周内</option>
-          <option :value="3">一月内</option>
-          <option :value="4">一年内</option>
+          <option :value="0">
+            时间不限
+          </option>
+          <option :value="1">
+            一天内
+          </option>
+          <option :value="2">
+            一周内
+          </option>
+          <option :value="3">
+            一月内
+          </option>
+          <option :value="4">
+            一年内
+          </option>
         </select>
       </div>
     </div>
@@ -35,29 +45,29 @@ export default {
   props: {
     nodes: {
       type: Array,
-      default() {
+      default () {
         return []
-      },
-    },
+      }
+    }
   },
-  data() {
+  data () {
     return {
-      timeRange: 0,
+      timeRange: 0
     }
   },
   computed: {
-    currentNodeId() {
+    currentNodeId () {
       return this.$store.state.search.nodeId
-    },
+    }
   },
   methods: {
-    setNodeId(nodeId) {
+    setNodeId (nodeId) {
       this.$store.dispatch('search/changeNodeId', nodeId)
     },
-    setTimeRange() {
+    setTimeRange () {
       this.$store.dispatch('search/changeTimeRange', this.timeRange)
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -21,10 +21,14 @@
         <div class="profile-edit-tabs-mobile tabs">
           <ul>
             <li :class="{ 'is-active': active === 'profile' }">
-              <nuxt-link to="/user/profile">个人资料</nuxt-link>
+              <nuxt-link to="/user/profile">
+                个人资料
+              </nuxt-link>
             </li>
             <li :class="{ 'is-active': active === 'account' }">
-              <nuxt-link to="/user/profile/account">账号设置</nuxt-link>
+              <nuxt-link to="/user/profile/account">
+                账号设置
+              </nuxt-link>
             </li>
           </ul>
         </div>
@@ -38,13 +42,13 @@
 export default {
   middleware: 'authenticated',
   computed: {
-    active() {
+    active () {
       if (this.$route.path.includes('/user/profile/account')) {
         return 'account'
       }
       return 'profile'
-    },
-  },
+    }
+  }
 }
 </script>
 

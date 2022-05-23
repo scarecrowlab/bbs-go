@@ -12,30 +12,30 @@ export default {
   props: {
     nodeId: {
       type: Number,
-      default: 0,
-    },
-  },
-  data() {
-    return {
-      topics: [],
+      default: 0
     }
   },
-  mounted() {
+  data () {
+    return {
+      topics: []
+    }
+  },
+  mounted () {
     this.loadStickyTopics()
   },
   methods: {
-    async loadStickyTopics() {
+    async loadStickyTopics () {
       try {
         this.topics = await this.$axios.get('/api/topic/sticky_topics', {
           params: {
-            nodeId: this.nodeId,
-          },
+            nodeId: this.nodeId
+          }
         })
       } catch (e) {
         console.error(e)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

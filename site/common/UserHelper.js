@@ -1,5 +1,5 @@
 class UserHelper {
-  hasRole(user, role) {
+  hasRole (user, role) {
     if (!user || !user.roles || !user.roles.length) {
       return false
     }
@@ -11,7 +11,7 @@ class UserHelper {
     return false
   }
 
-  hasAnyRole(user, ...roles) {
+  hasAnyRole (user, ...roles) {
     if (!roles || !roles.length) {
       return false
     }
@@ -23,11 +23,11 @@ class UserHelper {
     return false
   }
 
-  isOwner(user) {
+  isOwner (user) {
     return this.hasRole(user, 'owner')
   }
 
-  isAdmin(user) {
+  isAdmin (user) {
     return this.hasRole(user, 'admin')
   }
 }

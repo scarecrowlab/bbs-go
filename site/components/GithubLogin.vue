@@ -11,25 +11,25 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Github 登录',
+      default: 'Github 登录'
     },
     refUrl: {
       // 登录来源地址，控制登录成功之后要跳到该地址
       type: String,
-      default: '',
+      default: ''
     },
     isButton: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
-  data() {
+  data () {
     return {
-      refUrlValue: this.refUrl,
+      refUrlValue: this.refUrl
     }
   },
   methods: {
-    async githubLogin() {
+    async githubLogin () {
       try {
         if (!this.refUrlValue && process.client) {
           // 如果没配置refUrl，那么取当前地址
@@ -37,16 +37,16 @@ export default {
         }
         const ret = await this.$axios.get('/api/github/login/authorize', {
           params: {
-            ref: this.refUrlValue,
-          },
+            ref: this.refUrlValue
+          }
         })
         window.location = ret.url
       } catch (e) {
         console.error(e)
         this.$message.error('登录失败：' + (e.message || e))
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

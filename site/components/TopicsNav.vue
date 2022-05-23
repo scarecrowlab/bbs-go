@@ -3,19 +3,19 @@
     <ul>
       <li :class="{ active: currentNodeId === 0 }">
         <nuxt-link to="/topics/node/newest">
-          <img class="node-logo" src="~/assets/logos/arduino.svg" />
+          <img class="node-logo" src="~/assets/logos/arduino.svg">
           <span class="node-name">最新</span>
         </nuxt-link>
       </li>
       <li :class="{ active: currentNodeId === -1 }">
         <nuxt-link to="/topics/node/recommend">
-          <img class="node-logo" src="~/assets/logos/raspberrypi.png" />
+          <img class="node-logo" src="~/assets/logos/raspberrypi.png">
           <span class="node-name">推荐</span>
         </nuxt-link>
       </li>
       <li :class="{ active: currentNodeId === -2 }">
         <nuxt-link to="/topics/node/feed">
-          <img class="node-logo" src="~/assets/logos/tinygo-logo.png" />
+          <img class="node-logo" src="~/assets/logos/tinygo-logo.png">
           <span class="node-name">关注</span>
         </nuxt-link>
       </li>
@@ -25,8 +25,8 @@
         :class="{ active: currentNodeId === node.nodeId }"
       >
         <nuxt-link :to="'/topics/node/' + node.nodeId">
-          <img v-if="node.logo" class="node-logo" :src="node.logo" />
-          <img v-else class="node-logo" src="~/assets/images/node.png" />
+          <img v-if="node.logo" class="node-logo" :src="node.logo">
+          <img v-else class="node-logo" src="~/assets/images/node.png">
           <span class="node-name">{{ node.name }}</span>
         </nuxt-link>
       </li>
@@ -39,16 +39,16 @@ export default {
   props: {
     nodes: {
       type: Array,
-      default() {
+      default () {
         return []
-      },
-    },
+      }
+    }
   },
   computed: {
-    currentNodeId() {
+    currentNodeId () {
       return this.$store.state.env.currentNodeId
-    },
-  },
+    }
+  }
 }
 </script>
 

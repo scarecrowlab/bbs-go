@@ -9,9 +9,12 @@
       <div v-if="isNeedEmailVerify" class="comment-not-login">
         <div class="comment-login-div">
           请先前往
-          <nuxt-link style="font-weight: 700" to="/user/profile/account"
-            >个人中心 &gt; 账号设置</nuxt-link
-          >页面设置邮箱，并完成邮箱认证。
+          <nuxt-link
+            style="font-weight: 700"
+            to="/user/profile/account"
+          >
+            个人中心 &gt; 账号设置
+          </nuxt-link>页面设置邮箱，并完成邮箱认证。
         </div>
       </div>
       <template v-else>
@@ -46,64 +49,64 @@ export default {
   props: {
     mode: {
       type: String,
-      default: 'markdown',
+      default: 'markdown'
     },
     entityType: {
       type: String,
       default: '',
-      required: true,
+      required: true
     },
     entityId: {
       type: Number,
       default: 0,
-      required: true,
+      required: true
     },
     commentsPage: {
       type: Object,
-      default() {
+      default () {
         return {}
-      },
+      }
     },
     commentCount: {
       type: Number,
-      default: 0,
+      default: 0
     },
     showAd: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
-    isLogin() {
+    isLogin () {
       return this.$store.state.user.current != null
     },
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    config() {
+    config () {
       return this.$store.state.config.config
     },
     // 是否需要先邮箱认证
-    isNeedEmailVerify() {
+    isNeedEmailVerify () {
       return (
         this.config.createCommentEmailVerified &&
         this.user &&
         !this.user.emailVerified
       )
-    },
+    }
   },
   methods: {
-    commentCreated(data) {
+    commentCreated (data) {
       this.$refs.list.append(data)
       this.$emit('created')
     },
-    reply(quote) {
+    reply (quote) {
       this.$refs.input.reply(quote)
     },
-    toLogin() {
+    toLogin () {
       this.$toSignin()
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

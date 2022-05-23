@@ -10,25 +10,25 @@ export default function (context) {
     if (!UserHelper.isOwner(user) && !UserHelper.isAdmin(user)) {
       context.error({
         statusCode: 403,
-        message: '403 forbidden',
+        message: '403 forbidden'
       })
     }
   }
 }
 
 // 当前访问URL是否是管理后台
-function isAdminUrl(context) {
+function isAdminUrl (context) {
   return context.route.path.indexOf('/admin') === 0
 }
 
 // 前往登录地址
-function toSignIn(context) {
+function toSignIn (context) {
   const signInUrl = getSignInUrl(context)
   context.redirect(signInUrl)
 }
 
 // 获取登录跳转地址
-function getSignInUrl(context) {
+function getSignInUrl (context) {
   let ref // 来源地址
   if (process.server) {
     // 服务端

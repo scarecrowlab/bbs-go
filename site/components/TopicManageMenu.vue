@@ -5,16 +5,24 @@
     trigger="click"
     @command="handleCommand"
   >
-    <div v-if="hasPermission && value.type === 0" command="edit">修改</div>
-    <div v-if="hasPermission" command="delete">删除</div>
+    <div v-if="hasPermission && value.type === 0" command="edit">
+      修改
+    </div>
+    <div v-if="hasPermission" command="delete">
+      删除
+    </div>
     <div v-if="isOwner || isAdmin" command="recommend">
       {{ value.recommend ? '取消推荐' : '推荐' }}
     </div>
     <div v-if="isOwner || isAdmin" command="sticky">
       {{ value.sticky ? '取消置顶' : '置顶' }}
     </div>
-    <div v-if="isOwner || isAdmin" command="forbidden7Days">禁言7天</div>
-    <div v-if="isOwner" command="forbiddenForever">永久禁言</div>
+    <div v-if="isOwner || isAdmin" command="forbidden7Days">
+      禁言7天
+    </div>
+    <div v-if="isOwner" command="forbiddenForever">
+      永久禁言
+    </div>
   </div>
 </template>
 
@@ -25,40 +33,40 @@ export default {
   props: {
     value: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      topic: this.value,
+      topic: this.value
     }
   },
   computed: {
-    hasPermission() {
+    hasPermission () {
       return (
         this.isTopicOwner ||
         UserHelper.isOwner(this.user) ||
         UserHelper.isAdmin(this.user)
       )
     },
-    isTopicOwner() {
+    isTopicOwner () {
       if (!this.user || !this.topic) {
         return false
       }
       return this.user.id === this.topic.user.id
     },
-    isOwner() {
+    isOwner () {
       return UserHelper.isOwner(this.user)
     },
-    isAdmin() {
+    isAdmin () {
       return UserHelper.isAdmin(this.user)
     },
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
+    }
   },
   methods: {
-    async handleCommand(command) {
+    async handleCommand (command) {
       if (!this.topic || !this.topic.topicId) {
         return
       }
@@ -78,18 +86,18 @@ export default {
         console.log('click on item ' + command)
       }
     },
-    async forbidden(days) {
+    async forbidden (days) {
       try {
         await this.$axios.post('/api/user/forbidden', {
           userId: this.topic.user.id,
-          days,
+          days
         })
         this.$message.success('禁言成功')
       } catch (e) {
         this.$message.error('禁言失败')
       }
     },
-    deleteTopic() {
+    deleteTopic () {
       if (!process.client) {
         return
       }
@@ -100,9 +108,9 @@ export default {
           .then(() => {
             me.$msg({
               message: '删除成功',
-              onClose() {
+              onClose () {
                 me.$linkTo('/topics')
-              },
+              }
             })
           })
           .catch((e) => {
@@ -110,23 +118,23 @@ export default {
           })
       })
     },
-    editTopic() {
+    editTopic () {
       this.$linkTo('/topic/edit/' + this.topic.topicId)
     },
-    switchRecommend() {
+    switchRecommend () {
       const me = this
       const action = me.topic.recommend ? '取消推荐' : '推荐'
       this.$confirm(`是否确认${action}该帖子？`).then(function () {
         const recommend = !me.topic.recommend
         me.$axios
           .post('/api/topic/recommend/' + me.topic.topicId, {
-            recommend,
+            recommend
           })
           .then(() => {
             me.topic.recommend = recommend
             me.$emit('input', me.topic)
             me.$msg({
-              message: `${action}成功`,
+              message: `${action}成功`
             })
           })
           .catch((e) => {
@@ -134,27 +142,27 @@ export default {
           })
       })
     },
-    switchSticky() {
+    switchSticky () {
       const me = this
       const action = me.topic.sticky ? '取消置顶' : '置顶'
       this.$confirm(`是否确认${action}该帖子？`).then(function () {
         const sticky = !me.topic.sticky
         me.$axios
           .post('/api/topic/sticky/' + me.topic.topicId, {
-            sticky,
+            sticky
           })
           .then(() => {
             me.topic.sticky = sticky
             me.$emit('input', me.topic)
             me.$msg({
-              message: `${action}成功`,
+              message: `${action}成功`
             })
           })
           .catch((e) => {
             me.$message.error(`${action}失败：` + (e.message || e))
           })
       })
-    },
-  },
+    }
+  }
 }
 </script>

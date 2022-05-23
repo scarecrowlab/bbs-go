@@ -5,7 +5,7 @@
   >
     <div v-if="isOwner" class="file is-light is-small change-bg">
       <label class="file-label">
-        <input class="file-input" type="file" @change="uploadBackground" />
+        <input class="file-input" type="file" @change="uploadBackground">
         <span class="file-cta">
           <span class="file-icon">
             <i class="iconfont icon-upload" />
@@ -18,9 +18,11 @@
     <div class="profile-info">
       <div class="metas">
         <h1 class="nickname">
-          <nuxt-link :to="'/user/' + localUser.id">{{
-            localUser.nickname
-          }}</nuxt-link>
+          <nuxt-link :to="'/user/' + localUser.id">
+            {{
+              localUser.nickname
+            }}
+          </nuxt-link>
         </h1>
         <div v-if="localUser.description" class="description">
           <p>{{ localUser.description }}</p>
@@ -43,36 +45,36 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       localUser: Object.assign({}, this.user),
-      followed: false,
+      followed: false
     }
   },
   computed: {
-    backgroundImage() {
+    backgroundImage () {
       if (this.localUser.smallBackgroundImage) {
         return this.localUser.smallBackgroundImage
       }
       return require('~/assets/images/default-user-bg.jpg')
     },
-    currentUser() {
+    currentUser () {
       return this.$store.state.user.current
     },
     // 是否是主人态
-    isOwner() {
+    isOwner () {
       const current = this.$store.state.user.current
       return this.localUser && current && this.localUser.id === current.id
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.loadIsFollowed()
   },
   methods: {
-    async uploadBackground(e) {
+    async uploadBackground (e) {
       const files = e.target.files
       if (files.length <= 0) {
         return
@@ -83,12 +85,12 @@ export default {
         const formData = new FormData()
         formData.append('image', file, file.name)
         const ret = await this.$axios.post('/api/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'multipart/form-data' }
         })
 
         // 设置头像
         await this.$axios.post('/api/user/set/background/image', {
-          backgroundImage: ret.url,
+          backgroundImage: ret.url
         })
 
         // 重新加载数据
@@ -100,15 +102,15 @@ export default {
         console.error(e)
       }
     },
-    async loadIsFollowed() {
+    async loadIsFollowed () {
       this.followed = await this.$axios.get(
         '/api/fans/isfollowed?userId=' + this.user.id
       )
     },
-    onFollowed(userId, followed) {
+    onFollowed (userId, followed) {
       this.followed = followed
-    },
-  },
+    }
+  }
 }
 </script>
 

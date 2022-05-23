@@ -7,9 +7,10 @@
             <h1 itemprop="headline">
               <nuxt-link :to="'/project/' + p.projectId">
                 <span class="project-name">{{ p.name }}</span>
-                <span v-if="p.title" class="project-title"
-                  >&nbsp;-&nbsp;{{ p.title }}</span
-                >
+                <span
+                  v-if="p.title"
+                  class="project-title"
+                >&nbsp;-&nbsp;{{ p.title }}</span>
               </nuxt-link>
             </h1>
           </div>
@@ -30,8 +31,7 @@
               <time
                 :datetime="p.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')"
                 itemprop="datePublished"
-                >{{ p.createTime | prettyDate }}</time
-              >
+              >{{ p.createTime | prettyDate }}</time>
             </span>
           </span>
         </article>
@@ -45,11 +45,11 @@ export default {
   props: {
     projects: {
       type: Array,
-      default() {
+      default () {
         return []
-      },
-    },
-  },
+      }
+    }
+  }
 }
 </script>
 

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="error">
         <div>
-          <img src="~/assets/images/logo.png" style="max-width: 100px" />
+          <img src="~/assets/images/logo.png" style="max-width: 100px">
         </div>
         <div class="description">
           <span v-if="error.statusCode === 404">{{
@@ -15,9 +15,12 @@
           <span v-else>{{ error.statusCode }} 页面异常</span>
         </div>
         <div class="report">
-          <nuxt-link to="/topic/create" target="_blank"
-            >点击这里反馈该问题>></nuxt-link
+          <nuxt-link
+            to="/topic/create"
+            target="_blank"
           >
+            点击这里反馈该问题>>
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -30,9 +33,9 @@ export default {
   props: {
     error: {
       type: Object,
-      default: null,
-    },
-  },
+      default: null
+    }
+  }
 }
 </script>
 

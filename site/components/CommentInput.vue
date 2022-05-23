@@ -31,37 +31,37 @@ export default {
   props: {
     mode: {
       type: String,
-      default: 'markdown',
+      default: 'markdown'
     },
     entityType: {
       type: String,
       default: '',
-      required: true,
+      required: true
     },
     entityId: {
       type: Number,
       default: 0,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       value: {
         content: '', // 内容
-        imageList: [],
+        imageList: []
       },
       sending: false, // 发送中
-      quote: null, // 引用的对象
+      quote: null // 引用的对象
     }
   },
   computed: {
-    btnName() {
+    btnName () {
       return this.sending ? '正在发表...' : '发表'
     },
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    inputMode() {
+    inputMode () {
       // if (this.$store.state.env.isMobile) {
       //   // 手机中，强制使用普通文本编辑器
       //   return 'text'
@@ -70,12 +70,12 @@ export default {
       // 强制text模式
       return 'text'
     },
-    contentType() {
+    contentType () {
       return this.inputMode === 'markdown' ? 'markdown' : 'text'
-    },
+    }
   },
   methods: {
-    async create() {
+    async create () {
       if (!this.value.content) {
         this.$message.error('请输入评论内容')
         return
@@ -99,7 +99,7 @@ export default {
             this.value.imageList && this.value.imageList.length
               ? JSON.stringify(this.value.imageList)
               : '',
-          quoteId: this.quote ? this.quote.commentId : '',
+          quoteId: this.quote ? this.quote.commentId : ''
         })
         this.$emit('created', data)
 
@@ -120,17 +120,17 @@ export default {
         this.sending = false
       }
     },
-    reply(quote) {
+    reply (quote) {
       this.quote = quote
       this.$refs.commentEditor.scrollIntoView({
         block: 'start',
-        behavior: 'smooth',
+        behavior: 'smooth'
       })
     },
-    cancelReply() {
+    cancelReply () {
       this.quote = null
-    },
-  },
+    }
+  }
 }
 </script>
 

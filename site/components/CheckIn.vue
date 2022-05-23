@@ -1,24 +1,24 @@
 <template>
   <div class="widget">
-    <div class="widget-header">签到</div>
+    <div class="widget-header">
+      签到
+    </div>
     <div class="widget-content checkin">
       <div class="checkedin">
         <div class="gold-icon-box">
           <div>
-            <span
-              ><svg
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 8l3 5m0 0l3-5m-3 5v4m-3-5h6m-6 3h6m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path></svg
-            ></span>
+            <span><svg
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 8l3 5m0 0l3-5m-3 5v4m-3-5h6m-6 3h6m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              /></svg></span>
           </div>
         </div>
         <div class="gold-info-box">
@@ -43,7 +43,7 @@
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                ></path>
+                />
               </svg>
             </span>
             <span>今日已签到</span>
@@ -64,7 +64,7 @@
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                ></path>
+                />
               </svg>
             </span>
             <span>立即签到</span>
@@ -72,30 +72,31 @@
         </div>
       </div>
       <div v-if="checkIn && checkIn.checkIn" class="checkedin-tips-box">
-        <span class="checkedin-tips-icon"
-          ><svg
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-            ></path></svg
-        ></span>
-        <span class="checkedin-tips-info"
-          >你已经连续签到&nbsp;<b class="checkedin-tips-day">{{
-            checkIn.consecutiveDays
-          }}</b
-          >&nbsp;天啦 !</span
+        <span
+          class="checkedin-tips-icon"
+        ><svg
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+          /></svg></span>
+        <span
+          class="checkedin-tips-info"
+        >你已经连续签到&nbsp;<b class="checkedin-tips-day">{{
+          checkIn.consecutiveDays
+        }}</b>&nbsp;天啦 !</span>
       </div>
 
       <div v-if="checkInRank && checkInRank.length" class="rank">
-        <div class="rank-title">今日排行</div>
+        <div class="rank-title">
+          今日排行
+        </div>
         <ul>
           <li v-for="rank in checkInRank" :key="rank.id" class="rounded">
             <avatar
@@ -105,9 +106,11 @@
               class="rank-user-avatar"
             />
             <div class="rank-user-info">
-              <nuxt-link :to="'/user/' + rank.user.id">{{
-                rank.user.nickname
-              }}</nuxt-link>
+              <nuxt-link :to="'/user/' + rank.user.id">
+                {{
+                  rank.user.nickname
+                }}
+              </nuxt-link>
               <p>@{{ rank.updateTime | formatDate }}</p>
             </div>
           </li>
@@ -127,33 +130,33 @@ export default {
   //     },
   //   },
   // },
-  data() {
+  data () {
     return {
       checkIn: null,
-      checkInRank: null,
+      checkInRank: null
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    isLogin() {
+    isLogin () {
       return this.$store.state.user.current != null
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.getCheckIn()
     this.loadCheckInRank()
   },
   methods: {
-    async getCheckIn() {
+    async getCheckIn () {
       try {
         this.checkIn = await this.$axios.get('/api/checkin/checkin')
       } catch (e) {
         console.log(e)
       }
     },
-    async doCheckIn() {
+    async doCheckIn () {
       if (!this.isLogin) {
         this.$toSignin()
       }
@@ -166,14 +169,14 @@ export default {
         console.error(e)
       }
     },
-    async loadCheckInRank() {
+    async loadCheckInRank () {
       try {
         this.checkInRank = await this.$axios.get('/api/checkin/rank')
       } catch (e) {
         console.error(e)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

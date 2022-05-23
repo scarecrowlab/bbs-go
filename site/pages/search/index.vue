@@ -20,7 +20,6 @@
         <check-in />
         <site-notice />
         <score-rank :score-rank="scoreRank" />
-        <friend-links :links="links" />
       </div>
     </div>
   </section>
@@ -28,35 +27,35 @@
 
 <script>
 export default {
-  async asyncData({ $axios, query, store }) {
+  async asyncData ({ $axios, query, store }) {
     const keyword = query.q || ''
     const [nodes, scoreRank, links] = await Promise.all([
       $axios.get('/api/topic/nodes'),
       $axios.get('/api/user/score/rank'),
-      $axios.get('/api/link/toplinks'),
+      $axios.get('/api/link/toplinks')
     ])
     store.dispatch('search/initParams', {
       keyword: query.q || '',
-      page: query.p || 1,
+      page: query.p || 1
     })
     return { keyword, nodes, scoreRank, links }
   },
   computed: {
-    searchPage() {
+    searchPage () {
       return this.$store.state.search.searchPage
     },
-    searchLoading() {
+    searchLoading () {
       return this.$store.state.search.loading
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.searchTopic()
   },
   methods: {
-    async searchTopic() {
+    async searchTopic () {
       await this.$store.dispatch('search/searchTopic')
-    },
-  },
+    }
+  }
 }
 </script>
 

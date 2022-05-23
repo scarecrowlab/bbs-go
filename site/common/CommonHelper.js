@@ -6,11 +6,11 @@ class CommonHelper {
   highlightCss =
     '//cdn.staticfile.org/highlight.js/10.3.2/styles/dracula.min.css'
 
-  isMobile(ua) {
+  isMobile (ua) {
     return /mobile|android|webos|iphone|blackberry|micromessenger/i.test(ua)
   }
 
-  initHighlight(ctx) {
+  initHighlight (ctx) {
     if (!process.client) {
       return
     }
@@ -34,7 +34,7 @@ class CommonHelper {
     }
   }
 
-  addScript(url, callback) {
+  addScript (url, callback) {
     if (!process.client) {
       console.warn('Add script fail, !process.client, ' + url)
       return
@@ -45,7 +45,7 @@ class CommonHelper {
     script.defer = true
     document.body.appendChild(script)
     script.onload = function () {
-      if (callback) callback()
+      if (callback) { callback() }
     }
   }
 }

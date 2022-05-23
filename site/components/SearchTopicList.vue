@@ -6,11 +6,11 @@
       class="topic-search-item"
     >
       <a target="_blank" :href="'/topic/' + item.topicId">
-        <h1 class="topic-search-item-title" v-html="item.title"></h1>
+        <h1 class="topic-search-item-title" v-html="item.title" />
       </a>
-      <p class="topic-search-item-summary content" v-html="item.summary"></p>
+      <p class="topic-search-item-summary content" v-html="item.summary" />
       <div class="topic-mates">
-        <span v-html="item.nickname"></span>
+        <span v-html="item.nickname" />
         <span>{{ item.createTime | formatDate }}</span>
         <span v-if="item.node">{{ item.node.name }}</span>
         <!-- <template v-if="item.tags && item.tags.length">
@@ -24,7 +24,7 @@
             :key="index"
             class="tag"
             v-html="tagName"
-          ></span>
+          />
         </template>
       </div>
     </div>
@@ -36,9 +36,9 @@ export default {
   props: {
     searchPage: {
       type: Object,
-      default: null,
-    },
-  },
+      default: null
+    }
+  }
 }
 </script>
 

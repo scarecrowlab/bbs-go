@@ -8,7 +8,7 @@
         @click="loadMore"
       >
         <span v-if="loading" class="icon">
-          <i class="iconfont icon-loading"></i>
+          <i class="iconfont icon-loading" />
         </span>
         <span>{{ hasMore ? '查看更多' : '没有了' }}</span>
       </button>

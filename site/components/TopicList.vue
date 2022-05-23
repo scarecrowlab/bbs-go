@@ -12,28 +12,33 @@
         >
           <template v-if="topic.type === 0">
             <h1 class="topic-title">
-              <nuxt-link :to="'/topic/' + topic.topicId">{{
-                topic.title
-              }}</nuxt-link>
+              <nuxt-link :to="'/topic/' + topic.topicId">
+                {{
+                  topic.title
+                }}
+              </nuxt-link>
             </h1>
-            <nuxt-link :to="'/topic/' + topic.topicId" class="text-lg">{{
-              topic.summary
-            }}</nuxt-link>
+            <nuxt-link :to="'/topic/' + topic.topicId" class="text-lg">
+              {{
+                topic.summary
+              }}
+            </nuxt-link>
           </template>
           <template v-if="topic.type === 1">
             <nuxt-link
               v-if="topic.content"
               :to="'/topic/' + topic.topicId"
               class="text-lg"
-              >{{ topic.content }}</nuxt-link
             >
+              {{ topic.content }}
+            </nuxt-link>
             <ul
               v-if="topic.imageList && topic.imageList.length"
               class="topic-image-list"
             >
               <li v-for="(image, index) in topic.imageList" :key="index">
                 <nuxt-link :to="'/topic/' + topic.topicId" class="image-item">
-                  <img v-lazy="image.preview" />
+                  <img v-lazy="image.preview">
                 </nuxt-link>
               </li>
             </ul>
@@ -82,8 +87,7 @@
             <span
               v-if="showSticky && topic.sticky"
               class="topic-sticky-icon px-2"
-              >置顶</span
-            >
+            >置顶</span>
           </div>
           <div class="topic-tags">
             <span>
@@ -91,8 +95,7 @@
                 v-if="topic.node"
                 :to="'/topics/node/' + topic.node.nodeId"
                 :alt="topic.node.name"
-                >{{ topic.node.name }}</nuxt-link
-              >
+              >{{ topic.node.name }}</nuxt-link>
             </span>
           </div>
 
@@ -110,26 +113,26 @@ export default {
   props: {
     topics: {
       type: Array,
-      default() {
+      default () {
         return []
       },
-      required: false,
+      required: false
     },
     showAvatar: {
       type: Boolean,
-      default: true,
+      default: true
     },
     showSticky: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showAd: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   methods: {
-    async like(topic) {
+    async like (topic) {
       try {
         await this.$axios.post('/api/topic/like/' + topic.topicId)
         topic.liked = true
@@ -143,10 +146,10 @@ export default {
         }
       }
     },
-    toTopicDetail(topicId) {
+    toTopicDetail (topicId) {
       this.$linkTo(`/topic/${topicId}`)
-    },
-  },
+    }
+  }
 }
 </script>
 

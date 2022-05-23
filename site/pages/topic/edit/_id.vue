@@ -2,7 +2,9 @@
   <section class="main">
     <div class="container">
       <div class="topic-create-form">
-        <h1 class="title">修改帖子</h1>
+        <h1 class="title">
+          修改帖子
+        </h1>
 
         <div class="field">
           <div class="control">
@@ -25,7 +27,7 @@
               class="input topic-title"
               type="text"
               placeholder="请输入帖子标题"
-            />
+            >
           </div>
         </div>
 
@@ -62,8 +64,7 @@
               :disabled="publishing"
               class="button is-success"
               @click="submitCreate"
-              >提交更改</a
-            >
+            >提交更改</a>
           </div>
         </div>
       </div>
@@ -74,10 +75,10 @@
 <script>
 export default {
   middleware: 'authenticated',
-  async asyncData({ $axios, params }) {
+  async asyncData ({ $axios, params }) {
     const [topic, nodes] = await Promise.all([
       $axios.get('/api/topic/edit/' + params.id),
-      $axios.get('/api/topic/nodes'),
+      $axios.get('/api/topic/nodes')
     ])
     return {
       topic,
@@ -87,37 +88,37 @@ export default {
         title: topic.title,
         tags: topic.tags,
         content: topic.content,
-        hideContent: topic.hideContent,
-      },
+        hideContent: topic.hideContent
+      }
     }
   },
-  data() {
+  data () {
     return {
       publishing: false, // 当前是否正处于发布中...
       postForm: {
         nodeId: 0,
         title: '',
         tags: [],
-        content: '',
-      },
+        content: ''
+      }
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle('修改话题'),
+      title: this.$siteTitle('修改话题')
     }
   },
   computed: {
-    currentUser() {
+    currentUser () {
       return this.$store.state.user.current
     },
-    isEnableHideContent() {
+    isEnableHideContent () {
       return this.$store.state.config.config.enableHideContent
-    },
+    }
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    async submitCreate() {
+    async submitCreate () {
       const me = this
       if (me.publishing) {
         return
@@ -132,22 +133,22 @@ export default {
             title: this.postForm.title,
             content: this.postForm.content,
             hideContent: this.postForm.hideContent,
-            tags: this.postForm.tags ? this.postForm.tags.join(',') : '',
+            tags: this.postForm.tags ? this.postForm.tags.join(',') : ''
           }
         )
         this.$msg({
           message: '修改成功',
-          onClose() {
+          onClose () {
             me.$linkTo('/topic/' + topic.topicId)
-          },
+          }
         })
       } catch (e) {
         console.error(e)
         me.publishing = false
         this.$message.error('提交失败：' + (e.message || e))
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -1,22 +1,18 @@
 <template>
   <nav
     ref="nav"
-    class="navbar has-shadow"
-    role="navigation"
-    aria-label="main navigation"
   >
     <div class="container">
-      <div class="navbar-brand flex items-center">
+      <div>
         <nuxt-link to="/">
           <img
             :alt="config.siteTitle"
             src="~/assets/images/logo.svg"
             style="height: 36px"
-          />
+          >
         </nuxt-link>
         <a
           :class="{ 'is-active': navbarActive }"
-          class="navbar-burger burger"
           data-target="navbarBasic"
           @click="toggleNav"
         >
@@ -32,8 +28,9 @@
             :key="index"
             :to="nav.url"
             class="navbar-item"
-            >{{ nav.title }}</nuxt-link
           >
+            {{ nav.title }}
+          </nuxt-link>
         </div>
 
         <div class="navbar-end">
@@ -72,8 +69,11 @@
           </div>
           <div v-else class="navbar-item">
             <div class="buttons">
-              <nuxt-link class="button login-btn" to="/user/signin"
-                >登录
+              <nuxt-link
+                class="button login-btn"
+                to="/user/signin"
+              >
+                登录
               </nuxt-link>
             </div>
           </div>
@@ -87,24 +87,24 @@
 import UserHelper from '~/common/UserHelper'
 
 export default {
-  data() {
+  data () {
     return {
-      navbarActive: false,
+      navbarActive: false
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
     },
-    isOwnerOrAdmin() {
+    isOwnerOrAdmin () {
       return UserHelper.isOwner(this.user) || UserHelper.isAdmin(this.user)
     },
-    config() {
+    config () {
       return this.$store.state.config.config
-    },
+    }
   },
   methods: {
-    async signout() {
+    async signout () {
       try {
         await this.$store.dispatch('user/signout')
         this.$linkTo('/')
@@ -112,10 +112,10 @@ export default {
         console.error(e)
       }
     },
-    toggleNav() {
+    toggleNav () {
       this.navbarActive = !this.navbarActive
-    },
-  },
+    }
+  }
 }
 </script>
 

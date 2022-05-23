@@ -43,7 +43,7 @@
                 type="text"
                 autocomplete="off"
                 placeholder="请输入昵称"
-              />
+              >
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@
                 type="text"
                 autocomplete="off"
                 placeholder="请输入个人主页"
-              />
+              >
             </div>
           </div>
         </div>
@@ -105,35 +105,35 @@
 <script>
 export default {
   middleware: 'authenticated',
-  async asyncData({ $axios }) {
+  async asyncData ({ $axios }) {
     const user = await $axios.get('/api/user/current')
     const form = { ...user }
     return {
       user,
-      form,
+      form
     }
   },
-  data() {
+  data () {
     return {
       form: {
         nickname: '',
         homePage: '',
-        description: '',
-      },
+        description: ''
+      }
     }
   },
-  head() {
+  head () {
     return {
-      title: this.$siteTitle(this.user.nickname + ' - 个人资料'),
+      title: this.$siteTitle(this.user.nickname + ' - 个人资料')
     }
   },
   methods: {
-    async submitForm() {
+    async submitForm () {
       try {
         await this.$axios.post('/api/user/edit/' + this.user.id, {
           nickname: this.form.nickname,
           homePage: this.form.homePage,
-          description: this.form.description,
+          description: this.form.description
         })
         await this.reload()
         this.$message.success('资料修改成功')
@@ -142,17 +142,17 @@ export default {
         this.$message.error('资料修改失败：' + (e.message || e))
       }
     },
-    onAvatarUpdateSuccess() {
+    onAvatarUpdateSuccess () {
       this.$message.success('头像更新成功')
     },
-    onAvatarUpdateError(e) {
+    onAvatarUpdateError (e) {
       this.$message.error('头像更新失败')
     },
-    async reload() {
+    async reload () {
       this.user = await this.$axios.get('/api/user/current')
       this.form = { ...this.user }
-    },
-  },
+    }
+  }
 }
 </script>
 

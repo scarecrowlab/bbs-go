@@ -13,13 +13,13 @@
       :class="[sizeClass, roundClass, borderClass]"
       :alt="user.nickname"
       @error="error"
-    />
+    >
     <span
       v-else-if="styleText"
       :class="['avatar', sizeClass, roundClass, borderClass]"
       :style="styleText"
     >
-      <img class="node-logo" src="~/assets/logos/avatar.svg" />
+      <img class="node-logo" src="~/assets/logos/avatar.svg">
     </span>
   </nuxt-link>
 </template>
@@ -32,26 +32,26 @@ export default {
   props: {
     user: {
       type: [Object, String],
-      default: () => {},
+      default: () => {}
     },
     size: {
       type: [Number, String],
-      default: 50,
+      default: 50
     },
     round: {
       type: Boolean,
-      default: false,
+      default: false
     },
     hasBorder: {
       type: Boolean,
-      default: false,
+      default: false
     },
     extraStyle: {
       type: [Object],
-      default: () => {},
-    },
+      default: () => {}
+    }
   },
-  data() {
+  data () {
     return {
       loadError: false,
       sizes: {
@@ -66,18 +66,18 @@ export default {
         35: 'font-size: 18px;line-height: 30px;border-radius: 2px',
         30: 'font-size: 18px;line-height: 30px;border-radius: 2px',
         24: 'font-size: 12px;line-height: 24px;border-radius: 2px',
-        20: 'font-size: 10px;line-height: 20px;border-radius: 2px',
-      },
+        20: 'font-size: 10px;line-height: 20px;border-radius: 2px'
+      }
     }
   },
   computed: {
-    hasAvatarUrl() {
+    hasAvatarUrl () {
       return this.avatarUrl
     },
-    avatarUrl() {
+    avatarUrl () {
       return this.user.smallAvatar || this.user.avatar
     },
-    usernameAt() {
+    usernameAt () {
       let c = this.user.nickname
         ? this.user.nickname.charAt(0).toUpperCase()
         : ''
@@ -86,26 +86,26 @@ export default {
       }
       return c
     },
-    styleText() {
+    styleText () {
       return `background-color: #${stringToColor(this.usernameAt)};${
         this.sizes[this.size]
       }`
     },
-    sizeClass() {
+    sizeClass () {
       return ['avatar-size-' + this.size]
     },
-    roundClass() {
+    roundClass () {
       return this.round ? 'round' : ''
     },
-    borderClass() {
+    borderClass () {
       return this.hasBorder ? 'has-border' : ''
-    },
+    }
   },
   methods: {
-    error() {
+    error () {
       this.loadError = true
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -8,7 +8,9 @@
       </div>
       <div class="nav-center">
         <div class="menu-item">
-          <nuxt-link to="/">首页</nuxt-link>
+          <nuxt-link to="/">
+            首页
+          </nuxt-link>
         </div>
         <div
           class="menu-item"
@@ -38,44 +40,44 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       sidebarActive: false,
-      nodesActive: false,
+      nodesActive: false
     }
   },
   computed: {
-    isShowOverlay() {
+    isShowOverlay () {
       return (
         this.$store.state.env.showMobileSidebar ||
         this.$store.state.env.showMobileNodes
       )
     },
-    overlayZIndex() {
+    overlayZIndex () {
       return this.isShowSidebar ? 40 : 20
     },
-    isShowSidebar() {
+    isShowSidebar () {
       return this.$store.state.env.showMobileSidebar
     },
-    isShowNodes() {
+    isShowNodes () {
       return this.$store.state.env.showMobileNodes
-    },
+    }
   },
   methods: {
-    switchSidebar() {
+    switchSidebar () {
       this.$store.commit('env/setShowMobileSidebar', !this.isShowSidebar)
       if (this.isShowSidebar) {
         this.$store.commit('env/setShowMobileNodes', false)
       }
     },
-    switchNodes() {
+    switchNodes () {
       this.$store.commit('env/setShowMobileNodes', !this.isShowNodes)
     },
-    close() {
+    close () {
       this.$store.commit('env/setShowMobileNodes', false)
       this.$store.commit('env/setShowMobileSidebar', false)
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped></style>

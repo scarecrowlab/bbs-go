@@ -7,7 +7,9 @@
     <follow-widget :user="localUser" />
 
     <div v-if="isAdmin" class="widget">
-      <div class="widget-header">操作</div>
+      <div class="widget-header">
+        操作
+      </div>
       <div class="widget-content">
         <ul class="operations">
           <li v-if="localUser.forbidden">
@@ -38,52 +40,52 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      localUser: Object.assign({}, this.user),
+      localUser: Object.assign({}, this.user)
     }
   },
   computed: {
-    currentUser() {
+    currentUser () {
       return this.$store.state.user.current
     },
     // 是否是主人态
-    isOwner() {
+    isOwner () {
       const current = this.$store.state.user.current
       return this.localUser && current && this.localUser.id === current.id
     },
-    isSiteOwner() {
+    isSiteOwner () {
       return UserHelper.isOwner(this.currentUser)
     },
-    isAdmin() {
+    isAdmin () {
       return (
         UserHelper.isOwner(this.currentUser) ||
         UserHelper.isAdmin(this.currentUser)
       )
-    },
+    }
   },
   methods: {
-    forbidden(days) {
+    forbidden (days) {
       const me = this
       const msg = days > 0 ? '是否禁言该用户？' : '是否永久禁言该用户？'
       this.$confirm(msg, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning',
+        type: 'warning'
       })
         .then(() => {
           me.doForbidden(days)
         })
         .catch(() => {})
     },
-    async doForbidden(days) {
+    async doForbidden (days) {
       try {
         await this.$axios.post('/api/user/forbidden', {
           userId: this.localUser.id,
-          days,
+          days
         })
         this.localUser.forbidden = true
         this.$message.success('禁言成功')
@@ -91,19 +93,19 @@ export default {
         this.$message.error('禁言失败')
       }
     },
-    async removeForbidden() {
+    async removeForbidden () {
       try {
         await this.$axios.post('/api/user/forbidden', {
           userId: this.localUser.id,
-          days: 0,
+          days: 0
         })
         this.localUser.forbidden = false
         this.$message.success('取消禁言成功')
       } catch (e) {
         this.$message.error('取消禁言失败')
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

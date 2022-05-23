@@ -14,13 +14,15 @@
               恭喜，邮箱验证成功。你的邮箱为：{{ email }}
             </div>
             <div v-else>
-              邮箱验证失败<span v-if="message" class="has-text-danger"
-                >&nbsp;原因：{{ message }}</span
-              >，请前往&nbsp;<nuxt-link
+              邮箱验证失败<span
+                v-if="message"
+                class="has-text-danger"
+              >&nbsp;原因：{{ message }}</span>，请前往&nbsp;<nuxt-link
                 to="/user/profile"
                 style="font-weight: 700"
-                >个人资料 &gt; 账号设置</nuxt-link
-              >&nbsp;页面尝试重新发送验证邮件。
+              >
+                个人资料 &gt; 账号设置
+              </nuxt-link>&nbsp;页面尝试重新发送验证邮件。
             </div>
           </div>
         </article>
@@ -31,7 +33,7 @@
 
 <script>
 export default {
-  async asyncData({ $axios, query }) {
+  async asyncData ({ $axios, query }) {
     try {
       const data = await $axios.post(
         '/api/user/verify_email?token=' + query.token
@@ -40,7 +42,7 @@ export default {
     } catch (e) {
       return { success: false, message: e.message || '' }
     }
-  },
+  }
 }
 </script>
 

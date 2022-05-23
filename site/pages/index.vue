@@ -3,7 +3,9 @@
     <div class="container main-container left-main size-320">
       <div class="left-container">
         <div class="main-content no-padding no-bg topics-wrapper">
-          <div class="topics-nav"><topics-nav :nodes="nodes" /></div>
+          <div class="topics-nav">
+            <topics-nav :nodes="nodes" />
+          </div>
           <div class="topics-main">
             <sticky-topics :node-id="0" />
             <load-more
@@ -20,8 +22,7 @@
       <div class="right-container">
         <check-in />
         <site-notice />
-        <!-- <score-rank :score-rank="scoreRank" /> -->
-        <friend-links :links="links" />
+        <score-rank :score-rank="scoreRank" />
       </div>
     </div>
   </section>
@@ -31,34 +32,34 @@
 import '../assets/globals.css'
 
 export default {
-  async asyncData({ $axios, store }) {
+  async asyncData ({ $axios, store }) {
     store.commit('env/setCurrentNodeId', 0) // 设置当前所在node
     try {
       const [nodes, topicsPage, scoreRank, links] = await Promise.all([
         $axios.get('/api/topic/nodes'),
         $axios.get('/api/topic/topics'),
         $axios.get('/api/user/score/rank'),
-        $axios.get('/api/link/toplinks'),
+        $axios.get('/api/link/toplinks')
       ])
       return { nodes, topicsPage, scoreRank, links }
     } catch (e) {
       console.error(e)
     }
   },
-  data() {},
-  head() {
+  data () {},
+  head () {
     return {
       title: this.$siteTitle(),
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.$siteDescription(),
+          content: this.$siteDescription()
         },
-        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() },
-      ],
+        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() }
+      ]
     }
-  },
+  }
 }
 </script>
 

@@ -20,8 +20,9 @@
                       itemscope
                       itemtype="http://schema.org/Person"
                       :to="'/user/' + topic.user.id"
-                      >{{ topic.user.nickname }}</nuxt-link
                     >
+                      {{ topic.user.nickname }}
+                    </nuxt-link>
                   </div>
                   <div class="topic-meta">
                     <span class="meta-item">
@@ -31,8 +32,7 @@
                           topic.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')
                         "
                         itemprop="datePublished"
-                        >{{ topic.createTime | prettyDate }}</time
-                      >
+                      >{{ topic.createTime | prettyDate }}</time>
                     </span>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
                   v-lazy-container="{ selector: 'img' }"
                   class="topic-content-detail"
                   v-html="topic.content"
-                ></div>
+                />
                 <ul
                   v-if="topic.imageList && topic.imageList.length"
                   v-viewer
@@ -65,7 +65,7 @@
                 >
                   <li v-for="(image, index) in topic.imageList" :key="index">
                     <div class="image-item">
-                      <img :src="image.preview" :data-src="image.url" />
+                      <img :src="image.preview" :data-src="image.url">
                     </div>
                   </li>
                 </ul>
@@ -95,15 +95,17 @@
                   v-if="topic.node"
                   :to="'/topics/node/' + topic.node.nodeId"
                   class="topic-tag"
-                  >{{ topic.node.name }}</nuxt-link
                 >
+                  {{ topic.node.name }}
+                </nuxt-link>
                 <nuxt-link
                   v-for="tag in topic.tags"
                   :key="tag.tagId"
                   :to="'/topics/tag/' + tag.tagId"
                   class="topic-tag"
-                  >#{{ tag.tagName }}</nuxt-link
                 >
+                  #{{ tag.tagName }}
+                </nuxt-link>
               </div>
 
               <!-- 点赞用户列表 -->
@@ -189,14 +191,14 @@
 import CommonHelper from '~/common/CommonHelper'
 
 export default {
-  async asyncData({ $axios, params, error }) {
+  async asyncData ({ $axios, params, error }) {
     let topic
     try {
       topic = await $axios.get('/api/topic/' + params.id)
     } catch (e) {
       error({
         statusCode: 404,
-        message: '话题不存在',
+        message: '话题不存在'
       })
       return
     }
@@ -205,22 +207,22 @@ export default {
       $axios.get('/api/like/liked', {
         params: {
           entityType: 'topic',
-          entityId: params.id,
-        },
+          entityId: params.id
+        }
       }),
       $axios.get('/api/favorite/favorited', {
         params: {
           entityType: 'topic',
-          entityId: params.id,
-        },
+          entityId: params.id
+        }
       }),
       $axios.get('/api/comment/comments', {
         params: {
           entityType: 'topic',
-          entityId: params.id,
-        },
+          entityId: params.id
+        }
       }),
-      $axios.get('/api/topic/recentlikes/' + params.id),
+      $axios.get('/api/topic/recentlikes/' + params.id)
     ])
 
     return {
@@ -228,22 +230,22 @@ export default {
       commentsPage,
       favorited: favorited.favorited,
       liked: liked.liked,
-      likeUsers,
+      likeUsers
     }
   },
-  data() {
+  data () {
     return {
-      hideContent: null,
+      hideContent: null
     }
   },
-  head() {
+  head () {
     return {
       title: this.$topicSiteTitle(this.topic),
       link: [
         {
           rel: 'stylesheet',
-          href: CommonHelper.highlightCss,
-        },
+          href: CommonHelper.highlightCss
+        }
       ],
       script: [
         {
@@ -252,17 +254,17 @@ export default {
           callback: () => {
             // 客户端渲染的时候执行这里进行代码高亮
             CommonHelper.initHighlight()
-          },
-        },
-      ],
+          }
+        }
+      ]
     }
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user.current
-    },
+    }
   },
-  mounted() {
+  mounted () {
     // 加载隐藏内容
     this.getHideContent()
     // 为了解决服务端渲染时，没有刷新meta中的script，callback没执行，导致代码高亮失败的问题
@@ -270,17 +272,17 @@ export default {
     CommonHelper.initHighlight(this)
   },
   methods: {
-    commentCreated() {
+    commentCreated () {
       this.getHideContent()
     },
-    async addFavorite(topicId) {
+    async addFavorite (topicId) {
       try {
         if (this.favorited) {
           await this.$axios.get('/api/favorite/delete', {
             params: {
               entityType: 'topic',
-              entityId: topicId,
-            },
+              entityId: topicId
+            }
           })
           this.favorited = false
           this.$message.success('已取消收藏')
@@ -294,7 +296,7 @@ export default {
         this.$message.error('收藏失败：' + (e.message || e))
       }
     },
-    async like(topic) {
+    async like (topic) {
       try {
         if (this.liked) {
           return
@@ -313,18 +315,18 @@ export default {
         }
       }
     },
-    async getHideContent() {
+    async getHideContent () {
       try {
         this.hideContent = await this.$axios.get('/api/topic/hide_content', {
           params: {
-            topicId: this.topic.topicId,
-          },
+            topicId: this.topic.topicId
+          }
         })
       } catch (e) {
         console.log(e)
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -20,7 +20,7 @@
         @keyup.down="changeSelect(1)"
         @keyup.up="changeSelect(-1)"
         @keyup.enter="searchBoxOnEnter"
-      />
+      >
       <span>
         <i class="iconfont icon-search" />
       </span>
@@ -49,35 +49,35 @@ const maxHistoryLen = 10
 
 export default {
   directives: {
-    ClickOutside,
+    ClickOutside
   },
-  data() {
+  data () {
     return {
       keyword: '',
       inputFocus: false,
       selectedIndex: -1,
-      allHistories: [],
+      allHistories: []
     }
   },
   computed: {
-    showHistories() {
+    showHistories () {
       return this.inputFocus && this.histories && this.histories.length
     },
-    histories() {
+    histories () {
       if (this.keyword) {
         return this.allHistories.filter((history) => {
           return history.includes(this.keyword)
         })
       }
       return this.allHistories
-    },
+    }
   },
-  mounted() {
+  mounted () {
     this.keyword = this.$store.state.search.keyword
     this.loadAllHistories()
   },
   methods: {
-    searchBoxOnEnter() {
+    searchBoxOnEnter () {
       // 如果选中了历史搜索记录，那么使用历史搜索记录
       if (
         this.selectedIndex >= 0 &&
@@ -88,27 +88,27 @@ export default {
       }
       this.submitSearch()
     },
-    historyItemClick(keyword) {
+    historyItemClick (keyword) {
       this.keyword = keyword
       this.submitSearch()
     },
-    submitSearch() {
+    submitSearch () {
       if (!this.keyword) {
         return
       }
       this.addHistories()
       window.location = '/search?q=' + encodeURIComponent(this.keyword)
     },
-    onFocus() {
+    onFocus () {
       this.inputFocus = true
     },
-    onBlur() {
+    onBlur () {
       this.inputFocus = false
     },
-    onInput() {
+    onInput () {
       this.selectedIndex = -1
     },
-    changeSelect(delta) {
+    changeSelect (delta) {
       if (!this.histories || !this.histories.length) {
         return
       }
@@ -122,13 +122,13 @@ export default {
       }
       this.selectedIndex = index
     },
-    historyItemMouseOver(index) {
+    historyItemMouseOver (index) {
       this.selectedIndex = index
     },
-    historyItemMouseOut() {
+    historyItemMouseOut () {
       this.selectedIndex = -1
     },
-    loadAllHistories() {
+    loadAllHistories () {
       try {
         this.allHistories =
           JSON.parse(localStorage.getItem(localStorageKey)) || []
@@ -136,7 +136,7 @@ export default {
         this.allHistories = []
       }
     },
-    addHistories() {
+    addHistories () {
       if (!this.keyword) {
         return
       }
@@ -153,7 +153,7 @@ export default {
       localStorage.setItem(localStorageKey, JSON.stringify(newArray))
       this.allHistories = newArray
     },
-    deleteHistory(kw) {
+    deleteHistory (kw) {
       const newArray = []
       if (this.allHistories && this.allHistories.length) {
         for (let i = 0; i < this.allHistories.length; i++) {
@@ -165,8 +165,8 @@ export default {
       }
       localStorage.setItem(localStorageKey, JSON.stringify(newArray))
       this.allHistories = newArray
-    },
-  },
+    }
+  }
 }
 </script>
 
