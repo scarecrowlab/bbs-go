@@ -43,11 +43,11 @@ func CopyImage(url string) (string, error) {
 }
 
 func getUploader() uploader {
-	if IsEnabledOss() {
-		return aliyun
-	} else {
+	// if IsEnabledOss() {
+	// 	return aliyun
+	// } else {
 		return local
-	}
+	// }
 }
 
 // IsEnabledOss 是否启用阿里云oss

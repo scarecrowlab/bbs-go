@@ -37,7 +37,7 @@ func Router() {
 		AllowedHeaders:   []string{"*"},
 	}))
 	app.AllowMethods(iris.MethodOptions)
-
+	app.HandleDir("/images", iris.Dir("./www/upload/images"))
 	app.OnAnyErrorCode(func(ctx iris.Context) {
 		path := ctx.Path()
 		var err error
@@ -50,7 +50,7 @@ func Router() {
 	})
 
 	app.Any("/", func(i iris.Context) {
-		_, _ = i.HTML("<h1>Powered by bbs-go</h1>")
+		_, _ = i.HTML("success")
 	})
 
 	// api
