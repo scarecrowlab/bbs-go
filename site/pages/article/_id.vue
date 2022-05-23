@@ -51,7 +51,7 @@
 
                 <div class="article-tool">
                   <span v-if="hasPermission">
-                    <v-modal name="dialog"></v-modal>
+                    <v-dialog />
                     <a @click="deleteArticle(article.articleId)">
                       <i class="iconfont icon-delete" />&nbsp;删除
                     </a>
@@ -64,7 +64,7 @@
                   <span>
                     <a @click="addFavorite(article.articleId)">
                       <i class="iconfont icon-favorite" />&nbsp;{{
-                        favorited ? '已收藏' : '收藏'
+                        favorited ? "已收藏" : "收藏"
                       }}
                     </a>
                   </span>
@@ -147,57 +147,57 @@
 </template>
 
 <script>
-import UserHelper from '~/common/UserHelper'
-import CommonHelper from '~/common/CommonHelper'
+import UserHelper from "~/common/UserHelper";
+import CommonHelper from "~/common/CommonHelper";
 
 export default {
   async asyncData({ $axios, params, error }) {
-    let article
+    let article;
     try {
-      article = await $axios.get('/api/article/' + params.id)
+      article = await $axios.get("/api/article/" + params.id);
     } catch (e) {
       error({
         statusCode: e.errorCode,
         message: e.message,
-      })
-      return
+      });
+      return;
     }
     const [commentsPage, favorited, nearlyArticles, relatedArticles] =
       await Promise.all([
-        $axios.get('/api/comment/comments', {
+        $axios.get("/api/comment/comments", {
           params: {
-            entityType: 'article',
+            entityType: "article",
             entityId: article.articleId,
           },
         }),
-        $axios.get('/api/favorite/favorited', {
+        $axios.get("/api/favorite/favorited", {
           params: {
-            entityType: 'article',
+            entityType: "article",
             entityId: params.id,
           },
         }),
-        $axios.get('/api/article/nearly/' + article.articleId),
-        $axios.get('/api/article/related/' + article.articleId),
-      ])
+        $axios.get("/api/article/nearly/" + article.articleId),
+        $axios.get("/api/article/related/" + article.articleId),
+      ]);
 
     // 作品关键字
-    let keywords = ''
-    const keywordsArr = []
+    let keywords = "";
+    const keywordsArr = [];
     if (article.tags && article.tags.length > 0) {
       article.tags.forEach((tag) => {
-        keywordsArr.push(tag.tagName)
-      })
+        keywordsArr.push(tag.tagName);
+      });
       if (keywordsArr.length > 0) {
-        keywords = keywordsArr.join(',')
+        keywords = keywordsArr.join(",");
       }
     }
 
     // 作品描述
-    let description = ''
+    let description = "";
     if (article.summary && article.summary.length > 0) {
-      description = article.summary.substr(0, 128)
+      description = article.summary.substr(0, 128);
       if (article.summary.length > 128) {
-        description += '...'
+        description += "...";
       }
     }
 
@@ -209,32 +209,32 @@ export default {
       commentsPage,
       keywords,
       description,
-    }
+    };
   },
   head() {
     return {
       title: this.$siteTitle(this.article.title),
       meta: [
-        { hid: 'description', name: 'description', content: this.description },
-        { hid: 'keywords', name: 'keywords', content: this.keywords },
+        { hid: "description", name: "description", content: this.description },
+        { hid: "keywords", name: "keywords", content: this.keywords },
       ],
       link: [
         {
-          rel: 'stylesheet',
+          rel: "stylesheet",
           href: CommonHelper.highlightCss,
         },
       ],
       script: [
         {
-          type: 'text/javascript',
+          type: "text/javascript",
           src: CommonHelper.highlightScript,
           callback: () => {
             // 客户端渲染的时候执行这里进行代码高亮
-            CommonHelper.initHighlight()
+            CommonHelper.initHighlight();
           },
         },
       ],
-    }
+    };
   },
   computed: {
     hasPermission() {
@@ -242,93 +242,91 @@ export default {
         this.isOwner ||
         UserHelper.isOwner(this.user) ||
         UserHelper.isAdmin(this.user)
-      )
+      );
     },
     isOwner() {
       if (!this.user || !this.article) {
-        return false
+        return false;
       }
-      return this.user.id === this.article.user.id
+      return this.user.id === this.article.user.id;
     },
     isPending() {
-      return this.article.status === 2
+      return this.article.status === 2;
     },
     user() {
-      return this.$store.state.user.current
+      return this.$store.state.user.current;
     },
   },
   mounted() {
     // 为了解决服务端渲染时，没有刷新meta中的script，callback没执行，导致代码高亮失败的问题
     // 所以服务端渲染时会调用这里的方法进行代码高亮
-    CommonHelper.initHighlight(this)
+    CommonHelper.initHighlight(this);
   },
   methods: {
     deleteArticle(articleId) {
       if (!process.client) {
-        return
+        return;
       }
-      const me = this
+      const me = this;
 
       this.$modal.show(
-        'dialog',
+        "dialog",
         {
-          title: 'The standard Lorem Ipsum passage',
+          title: "删除作品",
+          text: "删除后不可恢复",
           buttons: [
             {
-              title: '确认删除',
+              title: "确认",
               handler: () => {
-                this.$modal.hide('dialog')
+                me.$axios
+                  .post("/api/article/delete/" + articleId)
+                  .then(() => {
+                    me.$msg({
+                      message: "删除成功",
+                      onClose() {
+                        me.$linkTo("/articles");
+                      },
+                    });
+                  })
+                  .catch((e) => {
+                    me.$message.error("删除失败：" + (e.message || e));
+                  });
               },
             },
             {
-              title: 'Cancel',
+              title: "取消",
               handler: () => {
-                this.$modal.hide('dialog')
+                this.$modal.hide("dialog");
               },
             },
           ],
         },
         { dialog: true }
-      )
-      // this.$confirm('是否确认删除该作品？').then(function () {
-      //   me.$axios
-      //     .post('/api/article/delete/' + articleId)
-      //     .then(() => {
-      //       me.$msg({
-      //         message: '删除成功',
-      //         onClose() {
-      //           me.$linkTo('/articles')
-      //         },
-      //       })
-      //     })
-      //     .catch((e) => {
-      //       me.$message.error('删除失败：' + (e.message || e))
-      //     })
-      // })
+      );
     },
     async addFavorite(articleId) {
       try {
         if (this.favorited) {
-          await this.$axios.get('/api/favorite/delete', {
+          await this.$axios.get("/api/favorite/delete", {
             params: {
-              entityType: 'article',
+              entityType: "article",
               entityId: articleId,
             },
-          })
-          this.favorited = false
-          this.$message.success('已取消收藏')
+          });
+          this.favorited = false;
+          this.$message.success("已取消收藏");
         } else {
-          await this.$axios.post('/api/article/favorite/' + articleId)
-          this.favorited = true
-          this.$message.success('收藏成功')
+          await this.$axios.post("/api/article/favorite/" + articleId);
+          this.favorited = true;
+          this.$message.success("收藏成功");
         }
       } catch (e) {
-        console.error(e)
-        this.$message.error('收藏失败：' + (e.message || e))
+        console.error(e);
+        this.$message.error("收藏失败：" + (e.message || e));
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped></style>

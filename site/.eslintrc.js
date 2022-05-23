@@ -2,15 +2,14 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: 'babel-eslint'
   },
   extends: [
     '@nuxtjs',
-    'plugin:prettier/recommended',
-    'plugin:nuxt/recommended',
+    'plugin:nuxt/recommended'
   ],
   // add your custom rules here
   rules: {
@@ -18,12 +17,12 @@ module.exports = {
       'warn',
       {
         vars: 'all',
-        args: 'none',
-      },
+        args: 'none'
+      }
     ],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/no-v-html': 'off',
-    'array-callback-return': 'off',
-  },
+    'array-callback-return': 'off'
+  }
 }
