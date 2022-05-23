@@ -3,9 +3,9 @@
     <li
       v-for="topic in topics"
       :key="topic.topicId"
-      class="topic-item rounded-sm shadow-sm"
+      class="topic-item rounded-sm "
     >
-      <div class="flex flex-col w-full">
+      <div class="flex flex-col bg-white m-3 p-3">
         <div
           class="topic-content py-2"
           :class="{ 'topic-tweet': topic.type === 1 }"
@@ -44,7 +44,7 @@
             </ul>
           </template>
         </div>
-        <div class="flex flex-row text-xs mt-2">
+        <div class="flex flex-row text-xs ">
           <div class="flex flex-row flex-grow items-center">
             <div
               class="topic-avatar pr-2"

@@ -1,86 +1,72 @@
 <template>
-  <nav
-    ref="nav"
-  >
-    <div class="container">
-      <div>
-        <nuxt-link to="/">
-          <img
-            :alt="config.siteTitle"
-            src="~/assets/images/logo.svg"
-            style="height: 36px"
-          >
-        </nuxt-link>
-        <a
-          :class="{ 'is-active': navbarActive }"
-          data-target="navbarBasic"
-          @click="toggleNav"
+  <div class=" h-16  flex flex-row items-center  container  m-auto">
+    <div>
+      <nuxt-link to="/">
+        <img
+          :alt="config.siteTitle"
+          src="~/assets/images/logo.svg"
+          style="height: 36px"
         >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </a>
+      </nuxt-link>
+    </div>
+
+    <div class="navbar-start flex flex-row flex-grow">
+      <nuxt-link
+        v-for="(nav, index) in config.siteNavs"
+        :key="index"
+        :to="nav.url"
+        class="px-2"
+      >
+        {{ nav.title }}
+      </nuxt-link>
+    </div>
+
+    <div class="navbar-end flex flex-row">
+      <div class="navbar-item">
+        <search-input />
       </div>
-      <div :class="{ 'is-active': navbarActive }" class="navbar-menu">
-        <div class="navbar-start">
-          <nuxt-link
-            v-for="(nav, index) in config.siteNavs"
-            :key="index"
-            :to="nav.url"
-            class="navbar-item"
-          >
-            {{ nav.title }}
-          </nuxt-link>
-        </div>
 
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <search-input />
-          </div>
+      <div class="navbar-item">
+        <create-topic-btn />
+      </div>
 
-          <div class="navbar-item">
-            <create-topic-btn />
-          </div>
+      <msg-notice v-if="user" />
 
-          <msg-notice v-if="user" />
-
-          <div
-            v-if="user"
-            class="navbar-item has-dropdown is-hoverable user-menus"
-          >
-            <nuxt-link :to="'/user/' + user.id" class="navbar-link">
-              <client-only><avatar :user="user" :size="30" /></client-only>
-              <span class="user-menus-nickname">{{ user.nickname }}</span>
+      <div
+        v-if="user"
+        class="navbar-item has-dropdown is-hoverable user-menus"
+      >
+        <nuxt-link :to="'/user/' + user.id" class="navbar-link flex flex-row">
+          <client-only><avatar :user="user" :size="30" /></client-only>
+          <span class="user-menus-nickname">{{ user.nickname }}</span>
+        </nuxt-link>
+        <!-- <div class="navbar-dropdown bg-white">
+            <nuxt-link class="navbar-item" :to="'/user/' + user.id">
+              <i class="iconfont icon-username" />&nbsp;个人中心
             </nuxt-link>
-            <div class="navbar-dropdown bg-white">
-              <nuxt-link class="navbar-item" :to="'/user/' + user.id">
-                <i class="iconfont icon-username" />&nbsp;个人中心
-              </nuxt-link>
-              <nuxt-link class="navbar-item" to="/user/favorites">
-                <i class="iconfont icon-favorites" />&nbsp;我的收藏
-              </nuxt-link>
-              <nuxt-link class="navbar-item" to="/user/profile">
-                <i class="iconfont icon-username" />&nbsp;编辑资料
-              </nuxt-link>
-              <a class="navbar-item" @click="signout">
-                <i class="iconfont icon-log-out" />&nbsp;退出登录
-              </a>
-            </div>
-          </div>
-          <div v-else class="navbar-item">
-            <div class="buttons">
-              <nuxt-link
-                class="button login-btn"
-                to="/user/signin"
-              >
-                登录
-              </nuxt-link>
-            </div>
-          </div>
+            <nuxt-link class="navbar-item" to="/user/favorites">
+              <i class="iconfont icon-favorites" />&nbsp;我的收藏
+            </nuxt-link>
+            <nuxt-link class="navbar-item" to="/user/profile">
+              <i class="iconfont icon-username" />&nbsp;编辑资料
+            </nuxt-link>
+            <a class="navbar-item" @click="signout">
+              <i class="iconfont icon-log-out" />&nbsp;退出登录
+            </a>
+          </div> -->
+      </div>
+      <div v-else class="navbar-item">
+        <div class="buttons">
+          <nuxt-link
+            class="button login-btn"
+            to="/user/signin"
+          >
+            登录
+          </nuxt-link>
         </div>
       </div>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>

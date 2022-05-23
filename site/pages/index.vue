@@ -1,29 +1,23 @@
 <template>
-  <section class="mt-10">
-    <div class="container main-container left-main size-320">
-      <div class="left-container">
-        <div class="main-content no-padding no-bg topics-wrapper">
-          <div class="topics-nav">
-            <topics-nav :nodes="nodes" />
-          </div>
-          <div class="topics-main">
-            <sticky-topics :node-id="0" />
-            <load-more
-              v-if="topicsPage"
-              v-slot="{ results }"
-              :init-data="topicsPage"
-              url="/api/topic/topics"
-            >
-              <topic-list :topics="results" :show-ad="true" />
-            </load-more>
-          </div>
-        </div>
+  <section class=" container flex flex-row m-auto ">
+    <topics-nav class="left-container    w-60 border-r" :nodes="nodes" />
+    <div class="center-container flex-grow  bg-gray-50">
+      <div class="topics-main">
+        <sticky-topics :node-id="0" />
+        <load-more
+          v-if="topicsPage"
+          v-slot="{ results }"
+          :init-data="topicsPage"
+          url="/api/topic/topics"
+        >
+          <topic-list :topics="results" :show-ad="true" />
+        </load-more>
       </div>
-      <div class="right-container">
-        <check-in />
-        <site-notice />
-        <score-rank :score-rank="scoreRank" />
-      </div>
+    </div>
+    <div class="right-container border-l  pl-5 pt-5">
+      <check-in />
+      <site-notice />
+      <score-rank :score-rank="scoreRank" />
     </div>
   </section>
 </template>

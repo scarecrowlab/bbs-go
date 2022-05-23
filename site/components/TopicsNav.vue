@@ -1,5 +1,5 @@
 <template>
-  <nav class="dock-nav border">
+  <nav class="dock-nav">
     <ul>
       <li :class="{ active: currentNodeId === 0 }">
         <nuxt-link to="/topics/node/newest">
@@ -57,9 +57,6 @@ export default {
   display: block;
   position: sticky;
   top: 10px;
-
-  width: 150px;
-  border-radius: 2px;
 
   transition: all 0.2s linear;
 
