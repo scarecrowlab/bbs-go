@@ -1,5 +1,5 @@
 <template>
-  <section class="main">
+  <section class="main m-10">
     <div class="container">
       <div class="main-body no-bg">
         <div class="widget signin">
@@ -70,29 +70,6 @@
             </div>
 
             <div class="field">
-              <label class="label">验证码</label>
-              <div class="control has-icons-left">
-                <div class="field is-horizontal">
-                  <div class="field login-captcha-input">
-                    <input
-                      v-model="captchaCode"
-                      class="input"
-                      type="text"
-                      placeholder="验证码"
-                      @keyup.enter="signup"
-                    />
-                    <span class="icon is-small is-left"
-                      ><i class="iconfont icon-captcha"
-                    /></span>
-                  </div>
-                  <div v-if="captchaUrl" class="field login-captcha-img">
-                    <a @click="showCaptcha"><img :src="captchaUrl" /></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="field">
               <div class="control">
                 <button class="button is-success" @click="signup">注册</button>
                 <nuxt-link class="button is-text" to="/user/signin">
@@ -135,9 +112,6 @@ export default {
       return this.$store.state.config.config.loginMethod
     },
   },
-  mounted() {
-    this.showCaptcha()
-  },
   methods: {
     async signup() {
       try {
@@ -160,16 +134,6 @@ export default {
       } catch (err) {
         this.$message.error(err.message || err)
         await this.showCaptcha()
-      }
-    },
-    async showCaptcha() {
-      try {
-        const ret = await this.$axios.get('/api/captcha/request')
-        this.captchaId = ret.captchaId
-        this.captchaUrl = ret.captchaUrl
-        this.captchaCode = ''
-      } catch (e) {
-        this.$message.error(e.message || e)
       }
     },
   },

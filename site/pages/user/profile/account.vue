@@ -360,7 +360,6 @@ export default {
       }
     },
     async requestEmailVerify() {
-      this.$nuxt.$loading.start()
       try {
         await this.$axios.post('/api/user/send_verify_email')
         this.$message.success(
@@ -368,8 +367,6 @@ export default {
         )
       } catch (err) {
         this.$message.error('请求验证失败：' + (err.message || err))
-      } finally {
-        this.$nuxt.$loading.finish()
       }
     },
     async reload() {

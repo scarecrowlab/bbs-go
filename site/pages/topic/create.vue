@@ -85,26 +85,6 @@
           </div>
         </div>
 
-        <div v-if="captchaUrl" class="field is-horizontal">
-          <div class="field control has-icons-left">
-            <input
-              v-model="captchaCode"
-              class="input"
-              type="text"
-              placeholder="验证码"
-              style="max-width: 150px; margin-right: 20px"
-            />
-            <span class="icon is-small is-left">
-              <i class="iconfont icon-captcha" />
-            </span>
-          </div>
-          <div class="field">
-            <a @click="showCaptcha">
-              <img :src="captchaUrl" style="height: 40px" />
-            </a>
-          </div>
-        </div>
-
         <div class="field is-grouped">
           <div class="control">
             <a

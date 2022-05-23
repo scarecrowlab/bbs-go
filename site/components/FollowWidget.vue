@@ -15,13 +15,8 @@
       </div>
       <div v-else class="widget-tips">没有更多内容了</div>
     </div>
-
-    <el-dialog
-      title="关注"
-      :visible.sync="showFollowDialog"
-      custom-class="my-dialog"
-    >
-      <div v-loading="followDialogLoading">
+    <v-modal name="showFollowDialog">
+      <div v-loading="followDialogLoading" class="m-10">
         <load-more
           v-if="followPage"
           ref="commentsLoadMore"
@@ -34,7 +29,7 @@
         </load-more>
         <div v-else>没数据</div>
       </div>
-    </el-dialog>
+    </v-modal>
   </div>
 </template>
 
@@ -68,6 +63,7 @@ export default {
       await this.loadData()
     },
     async showMore() {
+      this.$modal.show('showFollowDialog')
       this.showFollowDialog = true
       this.followDialogLoading = true
       try {

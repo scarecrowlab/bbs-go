@@ -1,5 +1,5 @@
 <template>
-  <section class="main">
+  <section class="main m-10">
     <div class="container">
       <div class="main-body no-bg">
         <div class="widget signin">
@@ -39,29 +39,6 @@
               </div>
 
               <div class="field">
-                <label class="label">验证码</label>
-                <div class="control has-icons-left">
-                  <div class="field is-horizontal">
-                    <div class="field login-captcha-input">
-                      <input
-                        v-model="captchaCode"
-                        class="input"
-                        type="text"
-                        placeholder="验证码"
-                        @keyup.enter="submitLogin"
-                      />
-                      <span class="icon is-small is-left"
-                        ><i class="iconfont icon-captcha"
-                      /></span>
-                    </div>
-                    <div v-if="captchaUrl" class="field login-captcha-img">
-                      <a @click="showCaptcha"><img :src="captchaUrl" /></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field">
                 <button class="button is-success" @click="submitLogin">
                   登录
                 </button>
@@ -88,9 +65,6 @@ export default {
     return {
       username: '',
       password: '',
-      captchaId: '',
-      captchaUrl: '',
-      captchaCode: '',
     }
   },
   head() {
@@ -109,12 +83,6 @@ export default {
       return this.$store.state.config.config.loginMethod
     },
   },
-  mounted() {
-    if (this.redirectIfLogined()) {
-      return
-    }
-    this.showCaptcha()
-  },
   methods: {
     async submitLogin() {
       try {
@@ -124,10 +92,6 @@ export default {
         }
         if (!this.password) {
           this.$message.error('请输入密码')
-          return
-        }
-        if (!this.captchaCode) {
-          this.$message.error('请输入验证码')
           return
         }
         const user = await this.$store.dispatch('user/signin', {
@@ -147,19 +111,6 @@ export default {
       } catch (e) {
         this.$message.error(e.message || e)
         await this.showCaptcha()
-      }
-    },
-    async showCaptcha() {
-      try {
-        const ret = await this.$axios.get('/api/captcha/request', {
-          params: {
-            captchaId: this.captchaId || '',
-          },
-        })
-        this.captchaId = ret.captchaId
-        this.captchaUrl = ret.captchaUrl
-      } catch (e) {
-        this.$message.error(e.message || e)
       }
     },
     /**

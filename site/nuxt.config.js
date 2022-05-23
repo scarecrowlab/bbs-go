@@ -17,12 +17,6 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
   },
-
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: { color: '#FFB90F' },
-
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [{ src: '~/assets/styles/main.scss', lang: 'scss' }],
 
@@ -34,6 +28,7 @@ export default {
     '~/plugins/bbs-go',
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/viewer.js', ssr: false },
+    { src: '~plugins/vue-js-modal.client.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

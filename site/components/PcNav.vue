@@ -6,12 +6,12 @@
     aria-label="main navigation"
   >
     <div class="container">
-      <div class="navbar-brand">
-        <nuxt-link to="/" class="navbar-item">
+      <div class="navbar-brand flex items-center">
+        <nuxt-link to="/">
           <img
             :alt="config.siteTitle"
             src="~/assets/images/logo.svg"
-            style="height: 64px"
+            style="height: 36px"
           />
         </nuxt-link>
         <a
@@ -55,7 +55,7 @@
               <no-ssr><avatar :user="user" :size="30" /></no-ssr>
               <span class="user-menus-nickname">{{ user.nickname }}</span>
             </nuxt-link>
-            <div class="navbar-dropdown">
+            <div class="navbar-dropdown bg-white">
               <nuxt-link class="navbar-item" :to="'/user/' + user.id">
                 <i class="iconfont icon-username" />&nbsp;个人中心
               </nuxt-link>
