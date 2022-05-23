@@ -1,7 +1,6 @@
 <template>
   <div class="shadow-sm">
     <pc-nav class="pc-nav" />
-    <mobile-nav class="mobile-nav" />
   </div>
 </template>
 
@@ -14,20 +13,6 @@ export default {}
 body {
   @media screen and (max-width: 1024px) {
     padding-top: 46px;
-  }
-}
-</style>
-
-<style scoped>
-@media screen and (max-width: 1024px) {
-  .pc-nav {
-    display: none !important;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .mobile-nav {
-    display: none !important;
   }
 }
 </style>
