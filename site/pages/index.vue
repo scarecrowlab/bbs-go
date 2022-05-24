@@ -10,11 +10,11 @@
           :init-data="topicsPage"
           url="/api/topic/topics"
         >
-          <topic-list :topics="results" :show-ad="true" />
+          <topic-list :topics="results" />
         </load-more>
       </div>
     </div>
-    <div class="right-container border-l  pl-5 pt-5">
+    <div class="right-container border-l  pl-5 pt-5   w-64">
       <check-in />
       <site-notice />
       <score-rank :score-rank="scoreRank" />

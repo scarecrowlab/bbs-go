@@ -1,14 +1,12 @@
 <template>
-  <section class="main">
-    <div class="container main-container left-main size-320">
-      <div class="left-container">
-        <nuxt-child :key="$route.path" />
-      </div>
-      <div class="right-container">
-        <check-in />
-        <site-notice />
-        <score-rank :score-rank="scoreRank" />
-      </div>
+  <section class="container flex flex-row m-auto ">
+    <div class="left-container flex-grow">
+      <nuxt-child :key="$route.path" />
+    </div>
+    <div class="right-container border-l  pl-5 pt-5  w-64">
+      <check-in />
+      <site-notice />
+      <score-rank :score-rank="scoreRank" />
     </div>
   </section>
 </template>

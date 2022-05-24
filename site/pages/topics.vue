@@ -1,19 +1,14 @@
 <template>
-  <section class="main">
-    <div class="container main-container left-main size-320">
-      <div class="left-container">
-        <div class="main-content no-padding no-bg topics-wrapper">
-          <div class="topics-nav">
-            <topics-nav :nodes="nodes" />
-          </div>
-          <nuxt-child :key="$route.path" />
-        </div>
-      </div>
-      <div class="right-container">
-        <check-in />
-        <site-notice />
-        <score-rank :score-rank="scoreRank" />
-      </div>
+  <section class="container flex flex-row m-auto">
+    <topics-nav :nodes="nodes" class="left-container    w-60 border-r" />
+    <div class="center-container flex-grow  bg-gray-50">
+      <nuxt-child :key="$route.path" />
+    </div>
+    <div class="right-container border-l  pl-5 pt-5  w-64">
+      <check-in />
+      <site-notice />
+      <score-rank :score-rank="scoreRank" />
+      <!-- <friend-links :links="links" /> -->
     </div>
   </section>
 </template>

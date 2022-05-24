@@ -1,189 +1,179 @@
 <template>
-  <div>
-    <section class="main">
-      <div class="container main-container left-main size-360">
-        <div class="left-container">
-          <div class="main-content no-padding no-bg">
-            <article
-              class="topic-detail"
-              itemscope
-              itemtype="http://schema.org/BlogPosting"
+  <div class="container flex flex-row m-auto">
+    <div class="left-container  pt-5 px-2 flex-grow">
+      <article
+        class="topic-detail flex  flex-col"
+        itemscope
+        itemtype="http://schema.org/BlogPosting"
+      >
+        <topic-manage-menu v-model="topic" />
+
+        <!--内容-->
+        <div
+          class="topic-content content py-10"
+          :class="{
+            'topic-tweet': topic.type === 1,
+          }"
+          itemprop="articleBody"
+        >
+          <h1 v-if="topic.title" class="topic-title   text-xl" itemprop="headline">
+            {{ topic.title }}
+          </h1>
+          <!--节点、标签-->
+          <div class="topic-tags border my-1 ">
+            <nuxt-link
+              v-if="topic.node"
+              :to="'/topics/node/' + topic.node.nodeId"
+              class="topic-tag"
             >
-              <div class="topic-header">
-                <div class="topic-header-left">
-                  <avatar :user="topic.user" size="45" />
-                </div>
-                <div class="topic-header-center">
-                  <div class="topic-nickname" itemprop="headline">
-                    <nuxt-link
-                      itemprop="author"
-                      itemscope
-                      itemtype="http://schema.org/Person"
-                      :to="'/user/' + topic.user.id"
-                    >
-                      {{ topic.user.nickname }}
-                    </nuxt-link>
-                  </div>
-                  <div class="topic-meta">
-                    <span class="meta-item">
-                      发布于
-                      <time
-                        :datetime="
-                          topic.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')
-                        "
-                        itemprop="datePublished"
-                      >{{ topic.createTime | prettyDate }}</time>
-                    </span>
-                  </div>
-                </div>
-                <div class="topic-header-right">
-                  <topic-manage-menu v-model="topic" />
-                </div>
+              {{ topic.node.name }}
+            </nuxt-link>
+            <nuxt-link
+              v-for="tag in topic.tags"
+              :key="tag.tagId"
+              :to="'/topics/tag/' + tag.tagId"
+              class="topic-tag"
+            >
+              #{{ tag.tagName }}
+            </nuxt-link>
+          </div>
+          <div
+            ref="topicContent"
+            v-lazy-container="{ selector: 'img' }"
+            class="topic-content-detail py-5"
+            v-html="topic.content"
+          />
+          <ul
+            v-if="topic.imageList && topic.imageList.length"
+            v-viewer
+            class="topic-image-list"
+          >
+            <li v-for="(image, index) in topic.imageList" :key="index">
+              <div class="image-item">
+                <img :src="image.preview" :data-src="image.url">
               </div>
-
-              <!--内容-->
-              <div
-                class="topic-content content"
-                :class="{
-                  'topic-tweet': topic.type === 1,
-                }"
-                itemprop="articleBody"
-              >
-                <h1 v-if="topic.title" class="topic-title" itemprop="headline">
-                  {{ topic.title }}
-                </h1>
-                <div
-                  ref="topicContent"
-                  v-lazy-container="{ selector: 'img' }"
-                  class="topic-content-detail"
-                  v-html="topic.content"
-                />
-                <ul
-                  v-if="topic.imageList && topic.imageList.length"
-                  v-viewer
-                  class="topic-image-list"
-                >
-                  <li v-for="(image, index) in topic.imageList" :key="index">
-                    <div class="image-item">
-                      <img :src="image.preview" :data-src="image.url">
-                    </div>
-                  </li>
-                </ul>
-                <div
-                  v-if="hideContent && hideContent.exists"
-                  class="topic-content-detail hide-content"
-                >
-                  <div v-if="hideContent.show" class="widget has-border">
-                    <div class="widget-header">
-                      <span>
-                        <i class="iconfont icon-lock" />
-                        <span>隐藏内容</span>
-                      </span>
-                    </div>
-                    <div class="widget-content" v-html="hideContent.content" />
-                  </div>
-                  <div v-else class="hide-content-tip">
-                    <i class="iconfont icon-lock" />
-                    <span>隐藏内容，请回复后查看</span>
-                  </div>
-                </div>
+            </li>
+          </ul>
+          <div
+            v-if="hideContent && hideContent.exists"
+            class="topic-content-detail hide-content"
+          >
+            <div v-if="hideContent.show" class="widget has-border">
+              <div class="widget-header">
+                <span>
+                  <i class="iconfont icon-lock" />
+                  <span>隐藏内容</span>
+                </span>
               </div>
-
-              <!--节点、标签-->
-              <div class="topic-tags">
-                <nuxt-link
-                  v-if="topic.node"
-                  :to="'/topics/node/' + topic.node.nodeId"
-                  class="topic-tag"
-                >
-                  {{ topic.node.name }}
-                </nuxt-link>
-                <nuxt-link
-                  v-for="tag in topic.tags"
-                  :key="tag.tagId"
-                  :to="'/topics/tag/' + tag.tagId"
-                  class="topic-tag"
-                >
-                  #{{ tag.tagName }}
-                </nuxt-link>
-              </div>
-
-              <!-- 点赞用户列表 -->
-              <div
-                v-if="likeUsers && likeUsers.length"
-                class="topic-like-users"
-              >
-                <avatar
-                  v-for="likeUser in likeUsers"
-                  :key="likeUser.id"
-                  :user="likeUser"
-                  :round="true"
-                  :has-border="true"
-                  size="24"
-                />
-                <span class="like-count">{{ topic.likeCount }}</span>
-              </div>
-
-              <!-- 功能按钮 -->
-              <div class="topic-actions">
-                <div class="action disabled">
-                  <i class="action-icon iconfont icon-read" />
-                  <div class="action-text">
-                    <span>浏览</span>
-                    <span v-if="topic.viewCount > 0" class="action-text">
-                      ({{ topic.viewCount }})
-                    </span>
-                  </div>
-                </div>
-                <div
-                  class="action"
-                  :class="{ disabled: liked }"
-                  @click="like(topic)"
-                >
-                  <i
-                    class="action-icon iconfont icon-like"
-                    :class="{ 'checked-icon': liked }"
-                  />
-                  <div class="action-text">
-                    <span>点赞</span>
-                    <span v-if="topic.likeCount > 0">
-                      ({{ topic.likeCount }})
-                    </span>
-                  </div>
-                </div>
-                <div class="action" @click="addFavorite(topic.topicId)">
-                  <i
-                    class="action-icon iconfont"
-                    :class="{
-                      'icon-has-favorite': favorited,
-                      'icon-favorite': !favorited,
-                      'checked-icon': favorited,
-                    }"
-                  />
-                  <div class="action-text">
-                    <span>收藏</span>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <!-- 评论 -->
-            <comment
-              :entity-id="topic.topicId"
-              :comments-page="commentsPage"
-              :comment-count="topic.commentCount"
-              :show-ad="false"
-              :mode="topic.type === 1 ? 'text' : 'markdown'"
-              entity-type="topic"
-              @created="commentCreated"
-            />
+              <div class="widget-content" v-html="hideContent.content" />
+            </div>
+            <div v-else class="hide-content-tip">
+              <i class="iconfont icon-lock" />
+              <span>隐藏内容，请回复后查看</span>
+            </div>
           </div>
         </div>
-        <div class="right-container">
-          <user-info :user="topic.user" />
+
+        <!-- 点赞用户列表 -->
+        <div
+          v-if="likeUsers && likeUsers.length"
+          class="topic-like-users flex  my-5"
+        >
+          <avatar
+            v-for="likeUser in likeUsers"
+            :key="likeUser.id"
+            :user="likeUser"
+            :round="true"
+            :has-border="true"
+            size="24"
+          />
+          <span class="like-count">{{ topic.likeCount }}</span>
+        </div>
+
+        <!-- 功能按钮 -->
+        <div class="topic-actions flex text-sm my-2">
+          <div class="action disabled">
+            <i class="action-icon iconfont icon-read" />
+            <div class="action-text">
+              <span>浏览</span>
+              <span v-if="topic.viewCount > 0" class="action-text">
+                ({{ topic.viewCount }})
+              </span>
+            </div>
+          </div>
+          <div
+            class="action"
+            :class="{ disabled: liked }"
+            @click="like(topic)"
+          >
+            <i
+              class="action-icon iconfont icon-like"
+              :class="{ 'checked-icon': liked }"
+            />
+            <div class="action-text">
+              <span>点赞</span>
+              <span v-if="topic.likeCount > 0">
+                ({{ topic.likeCount }})
+              </span>
+            </div>
+          </div>
+          <div class="action" @click="addFavorite(topic.topicId)">
+            <i
+              class="action-icon iconfont"
+              :class="{
+                'icon-has-favorite': favorited,
+                'icon-favorite': !favorited,
+                'checked-icon': favorited,
+              }"
+            />
+            <div class="action-text">
+              <span>收藏</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="topic-header flex  flex-row border p-5 border-dashed">
+        <div class="topic-header-left">
+          <avatar :user="topic.user" size="45" />
+        </div>
+        <div class="topic-header-center flex-grow pl-5">
+          <div class="topic-nickname" itemprop="headline">
+            <nuxt-link
+              itemprop="author"
+              itemscope
+              itemtype="http://schema.org/Person"
+              :to="'/user/' + topic.user.id"
+            >
+              {{ topic.user.nickname }}
+            </nuxt-link>
+          </div>
+          <div class="topic-meta">
+            <span class="meta-item text-xs text-gray-500">
+              发布于
+              <time
+                :datetime="
+                  topic.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')
+                "
+                itemprop="datePublished"
+              >{{ topic.createTime | prettyDate }}</time>
+            </span>
+          </div>
         </div>
       </div>
-    </section>
+      <!-- 评论 -->
+      <comment
+        :entity-id="topic.topicId"
+        :comments-page="commentsPage"
+        :comment-count="topic.commentCount"
+        :show-ad="false"
+        :mode="topic.type === 1 ? 'text' : 'markdown'"
+        entity-type="topic"
+        @created="commentCreated"
+      />
+    </div>
+
+    <user-info :user="topic.user" class="right-container border-l  pl-5 pt-5  w-64" />
   </div>
 </template>
 

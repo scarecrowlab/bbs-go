@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-form">
+  <div class="comment-form border">
     <div class="comment-create">
       <div ref="commentEditor" class="comment-input-wrapper">
         <div v-if="quote" class="comment-quote-info">
@@ -135,71 +135,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.comment-form {
-  background-color: var(--bg-color);
-  padding: 10px;
-  margin-bottom: 10px;
-
-  .comment-create {
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-    padding: 0;
-    box-sizing: border-box;
-
-    .comment-quote-info {
-      font-size: 13px;
-      color: var(--text-color);
-      margin-bottom: 3px;
-      font-weight: 600;
-
-      i {
-        font-size: 12px !important;
-        color: var(--text-link-color);
-        cursor: pointer;
-      }
-
-      i:hover {
-        color: red;
-      }
-    }
-
-    .comment-input-wrapper {
-      margin-bottom: 8px;
-
-      .text-input {
-        outline: none;
-        width: 100%;
-        height: 85px;
-        font-size: 14px;
-        padding: 10px 40px 10px 10px;
-        color: var(--text-color);
-        line-height: 16px;
-        max-width: 100%;
-        resize: none;
-        border: 1px solid var(--border-color);
-        box-sizing: border-box;
-        border-radius: var(--jinsom-border-radius);
-      }
-    }
-
-    .comment-button-wrapper {
-      user-select: none;
-      display: flex;
-      float: right;
-      height: 30px;
-      line-height: 30px;
-
-      span {
-        color: var(--text-color4);
-        font-size: 13px;
-        margin-right: 5px;
-      }
-
-      button {
-        font-weight: 500;
-      }
-    }
-  }
-}
 </style>

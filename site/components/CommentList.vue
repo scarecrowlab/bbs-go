@@ -8,20 +8,20 @@
       :params="{ entityType: entityType, entityId: entityId }"
       url="/api/comment/comments"
     >
-      <div v-for="comment in results" :key="comment.commentId" class="comment">
+      <div v-for="comment in results" :key="comment.commentId" class="comment flex py-2">
         <div class="comment-item-left">
           <avatar :user="comment.user" size="40" round has-border />
         </div>
-        <div class="comment-item-main">
-          <div class="comment-meta">
+        <div class="comment-item-main pl-2 flex-grow">
+          <div class="comment-meta flex text-sm">
             <nuxt-link
               :to="'/user/' + comment.user.id"
-              class="comment-nickname"
+              class="comment-nickname flex-grow "
             >
               {{ comment.user.nickname }}
             </nuxt-link>
             <time
-              class="comment-time"
+              class="comment-time text-xs"
               :datetime="comment.createTime | formatDate('yyyy-MM-ddTHH:mm:ss')"
             >{{ comment.createTime | prettyDate }}</time>
           </div>
@@ -46,13 +46,13 @@
               >
             </div>
           </div>
-          <div class="comment-actions">
+          <div class="comment-actions flex text-xs">
             <div
-              class="comment-action-item"
+              class="comment-action-item px-1"
               :class="{ active: comment.liked }"
               @click="like(comment)"
             >
-              <i class="iconfont icon-like" />
+              <i class="iconfont icon-like px-1" />
               <span>{{ comment.liked ? '已赞' : '点赞' }}</span>
               <span v-if="comment.likeCount > 0">{{ comment.likeCount }}</span>
             </div>
@@ -69,11 +69,12 @@
           </div>
           <div
             v-if="reply.commentId === comment.commentId"
-            class="comment-reply-form"
+            class="comment-reply-form border"
           >
             <text-editor
               :ref="`editor${comment.commentId}`"
               v-model="reply.value"
+              class="border"
               :height="100"
               @submit="submitReply(comment)"
             />
@@ -215,111 +216,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.comments {
-  padding: 10px;
-  font-size: 14px;
 
-  .comment {
-    display: flex;
-    padding: 10px 0;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .comment-item-main {
-      flex: 1 1 auto;
-      margin-left: 16px;
-
-      .comment-meta {
-        display: flex;
-        justify-content: space-between;
-        .comment-nickname {
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--text-color);
-
-          &:hover {
-            color: var(--text-link-color);
-          }
-        }
-
-        .comment-time {
-          font-size: 13px;
-          color: var(--text-color3);
-        }
-      }
-
-      .comment-content-wrapper {
-        .comment-content {
-          margin-top: 10px;
-          margin-bottom: 0;
-          color: var(--text-color);
-        }
-        .comment-image-list {
-          margin-top: 10px;
-
-          img {
-            width: 72px;
-            height: 72px;
-            line-height: 72px;
-            cursor: pointer;
-            &:not(:last-child) {
-              margin-right: 8px;
-            }
-
-            object-fit: cover;
-            transition: all 0.5s ease-out 0.1s;
-
-            &:hover {
-              transform: matrix(1.04, 0, 0, 1.04, 0, 0);
-              backface-visibility: hidden;
-            }
-          }
-        }
-      }
-
-      .comment-actions {
-        margin-top: 10px;
-        display: flex;
-        align-items: center;
-
-        .comment-action-item {
-          line-height: 22px;
-          font-size: 13px;
-          cursor: pointer;
-          color: var(--text-color3);
-          user-select: none;
-
-          &:hover {
-            color: var(--text-link-color);
-          }
-
-          &.active {
-            color: var(--text-link-color);
-            font-weight: 500;
-          }
-
-          &:not(:last-child) {
-            margin-right: 16px;
-          }
-        }
-      }
-
-      .comment-reply-form {
-        margin-top: 10px;
-      }
-
-      .comment-replies {
-        margin-top: 10px;
-        // padding: 10px;
-        background-color: var(--bg-color2);
-      }
-    }
-  }
-
-  .reply {
-    display: flex;
-  }
-}
 </style>

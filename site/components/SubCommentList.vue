@@ -213,7 +213,7 @@ export default {
 <style lang="scss" scoped>
 .replies {
   margin-top: 10px;
-  padding: 1px 10px;
+
   font-size: 12px;
   background-color: var(--bg-color2);
 

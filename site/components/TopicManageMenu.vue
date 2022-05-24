@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="hasPermission"
-    class="border border-red-500"
+    class="border border-red-500 flex px-2"
     trigger="click"
     @command="handleCommand"
   >
