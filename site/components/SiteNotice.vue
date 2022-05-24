@@ -1,6 +1,6 @@
 <template>
   <div v-if="config.siteNotification" class="widget">
-    <div class="widget-header">
+    <div class="widget-header  text-lg">
       公告
     </div>
     <div class="widget-content content notice-content">

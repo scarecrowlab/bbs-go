@@ -1,63 +1,62 @@
 <template>
-  <section class="main m-10">
-    <div class="container">
-      <div class="main-body no-bg">
-        <div class="widget signin">
-          <div class="widget-header">
-            登录
+  <div class="flex  justify-center">
+    <div class="widget signin w-96">
+      <div class="widget-header  text-2xl my-2  ">
+        登录
+      </div>
+      <div class="widget-content">
+        <template v-if="loginMethod.password">
+          <div class="field my-2 ">
+            <label class=" text-lg my-2">用户名/邮箱</label>
+            <div class="control has-icons-left">
+              <t-input
+                v-model="username"
+                class="input is-success"
+                type="text"
+                placeholder="请输入用户名或邮箱"
+                @keyup.enter="submitLogin"
+              >
+                <span
+                  class="icon is-small is-left"
+                ><i
+                  class="iconfont icon-username"
+                /></span>
+              </t-input>
+            </div>
           </div>
-          <div class="widget-content">
-            <template v-if="loginMethod.password">
-              <div class="field">
-                <label class="label">用户名/邮箱</label>
-                <div class="control has-icons-left">
-                  <input
-                    v-model="username"
-                    class="input is-success"
-                    type="text"
-                    placeholder="请输入用户名或邮箱"
-                    @keyup.enter="submitLogin"
-                  >
-                  <span
-                    class="icon is-small is-left"
-                  ><i
-                    class="iconfont icon-username"
-                  /></span>
-                </div>
-              </div>
 
-              <div class="field">
-                <label class="label">密码</label>
-                <div class="control has-icons-left">
-                  <input
-                    v-model="password"
-                    class="input"
-                    type="password"
-                    placeholder="请输入密码"
-                    @keyup.enter="submitLogin"
-                  >
-                  <span
-                    class="icon is-small is-left"
-                  ><i
-                    class="iconfont icon-password"
-                  /></span>
-                </div>
-              </div>
-
-              <div class="field">
-                <button class="button is-success" @click="submitLogin">
-                  登录
-                </button>
-                <nuxt-link class="button is-text" to="/user/signup">
-                  没有账号？点击这里去注册&gt;&gt;
-                </nuxt-link>
-              </div>
-            </template>
+          <div class="field my-2 ">
+            <label class="text-lg my-2">密码</label>
+            <div class="control has-icons-left">
+              <t-input
+                v-model="password"
+                class="input"
+                type="password"
+                placeholder="请输入密码"
+                @keyup.enter="submitLogin"
+              >
+                <span
+                  class="icon is-small is-left"
+                ><i
+                  class="iconfont icon-password"
+                /></span>
+              </t-input>
+            </div>
           </div>
-        </div>
+
+          <div class="field flex   items-baseline">
+            <t-button @click="submitLogin">
+              登录
+            </t-button>
+            <nuxt-link to="/user/signup" class=" flex-grow text-right">
+              没有账号？点击这里去注册&gt;&gt;
+            </nuxt-link>
+            </t-button>
+          </div>
+        </template>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

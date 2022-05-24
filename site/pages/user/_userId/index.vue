@@ -1,79 +1,80 @@
 <template>
-  <section class="main">
-    <div class="container">
-      <user-profile :user="user" />
+  <div class="container flex flex-col  m-auto">
+    <user-profile :user="user" />
 
-      <div class="container main-container right-main size-320">
-        <user-center-sidebar :user="user" />
-        <div class="right-container">
-          <div class="tabs-warp">
-            <div class="tabs">
-              <ul>
-                <li :class="{ 'is-active': activeTab === 'topics' }">
-                  <nuxt-link :to="'/user/' + user.id + '?tab=topics'">
-                    <span class="icon is-small">
-                      <i class="iconfont icon-topic" aria-hidden="true" />
-                    </span>
-                    <span>话题</span>
-                  </nuxt-link>
-                </li>
-                <li :class="{ 'is-active': activeTab === 'articles' }">
-                  <nuxt-link :to="'/user/' + user.id + '?tab=articles'">
-                    <span class="icon is-small">
-                      <i class="iconfont icon-article" aria-hidden="true" />
-                    </span>
-                    <span>作品</span>
-                  </nuxt-link>
-                </li>
-              </ul>
-            </div>
+    <div class="flex">
+      <div class=" border-r">
+        <user-center-sidebar :user="user" class="  w-64" />
+      </div>
 
-            <div v-if="activeTab === 'topics'">
-              <div
-                v-if="
-                  topicsPage && topicsPage.results && topicsPage.results.length
-                "
+      <div class="right-container flex-grow">
+        <div class="tabs-warp">
+          <div class="tabs pl-4 border-b ">
+            <ul class="flex">
+              <li class="px-4 py-2" :class="{ ' border-b-2 border-blue-500': activeTab === 'topics' }">
+                <nuxt-link :to="'/user/' + user.id + '?tab=topics'">
+                  <span class="icon is-small">
+                    <i class="iconfont icon-topic" aria-hidden="true" />
+                  </span>
+                  <span>话题</span>
+                </nuxt-link>
+              </li>
+              <li class="px-4 py-2" :class="{ 'border-b-2 border-blue-500': activeTab === 'articles' }">
+                <nuxt-link :to="'/user/' + user.id + '?tab=articles'">
+                  <span class="icon is-small">
+                    <i class="iconfont icon-article" aria-hidden="true" />
+                  </span>
+                  <span>作品</span>
+                </nuxt-link>
+              </li>
+            </ul>
+          </div>
+
+          <div v-if="activeTab === 'topics'">
+            <div
+              v-if="
+                topicsPage && topicsPage.results && topicsPage.results.length
+              "
+            >
+              <load-more
+                v-if="topicsPage"
+                v-slot="{ results }"
+                :init-data="topicsPage"
+                :url="'/api/topic/user/topics?userId=' + user.id"
               >
-                <load-more
-                  v-if="topicsPage"
-                  v-slot="{ results }"
-                  :init-data="topicsPage"
-                  :url="'/api/topic/user/topics?userId=' + user.id"
-                >
-                  <topic-list :topics="results" :show-avatar="false" />
-                </load-more>
-              </div>
-              <div v-else class="notification is-primary">
-                暂无话题
-              </div>
+                <topic-list :topics="results" :show-avatar="false" />
+              </load-more>
             </div>
+            <div v-else class="notification is-primary">
+              暂无话题
+            </div>
+          </div>
 
-            <div v-if="activeTab === 'articles'">
-              <div
-                v-if="
-                  articlesPage &&
-                    articlesPage.results &&
-                    articlesPage.results.length
-                "
+          <div v-if="activeTab === 'articles'">
+            <div
+              v-if="
+                articlesPage &&
+                  articlesPage.results &&
+                  articlesPage.results.length
+              "
+            >
+              <load-more
+                v-if="articlesPage"
+                v-slot="{ results }"
+                :init-data="articlesPage"
+                :url="'/api/article/user/articles?userId=' + user.id"
               >
-                <load-more
-                  v-if="articlesPage"
-                  v-slot="{ results }"
-                  :init-data="articlesPage"
-                  :url="'/api/article/user/articles?userId=' + user.id"
-                >
-                  <article-list :articles="results" />
-                </load-more>
-              </div>
-              <div v-else class="notification is-primary">
-                暂无作品
-              </div>
+                <article-list :articles="results" />
+              </load-more>
+            </div>
+            <div v-else class="notification is-primary">
+              暂无作品
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -133,16 +134,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tabs-warp {
-  background-color: var(--bg-color);
-  padding: 0 10px 10px;
 
-  .tabs {
-    margin-bottom: 5px;
-  }
-
-  .more {
-    text-align: right;
-  }
-}
 </style>

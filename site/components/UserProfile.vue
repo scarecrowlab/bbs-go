@@ -3,14 +3,14 @@
     class="profile"
     :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
   >
-    <div v-if="isOwner" class="file is-light is-small change-bg">
+    <div v-if="isOwner" class=" text-white absolute bottom-0 right-0">
       <label class="file-label">
-        <input class="file-input" type="file" @change="uploadBackground">
+        <input class="file-input " style="visibility: hidden;" type="file" @change="uploadBackground">
         <span class="file-cta">
           <span class="file-icon">
             <i class="iconfont icon-upload" />
           </span>
-          <span class="file-label">设置背景</span>
+          <span class="file-label px-2">设置背景</span>
         </span>
       </label>
     </div>

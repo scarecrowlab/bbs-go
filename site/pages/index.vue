@@ -1,6 +1,6 @@
 <template>
   <section class=" container flex flex-row m-auto ">
-    <topics-nav class="left-container    w-60 border-r" :nodes="nodes" />
+    <topics-nav class="left-container    w-60 border-r  hidden   md:flex sm:flex-col" :nodes="nodes" />
     <div class="center-container flex-grow  bg-gray-50">
       <div class="topics-main">
         <sticky-topics :node-id="0" />
@@ -14,10 +14,10 @@
         </load-more>
       </div>
     </div>
-    <div class="right-container border-l  pl-5 pt-5   w-64">
-      <check-in />
-      <site-notice />
-      <score-rank :score-rank="scoreRank" />
+    <div class="right-container border-l  pl-5 pt-5   w-64    hidden   md:flex sm:flex-col ">
+      <check-in class=" mb-5" />
+      <site-notice class=" mb-5" />
+      <score-rank class=" mb-5" :score-rank="scoreRank" />
     </div>
   </section>
 </template>

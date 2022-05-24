@@ -1,6 +1,6 @@
 <template>
   <div class="widget">
-    <div class="widget-header">
+    <div class="widget-header text-lg">
       个人成就
     </div>
     <div class="widget-content extra-info">

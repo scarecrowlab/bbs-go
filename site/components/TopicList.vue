@@ -5,7 +5,7 @@
       :key="topic.topicId"
       class="topic-item rounded-sm "
     >
-      <div class="flex flex-col bg-white m-3 p-3">
+      <div class="flex flex-col bg-white m-2 p-2">
         <div
           class="topic-content py-2"
           :class="{ 'topic-tweet': topic.type === 1 }"

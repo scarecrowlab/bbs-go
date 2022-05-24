@@ -36,6 +36,7 @@
 
     <comment-list
       ref="list"
+      class="mt-5"
       :entity-id="entityId"
       :entity-type="entityType"
       :comments-page="commentsPage"

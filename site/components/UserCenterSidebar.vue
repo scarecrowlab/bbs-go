@@ -1,10 +1,12 @@
 <template>
-  <div class="left-container">
-    <my-counts :user="localUser" />
-    <my-profile :user="localUser" />
+  <div class="left-container pr-5">
+    <my-counts :user="localUser" class="my-5" />
 
-    <fans-widget :user="localUser" />
-    <follow-widget :user="localUser" />
+    <my-profile :user="localUser" class="my-5" />
+
+    <fans-widget :user="localUser" class="my-5" />
+
+    <follow-widget :user="localUser" class="my-5" />
 
     <div v-if="isAdmin" class="widget">
       <div class="widget-header">

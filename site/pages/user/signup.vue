@@ -1,91 +1,92 @@
 <template>
-  <section class="main m-10">
-    <div class="container">
-      <div class="main-body no-bg">
-        <div class="widget signin">
-          <div class="widget-header">
-            注册
+  <div class="flex  justify-center">
+    <div class="widget signin w-96">
+      <div class="widget-header text-2xl my-2">
+        注册
+      </div>
+      <div class="widget-content">
+        <div class="field  my-2">
+          <label class="label  my-2">昵称</label>
+          <div class="control has-icons-left">
+            <t-input
+              v-model="nickname"
+              class="input is-success"
+              type="text"
+              placeholder="请输入昵称"
+              @keyup.enter="signup"
+            >
+              <span class="icon is-small is-left">
+                <i class="iconfont icon-username" />
+              </span>
+            </t-input>
           </div>
-          <div class="widget-content">
-            <div class="field">
-              <label class="label">昵称</label>
-              <div class="control has-icons-left">
-                <input
-                  v-model="nickname"
-                  class="input is-success"
-                  type="text"
-                  placeholder="请输入昵称"
-                  @keyup.enter="signup"
-                >
-                <span class="icon is-small is-left">
-                  <i class="iconfont icon-username" />
-                </span>
-              </div>
-            </div>
+        </div>
 
-            <div class="field">
-              <label class="label">邮箱</label>
-              <div class="control has-icons-left">
-                <input
-                  v-model="email"
-                  class="input is-success"
-                  type="text"
-                  placeholder="请输入邮箱"
-                  @keyup.enter="signup"
-                >
-                <span class="icon is-small is-left">
-                  <i class="iconfont icon-email" />
-                </span>
-              </div>
-            </div>
+        <div class="field  my-2">
+          <label class="label  my-2">邮箱</label>
+          <div class="control has-icons-left">
+            <t-input
+              v-model="email"
+              class="input is-success"
+              type="text"
+              placeholder="请输入邮箱"
+              @keyup.enter="signup"
+            >
+              <span class="icon is-small is-left">
+                <i class="iconfont icon-email" />
+              </span>
+            </t-input>
+          </div>
+        </div>
 
-            <div class="field">
-              <label class="label">密码</label>
-              <div class="control has-icons-left">
-                <input
-                  v-model="password"
-                  class="input"
-                  type="password"
-                  placeholder="请输入密码"
-                  @keyup.enter="signup"
-                >
-                <span class="icon is-small is-left">
-                  <i class="iconfont icon-password" />
-                </span>
-              </div>
-            </div>
+        <div class="field  my-2">
+          <label class="label  my-2">密码</label>
+          <div class="control has-icons-left">
+            <t-input
+              v-model="password"
+              class="input"
+              type="password"
+              placeholder="请输入密码"
+              @keyup.enter="signup"
+            >
+              <span class="icon is-small is-left">
+                <i class="iconfont icon-password" />
+              </span>
+            </t-input>
+          </div>
+        </div>
 
-            <div class="field">
-              <label class="label">确认密码</label>
-              <div class="control has-icons-left">
-                <input
-                  v-model="rePassword"
-                  class="input"
-                  type="password"
-                  placeholder="请再次输入密码"
-                  @keyup.enter="signup"
-                >
-                <span class="icon is-small is-left">
-                  <i class="iconfont icon-password" />
-                </span>
-              </div>
-            </div>
+        <div class="field  my-2">
+          <label class="label  my-2">确认密码</label>
+          <div class="control has-icons-left">
+            <t-input
+              v-model="rePassword"
+              class="input"
+              type="password"
+              placeholder="请再次输入密码"
+              @keyup.enter="signup"
+            >
+              <span class="icon is-small is-left">
+                <i class="iconfont icon-password" />
+              </span>
+            </t-input>
+          </div>
+        </div>
 
-            <div class="field">
-              <div class="control">
-                <button class="button is-success" @click="signup">
-                  注册
-                </button>
-                <nuxt-link class="button is-text" to="/user/signin">
-                  已有账号，前往登录&gt;&gt;
-                </nuxt-link>
-              </div>
-            </div>
+        <div class="field">
+          <div class="control flex  items-center">
+            <t-button class="button is-success" @click="signup">
+              注册
+            </t-button>
+            <nuxt-link class="button is-text flex-grow text-right" to="/user/signin">
+              已有账号，前往登录&gt;&gt;
+            </nuxt-link>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+  </div>
 </template>
 
 <script>

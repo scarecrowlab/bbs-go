@@ -1,6 +1,6 @@
 <template>
   <div class="widget">
-    <div class="widget-header">
+    <div class="widget-header text-lg">
       签到
     </div>
     <div class="widget-content checkin">

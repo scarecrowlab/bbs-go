@@ -6,7 +6,7 @@
     :class="{ 'input-focus': inputFocus, 'show-histories': showHistories }"
   >
     <div class="search-input">
-      <input
+      <t-input
         v-model="keyword"
         name="q"
         class="input"
@@ -21,9 +21,10 @@
         @keyup.up="changeSelect(-1)"
         @keyup.enter="searchBoxOnEnter"
       >
-      <span>
-        <i class="iconfont icon-search" />
-      </span>
+        <span>
+          <i class="iconfont icon-search" />
+        </span>
+      </t-input>
     </div>
     <div class="histories absolute">
       <ul>

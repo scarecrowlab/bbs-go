@@ -1,11 +1,11 @@
 <template>
   <div class="widget">
-    <div class="widget-header">
+    <div class="widget-header text-lg flex    justify-between items-baseline ">
       <div>
         <span>粉丝</span>
         <span class="count">{{ user.fansCount }}</span>
       </div>
-      <div class="slot">
+      <div class="slot text-xs">
         <a @click="showMore">更多</a>
       </div>
     </div>
