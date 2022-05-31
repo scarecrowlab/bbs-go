@@ -1,5 +1,15 @@
 import Vue from 'vue'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+import { faUserSecret, faHeart, faComment, faEye } from '@fortawesome/free-solid-svg-icons'
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUserSecret, faHeart, faComment, faEye)
+
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
+
 Vue.use({
   install (Vue, options) {
     Vue.prototype.$siteTitle = function (subTitle) {

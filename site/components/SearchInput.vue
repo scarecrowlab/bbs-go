@@ -2,14 +2,14 @@
   <div
     ref="searchForm"
     v-click-outside="onBlur"
-    class=" border rounded-full relative "
+    class=" border  rounded-full relative "
     :class="{ 'input-focus': inputFocus, 'show-histories': showHistories }"
   >
     <div class="search-input">
-      <t-input
+      <input
         v-model="keyword"
         name="q"
-        class="input"
+        class="input rounded-full px-4 text-sm m-0 border-gray-200"
         type="text"
         maxlength="30"
         placeholder="输入你想查找的内容"
@@ -21,24 +21,9 @@
         @keyup.up="changeSelect(-1)"
         @keyup.enter="searchBoxOnEnter"
       >
-        <span>
-          <i class="iconfont icon-search" />
-        </span>
-      </t-input>
-    </div>
-    <div class="histories absolute">
-      <ul>
-        <li
-          v-for="(item, index) in histories"
-          :key="index"
-          :class="{ selected: index === selectedIndex }"
-          @mouseover="historyItemMouseOver(index)"
-          @mouseout="historyItemMouseOut()"
-        >
-          <span @click="historyItemClick(item)">{{ item }}</span>
-          <i class="iconfont icon-close" @click="deleteHistory(item)" />
-        </li>
-      </ul>
+      <span>
+        <i class="iconfont icon-search" />
+      </span>
     </div>
   </div>
 </template>

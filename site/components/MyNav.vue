@@ -1,6 +1,6 @@
 <template>
-  <div class="shadow-sm">
-    <pc-nav class="pc-nav" />
+  <div class=" border-b">
+    <pc-nav class="pc-nav  " />
   </div>
 </template>
 

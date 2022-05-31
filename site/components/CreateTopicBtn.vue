@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-row">
-    <t-button @click="handlePostCommand('topic')">
-      发帖子
-    </t-button>
+    <button class=" border px-4 py-1  rounded-full" @click="handlePostCommand('topic')">
+      发布
+    </button>
     <!-- <a @click="handlePostCommand('article')">发作品</a> -->
   </div>
 </template>

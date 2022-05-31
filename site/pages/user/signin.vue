@@ -9,19 +9,19 @@
           <div class="field my-2 ">
             <label class=" text-lg my-2">用户名/邮箱</label>
             <div class="control has-icons-left">
-              <t-input
+              <input
                 v-model="username"
                 class="input is-success"
                 type="text"
                 placeholder="请输入用户名或邮箱"
                 @keyup.enter="submitLogin"
               >
-                <span
-                  class="icon is-small is-left"
-                ><i
-                  class="iconfont icon-username"
-                /></span>
-              </t-input>
+              <span
+                class="icon is-small is-left"
+              ><i
+                class="iconfont icon-username"
+              /></span>
+              </input>
             </div>
           </div>
 

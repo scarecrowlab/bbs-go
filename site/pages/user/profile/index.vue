@@ -1,15 +1,5 @@
 <template>
   <div class="widget no-margin">
-    <div class="widget-header">
-      <div>
-        <i class="iconfont icon-setting" />
-        <span>个人资料</span>
-      </div>
-      <nuxt-link :to="'/user/' + user.id" style="font-size: 13px">
-        <i class="iconfont icon-return" />
-        <span>返回个人主页</span>
-      </nuxt-link>
-    </div>
     <div class="widget-content">
       <!-- 头像 -->
       <div class="field is-horizontal">
@@ -39,7 +29,7 @@
             <div class="control">
               <input
                 v-model="form.nickname"
-                class="input"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 autocomplete="off"
                 placeholder="请输入昵称"
@@ -59,7 +49,7 @@
             <div class="control">
               <textarea
                 v-model="form.description"
-                class="textarea"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 rows="2"
                 placeholder="一句话介绍你自己"
               />
@@ -78,7 +68,7 @@
             <div class="control">
               <input
                 v-model="form.homePage"
-                class="input"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 autocomplete="off"
                 placeholder="请输入个人主页"

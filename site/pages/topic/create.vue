@@ -1,101 +1,41 @@
 <template>
-  <section class="container flex flex-row m-auto ">
-    <article v-if="isNeedEmailVerify" class="message is-warning">
-      <div class="message-header">
-        <p>请先验证邮箱</p>
-      </div>
-      <div class="message-body">
-        发表话题前，请先前往
-        <strong><nuxt-link
-          to="/user/profile/account"
-          style="color: var(--text-link-color)"
-        >个人中心 &gt; 账号设置</nuxt-link></strong>
-        页面设置邮箱，并完成邮箱认证。
-      </div>
-    </article>
-    <div v-else class="topic-create-form">
-      <h1 class="title">
-        {{ postForm.type === 0 ? '发帖子' : '发动态' }}
-      </h1>
+  <section class="container flex flex-col  m-auto  ">
+    <div class="control my-5 flex flex-row items-center">
+      <input
+        v-model="postForm.title"
+        class="input topic-title my-1 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        placeholder="请输入帖子标题"
+      >
+      <a
+        :class="{ 'is-loading': publishing }"
+        :disabled="publishing"
+        class="button is-success border px-4 py-1 rounded-full mx-5 cursor-pointer"
+        @click="submitCreate"
+      >发表帖子</a>
+    </div>
 
-      <div class="field">
-        <div class="control">
-          <div
-            v-for="node in nodes"
-            :key="node.nodeId"
-            class="topic-tag"
-            :class="{ selected: postForm.nodeId === node.nodeId }"
-            @click="postForm.nodeId = node.nodeId"
-          >
-            <span>{{ node.name }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="postForm.type === 0" class="field">
-        <div class="control">
-          <input
-            v-model="postForm.title"
-            class="input topic-title"
-            type="text"
-            placeholder="请输入帖子标题"
-          >
-        </div>
-      </div>
-
-      <div v-if="postForm.type === 0" class="field">
-        <div class="control">
-          <markdown-editor
-            ref="mdEditor"
-            v-model="postForm.content"
-            placeholder="请输入你要发表的内容..."
-          />
-        </div>
-      </div>
-
-      <div v-if="postForm.type === 0 && isEnableHideContent" class="field">
-        <div class="control">
-          <markdown-editor
-            ref="mdEditor"
-            v-model="postForm.hideContent"
-            height="200px"
-            placeholder="隐藏内容，评论后可见"
-          />
-        </div>
-      </div>
-
-      <div v-if="postForm.type === 1" class="field">
-        <div class="control">
-          <simple-editor
-            ref="simpleEditor"
-            @input="onSimpleEditorInput"
-            @submit="submitCreate"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <tag-input v-model="postForm.tags" />
-        </div>
-      </div>
-
-      <div class="field is-grouped">
-        <div class="control">
-          <a
-            :class="{ 'is-loading': publishing }"
-            :disabled="publishing"
-            class="button is-success"
-            @click="submitCreate"
-          >发表帖子</a>
-        </div>
+    <div class="control flex mb-3 ">
+      <div
+        v-for="node in nodes"
+        :key="node.nodeId"
+        class="topic-tag border py-1 px-4 text-sm m-1 rounded-full"
+        :class="{ selected: postForm.nodeId === node.nodeId }"
+        @click="postForm.nodeId = node.nodeId"
+      >
+        <span>{{ node.name }}</span>
       </div>
     </div>
+
+    <markdown-editor
+      ref="mdEditor"
+      v-model="postForm.content"
+      placeholder="请输入你要发表的内容..."
+    />
   </section>
 </template>
 
 <script>
-// import EditorJS from '@editorjs/editorjs'
 
 export default {
   middleware: 'authenticated',
@@ -143,7 +83,7 @@ export default {
   },
   head () {
     return {
-      title: this.$siteTitle(this.postForm.type === 1 ? '发动态' : '发帖子')
+      title: this.$siteTitle(this.postForm.type === 1 ? '发动态' : '发布')
     }
   },
   computed: {

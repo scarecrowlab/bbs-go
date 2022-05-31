@@ -5,47 +5,24 @@
       :key="topic.topicId"
       class="topic-item rounded-sm "
     >
-      <div class="flex flex-col bg-white m-2 p-2">
+      <div class="flex flex-col bg-white  border-b p-2 px-4 hover:shadow rounded">
         <div
-          class="topic-content py-2"
+          class="  flex flex-col  py-2"
           :class="{ 'topic-tweet': topic.type === 1 }"
         >
-          <template v-if="topic.type === 0">
-            <h1 class="topic-title">
-              <nuxt-link :to="'/topic/' + topic.topicId">
-                {{
-                  topic.title
-                }}
-              </nuxt-link>
-            </h1>
-            <nuxt-link :to="'/topic/' + topic.topicId" class="text-lg">
-              {{
-                topic.summary
-              }}
-            </nuxt-link>
-          </template>
-          <template v-if="topic.type === 1">
-            <nuxt-link
-              v-if="topic.content"
-              :to="'/topic/' + topic.topicId"
-              class="text-lg"
-            >
-              {{ topic.content }}
-            </nuxt-link>
-            <ul
-              v-if="topic.imageList && topic.imageList.length"
-              class="topic-image-list"
-            >
-              <li v-for="(image, index) in topic.imageList" :key="index">
-                <nuxt-link :to="'/topic/' + topic.topicId" class="image-item">
-                  <img v-lazy="image.preview">
-                </nuxt-link>
-              </li>
-            </ul>
-          </template>
+          <nuxt-link :to="'/topic/' + topic.topicId" class=" py-2 text-lg  font-medium hover:text-blue-500">
+            {{
+              topic.title
+            }}
+          </nuxt-link>
+          <nuxt-link :to="'/topic/' + topic.topicId" class="py-1 text-sm hover:text-gray-800 text-gray-600">
+            {{
+              topic.summary
+            }}
+          </nuxt-link>
         </div>
-        <div class="flex flex-row text-xs ">
-          <div class="flex flex-row flex-grow items-center">
+        <div class="flex flex-row text-xs  items-center text-gray-500">
+          <div class="flex flex-row flex-grow items-center ">
             <div
               class="topic-avatar pr-2"
               :href="'/user/' + topic.user.id"
@@ -53,35 +30,36 @@
             >
               <avatar :user="topic.user" size="20" class="rounded-full" />
             </div>
-            <!-- <nuxt-link :to="'/user/' + topic.user.id">{{
-              topic.user.nickname
-            }}</nuxt-link> -->
             <div
               class="btn px-0.5 flex items-center"
               :class="{ liked: topic.liked }"
               @click="like(topic)"
             >
-              <i
-                class="iconfont icon-like pr-1"
+              <font-awesome-icon
+                icon="fa-solid fa-heart"
                 :class="{
-                  ' to-blue-500': topic.liked,
+                  ' text-blue-500': topic.liked,
                 }"
               />
-              <span>{{ topic.likeCount || 0 }}</span>
+              <span class="px-1">{{ topic.likeCount || 0 }}</span>
             </div>
             <div
               class="btn px-0.5 flex items-center"
               @click="toTopicDetail(topic.topicId)"
             >
-              <i class="iconfont icon-comment pr-1" />
-              <span>{{ topic.commentCount || 0 }}</span>
+              <font-awesome-icon
+                icon="fa-solid fa-comment"
+              />
+              <span class="px-1">{{ topic.commentCount || 0 }}</span>
             </div>
             <div
               class="btn px-0.5 flex items-center"
               @click="toTopicDetail(topic.topicId)"
             >
-              <i class="iconfont icon-read pr-1" />
-              <span>{{ topic.viewCount || 0 }}</span>
+              <font-awesome-icon
+                icon="fa-solid fa-eye"
+              />
+              <span class="px-1">{{ topic.viewCount || 0 }}</span>
             </div>
 
             <span
@@ -89,18 +67,19 @@
               class="topic-sticky-icon px-2"
             >置顶</span>
           </div>
-          <div class="topic-tags">
-            <span>
-              <nuxt-link
-                v-if="topic.node"
-                :to="'/topics/node/' + topic.node.nodeId"
-                :alt="topic.node.name"
-              >{{ topic.node.name }}</nuxt-link>
-            </span>
+          <div class="topic-tags text-gray-500">
+            <nuxt-link
+              v-if="topic.node"
+              :to="'/topics/node/' + topic.node.nodeId"
+              :alt="topic.node.name"
+              class="border px-2 mx-2 rounded-full"
+            >
+              {{ topic.node.name }}
+            </nuxt-link>
           </div>
 
           <div class="topic-time">
-            发布于{{ topic.createTime | prettyDate }}
+            {{ topic.createTime | prettyDate }}
           </div>
         </div>
       </div>

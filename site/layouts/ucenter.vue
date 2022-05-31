@@ -2,17 +2,15 @@
   <div>
     <my-nav />
 
-    <section class="main">
-      <div class="container">
-        <user-profile :user="user" />
-        <div class="container main-container right-main size-320">
-          <user-center-sidebar :user="user" />
-          <div class="right-container">
-            <nuxt />
-          </div>
+    <div class=" container flex flex-col m-auto ">
+      <user-profile :user="user" />
+      <div class="container flex flex-row m-auto ">
+        <user-center-sidebar :user="user" class="w-64" />
+        <div class="right-container">
+          <nuxt />
         </div>
       </div>
-    </section>
+    </div>
 
     <my-footer />
   </div>

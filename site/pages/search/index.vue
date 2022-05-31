@@ -1,28 +1,23 @@
 <template>
-  <section class="main">
-    <div class="container main-container left-main size-320">
-      <div class="left-container">
-        <div class="main-content">
-          <search-topics-nav :nodes="nodes" />
-          <div v-if="searchPage && searchPage.results">
-            <search-topic-list :search-page="searchPage" />
-            <pagination
-              :page="searchPage.page"
-              :url-prefix="'/search?q=' + keyword + '&p='"
-            />
-          </div>
-          <div v-else class="notification is-info empty-results">
-            {{ searchLoading ? '加载中...' : '未搜索到内容' }}
-          </div>
-        </div>
-      </div>
-      <div class="right-container">
-        <check-in />
-        <site-notice />
-        <score-rank :score-rank="scoreRank" />
-      </div>
+  <div class="container m-auto flex flex-row mx-5">
+    <search-topics-nav :nodes="nodes" />
+    <div v-if="searchPage && searchPage.results">
+      <search-topic-list :search-page="searchPage" />
+      <pagination
+        :page="searchPage.page"
+        :url-prefix="'/search?q=' + keyword + '&p='"
+      />
     </div>
-  </section>
+    <div v-else class="notification is-info empty-results">
+      {{ searchLoading ? '加载中...' : '未搜索到内容' }}
+    </div>
+  </div>
+
+  <!-- <div class="right-container  border-l  pl-5 pt-5   w-64    hidden   md:flex sm:flex-col">
+      <check-in />
+      <site-notice />
+      <score-rank :score-rank="scoreRank" />
+    </div> -->
 </template>
 
 <script>

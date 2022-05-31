@@ -1,16 +1,6 @@
 <template>
   <div>
     <div class="widget no-margin">
-      <div class="widget-header">
-        <div>
-          <i class="iconfont icon-setting" />
-          <span>编辑资料</span>
-        </div>
-        <nuxt-link :to="'/user/' + user.id" style="font-size: 13px">
-          <i class="iconfont icon-return" />
-          <span>返回个人主页</span>
-        </nuxt-link>
-      </div>
       <div class="widget-content">
         <!-- <div class="my-field">
               <div>用户名</div>
@@ -97,7 +87,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.username"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   placeholder="请输入用户名"
                   @keydown.enter="setUsername"
@@ -134,7 +124,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.email"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   placeholder="请输入邮箱"
                   @keydown.enter="setEmail"
@@ -171,7 +161,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.password"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="password"
                   placeholder="请输入密码"
                   @keydown.enter="setPassword"
@@ -185,7 +175,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.rePassword"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="password"
                   placeholder="请再次确认密码"
                   @keydown.enter="setPassword"
@@ -222,7 +212,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.oldPassword"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="password"
                   placeholder="请输入当前密码"
                   @keydown.enter="updatePassword"
@@ -236,7 +226,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.password"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="password"
                   placeholder="请输入密码"
                   @keydown.enter="updatePassword"
@@ -250,7 +240,7 @@
               <div class="control has-icons-left">
                 <input
                   v-model="form.rePassword"
-                  class="input is-success"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="password"
                   placeholder="请再次确认密码"
                   @keydown.enter="updatePassword"

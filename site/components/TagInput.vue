@@ -1,8 +1,14 @@
 <template>
   <div class="select-tags">
-    <input id="tags" v-model="tags" name="tags" type="hidden">
+    <input
+      id="tags"
+      v-model="tags"
+      name="tags"
+      type="hidden"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    >
     <div class="tags-selected">
-      <span v-for="tag in tags" :key="tag" class="tag-item">
+      <span v-for="tag in tags" :key="tag" class="border px-4 py-1 mx-1 my-1">
         <span
           class="text"
         >{{ tag
@@ -16,12 +22,14 @@
     <input
       ref="tagInput"
       v-model="inputTag"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
       :placeholder="
         '标签（请用逗号分隔每个标签，最多' +
           maxTagCount +
           '个，每个最长15字符）'
       "
-      class="input"
+
       type="text"
       @input="autocomplete"
       @keydown.delete="removeTag"
@@ -261,157 +269,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.select-tags {
-  display: flex;
-  background-color: var(--bg-color);
-  border: 1px solid var(--border-color2);
-  border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
-  color: var(--text-color);
-  padding: 0 8px;
-
-  .input {
-    border: none;
-    box-shadow: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .tags-selected {
-    display: flex;
-
-    span.tag-item {
-      margin: 5px;
-      padding: 0 10px;
-      background: #eee;
-      color: var(--text-color);
-      line-height: 30px;
-      border-radius: 5px;
-
-      .text {
-        text-align: center;
-        vertical-align: middle;
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.5);
-        white-space: nowrap;
-        display: inline-block;
-
-        i {
-          font-size: 12px;
-          margin-left: 4px;
-        }
-
-        i:hover {
-          color: red;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-
-  .autocomplete-tags {
-    z-index: 2000;
-    left: 0;
-    right: 0;
-    top: 42px;
-    bottom: 0;
-    position: absolute;
-
-    .tags-container {
-      scroll-behavior: smooth;
-      position: relative;
-      background: #f7f7f7;
-      border-left: 1px solid var(--border-color2);
-      border-right: 1px solid var(--border-color2);
-      border-bottom: 1px solid var(--border-color2);
-
-      .tag-section {
-        font-size: 14px;
-        line-height: 16px;
-
-        .tag-item {
-          padding: 8px 15px;
-          cursor: pointer;
-
-          &.active,
-          &:hover {
-            color: var(--text-color5);
-            background: #006bde;
-          }
-        }
-      }
-    }
-  }
-
-  .recommend-tags {
-    z-index: 2000;
-    left: 0;
-    right: 0;
-    top: 42px;
-    bottom: 0;
-    position: absolute;
-
-    .tags-container {
-      scroll-behavior: smooth;
-      position: relative;
-      background: #f7f7f7;
-      border-left: 1px solid var(--border-color2);
-      border-right: 1px solid var(--border-color2);
-      border-bottom: 1px solid var(--border-color2);
-      padding: 0 10px 10px 10px;
-
-      .header {
-        font-weight: bold;
-        font-size: 15px;
-        color: #017e66;
-        border-bottom: 1px solid var(--border-color2);
-        margin-bottom: 5px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-
-        .close-recommend {
-          float: right;
-          cursor: pointer;
-          &:hover {
-            color: red;
-          }
-        }
-      }
-
-      .tag-item {
-        padding: 0 11px;
-        border-radius: 5px;
-        display: inline-block;
-        color: #017e66;
-        background-color: rgba(1, 126, 102, 0.08);
-        height: 22px;
-        line-height: 22px;
-        font-weight: normal;
-        font-size: 13px;
-        text-align: center;
-
-        &:not(:last-child) {
-          margin-right: 5px;
-        }
-
-        img {
-          width: 16px;
-          height: 16px;
-          margin-right: 5px;
-          margin-top: -1px;
-          vertical-align: middle;
-        }
-      }
-
-      .tag-item:hover,
-      .tag-item:focus {
-        background-color: #017e66;
-        color: var(--text-color5);
-        text-decoration: none;
-      }
-    }
-  }
-}
-</style>
